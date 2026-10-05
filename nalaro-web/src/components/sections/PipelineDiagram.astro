@@ -3,17 +3,17 @@ import { pipelineStages } from "../../data/pipeline";
 import { products } from "../../data/products";
 
 const visibleProducts = products.filter((product) => !product.isSlot).slice(0, 3);
-const stageX = [70, 190, 310, 430];
-const productY = [190, 255, 320];
+const stageX = [45, 125, 205, 285];
+const productY = [150, 205, 260];
 ---
 
 <div class="pipeline-diagram" role="img" aria-label="Alur Nalaro dari idea, experiment, lab, product, lalu bercabang ke produk Nalaro">
-  <svg viewBox="0 0 640 400" class="w-full h-full" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+  <svg viewBox="0 0 480 320" class="w-full h-full" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
     <g class="pipeline-lines">
-      <path d="M70 110 H190 H310 H430" />
-      <path d="M430 110 V320" />
+      <path d="M45 82 H125 H205 H285" />
+      <path d="M285 82 V260" />
       {visibleProducts.map((_, index) => (
-        <path d={`M430 ${productY[index]} H520`} />
+        <path d={`M285 ${productY[index]} H350`} />
       ))}
     </g>
 
@@ -21,15 +21,15 @@ const productY = [190, 255, 320];
       <g>
         <rect
           x={stageX[index] - 5}
-          y="105"
+          y="77"
           width="10"
           height="10"
-          class:list={["stage-node", stage.id === "product" ? "is-product" : ""]}
+          class="stage-node"
         />
-        <text x={stageX[index]} y="88" text-anchor="middle" class="stage-label">
+        <text x={stageX[index]} y="60" text-anchor="middle" class="stage-label">
           {stage.label}
         </text>
-        <text x={stageX[index]} y="136" text-anchor="middle" class="stage-index">
+        <text x={stageX[index]} y="105" text-anchor="middle" class="stage-index">
           {String(index + 1).padStart(2, "0")}
         </text>
       </g>
@@ -37,13 +37,13 @@ const productY = [190, 255, 320];
 
     {visibleProducts.map((product, index) => (
       <g>
-        <rect x="515" y={productY[index] - 5} width="10" height="10" class="terminal-node" />
-        <text x="540" y={productY[index] - 8} class="product-code">{product.code}</text>
-        <text x="540" y={productY[index] + 14} class="product-name">{product.name}</text>
+        <rect x="345" y={productY[index] - 5} width="10" height="10" class="terminal-node" />
+        <text x="365" y={productY[index] - 8} class="product-code">{product.code}</text>
+        <text x="365" y={productY[index] + 14} class="product-name">{product.name}</text>
       </g>
     ))}
 
-    <rect x="426" y="182" width="8" height="16" class="signal-marker" />
+    <rect x="281" y="142" width="8" height="16" class="signal-marker" />
   </svg>
 
   <ul class="sr-only">
@@ -74,11 +74,6 @@ const productY = [190, 255, 320];
     vector-effect: non-scaling-stroke;
   }
 
-  .stage-node.is-product {
-    fill: var(--color-flare);
-    stroke: var(--color-flare);
-  }
-
   .stage-label,
   .stage-index,
   .product-code,
@@ -90,7 +85,7 @@ const productY = [190, 255, 320];
   .stage-label,
   .product-code {
     fill: var(--color-bone);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: .08em;
   }
@@ -103,7 +98,7 @@ const productY = [190, 255, 320];
 
   .product-name {
     fill: var(--color-mute);
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .signal-marker {
@@ -112,10 +107,10 @@ const productY = [190, 255, 320];
   }
 
   @keyframes signal {
-    0%, 18% { transform: translate(0, -80px); }
-    19%, 42% { transform: translate(0, -15px); }
-    43%, 66% { transform: translate(0, 50px); }
-    67%, 100% { transform: translate(0, 115px); }
+    0%, 18% { transform: translate(0, -55px); }
+    19%, 42% { transform: translate(0, 0); }
+    43%, 66% { transform: translate(0, 55px); }
+    67%, 100% { transform: translate(0, 110px); }
   }
 
   @media (max-width: 639px) {
@@ -132,7 +127,7 @@ const productY = [190, 255, 320];
   @media (prefers-reduced-motion: reduce) {
     .signal-marker {
       animation: none;
-      transform: translate(0, 50px);
+      transform: translate(0, 55px);
     }
   }
 </style>
