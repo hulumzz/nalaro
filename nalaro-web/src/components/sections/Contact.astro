@@ -56,7 +56,7 @@ import BracketLink from "../ui/BracketLink.astro";
                   type="text" 
                   id="c-name" 
                   name="name" 
-                  class="t-body text-[var(--color-ink)] border-b border-[var(--color-ink)] border-opacity-30 focus:border-opacity-100 py-2 transition-colors rounded-none outline-none bg-transparent" 
+                  class="t-body text-[var(--color-ink)] border-b field-line py-2 transition-colors rounded-none outline-none bg-transparent" 
                   required
                 />
                 <span id="err-name" class="t-label text-[var(--color-ink)] border-b-2 border-[var(--color-ink)] w-max hidden">GALAT — Isi nama Anda</span>
@@ -69,7 +69,7 @@ import BracketLink from "../ui/BracketLink.astro";
                   {["Produk", "Solutions", "Kolaborasi", "Lainnya"].map((need, i) => (
                     <label class="radio-label flex items-center gap-2 cursor-pointer group">
                       <input type="radio" name="need" value={need} class="sr-only peer" checked={i === 0} />
-                      <span class="w-[12px] h-[12px] border border-[var(--color-ink)] flex items-center justify-center shrink-0 transition-colors group-hover:bg-black/10 peer-focus-visible:outline-2 peer-focus-visible:outline-[var(--color-ink)] peer-focus-visible:outline-offset-2">
+                      <span class="w-[12px] h-[12px] border border-[var(--color-ink)] flex items-center justify-center shrink-0 transition-colors group-hover:bg-[rgba(11,12,10,0.10)] peer-focus-visible:outline-2 peer-focus-visible:outline-[var(--color-ink)] peer-focus-visible:outline-offset-2">
                         <span class="w-full h-full bg-[var(--color-ink)] scale-0 peer-checked:scale-100 transition-transform duration-120"></span>
                       </span>
                       <span class="t-body text-[var(--color-ink)] opacity-80 peer-checked:opacity-100 transition-opacity">{need}</span>
@@ -85,7 +85,7 @@ import BracketLink from "../ui/BracketLink.astro";
                   id="c-message" 
                   name="message" 
                   rows="3" 
-                  class="t-body text-[var(--color-ink)] border-b border-[var(--color-ink)] border-opacity-30 focus:border-opacity-100 py-2 transition-colors rounded-none outline-none bg-transparent resize-none"
+                  class="t-body text-[var(--color-ink)] border-b field-line py-2 transition-colors rounded-none outline-none bg-transparent resize-none"
                   required
                 ></textarea>
                 <span id="err-message" class="t-label text-[var(--color-ink)] border-b-2 border-[var(--color-ink)] w-max hidden">GALAT — Ceritakan kebutuhan Anda singkat saja</span>
