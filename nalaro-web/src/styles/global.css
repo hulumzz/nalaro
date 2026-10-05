@@ -308,6 +308,15 @@ ul, ol { list-style: none; }
 /* ===== EXPLICIT ALPHA SURFACES =====
    Tailwind v4 no longer relies on legacy bg/border-opacity helpers here. */
 .border-ink-soft { border-color: rgba(11, 12, 10, 0.16); }
+.border-ink-medium { border-color: rgba(11, 12, 10, 0.30); }
 .line-ink-soft { background-color: rgba(11, 12, 10, 0.16); }
 .surface-ink-2-soft { background-color: rgba(21, 22, 19, 0.50); }
 .surface-bone-2-soft { background-color: rgba(218, 214, 202, 0.30); }
+
+.field-line {
+  border-color: rgba(11, 12, 10, 0.30);
+}
+
+.field-line:focus {
+  border-color: var(--color-ink);
+}
