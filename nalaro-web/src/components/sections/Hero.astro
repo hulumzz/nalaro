@@ -7,7 +7,7 @@ import PipelineDiagram from "./PipelineDiagram.astro";
 
 <section id="index" class="relative w-full min-h-[100svh] lg:h-[100svh] lg:min-h-[720px] pb-[48px] lg:pb-[40px] flex flex-col justify-end bg-[var(--color-ink)]" data-section="index">
   {/* The Hero Content */}
-  <div class="grid-content relative flex-1 pt-[80px] lg:pt-[96px] pb-8 lg:pb-10 content-end">
+  <div class="hero-content grid-content relative flex-1 pt-[80px] lg:pt-[96px] pb-8 lg:pb-10 content-end">
     
     {/* Headline */}
     <div class="col-span-full lg:col-start-2 lg:col-span-7 flex flex-col gap-0 z-10 min-w-0">
@@ -22,13 +22,13 @@ import PipelineDiagram from "./PipelineDiagram.astro";
       </h1>
       
       {/* Subtext */}
-      <p class="t-lede text-[var(--color-mute)] mt-6 lg:mt-8 max-w-[30ch] reveal-fade">
+      <p class="hero-lede t-lede text-[var(--color-mute)] mt-6 lg:mt-8 max-w-[30ch] reveal-fade">
         {site.subheadline}
       </p>
     </div>
 
     {/* Diagram Frame (Desktop: Right Side, Mobile: Below Headline) */}
-    <div class="col-span-full lg:col-start-8 lg:col-span-5 h-[280px] sm:h-[300px] lg:h-auto lg:absolute lg:top-[72px] lg:bottom-8 mt-10 lg:mt-0 relative border border-[var(--color-line)] z-0 reveal-fade delay-3 overflow-hidden">
+    <div class="hero-diagram col-span-full lg:col-start-8 lg:col-span-5 h-[280px] sm:h-[300px] lg:h-auto lg:absolute lg:top-[72px] lg:bottom-8 mt-10 lg:mt-0 relative border border-[var(--color-line)] z-0 reveal-fade delay-3 overflow-hidden">
       <div class="hidden lg:block">
         <CornerTicks color="var(--color-mute)" />
       </div>
@@ -73,6 +73,24 @@ import PipelineDiagram from "./PipelineDiagram.astro";
   @media (max-width: 639px) {
     .hero-line {
       height: 1.08em;
+    }
+  }
+
+  @media (max-width: 639px) and (max-height: 720px) {
+    .hero-content {
+      padding-top: 64px;
+      padding-bottom: 20px;
+    }
+
+    .hero-lede {
+      margin-top: 12px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .hero-diagram {
+      height: 160px;
+      margin-top: 16px;
     }
   }
   /* Remove !important from Tailwind to allow our component to override via standard specificity */
