@@ -1,6 +1,30 @@
 // Registry Preview Logic (Desain.md §10.1 & §10.2)
 
+function initMobileRegistry() {
+  const toggles = document.querySelectorAll<HTMLButtonElement>("[data-mobile-product-toggle]");
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const panelId = toggle.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      if (!panel) return;
+
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      panel.classList.toggle("hidden", isOpen);
+      panel.classList.toggle("flex", !isOpen);
+
+      const arrow = toggle.querySelector<HTMLElement>(".registry-mobile-arrow");
+      if (arrow) {
+        arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+      }
+    });
+  });
+}
+
 function initRegistry() {
+  initMobileRegistry();
+
   const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   if (!isDesktop) return;
 
