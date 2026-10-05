@@ -94,8 +94,18 @@ ul, ol { list-style: none; }
 
 @media (max-width: 639px) {
   .t-hero {
-    font-size: clamp(2.1rem, 10.25vw, 2.75rem);
+    font-size: clamp(2.75rem, 10.25vw, 3.25rem);
     line-height: .92;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root {
+    --margin: 32px;
+  }
+
+  .grid-content {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 }
 
@@ -301,6 +311,11 @@ ul, ol { list-style: none; }
 
   .reveal-fade {
     opacity: 1 !important;
+  }
+
+  .registry-row .w-wide {
+    font-stretch: 120% !important;
+    transition: none !important;
   }
 }
 
