@@ -38,7 +38,7 @@ const productVisualByNumber: Record<string, string> = {
           type="button"
           class="registry-mobile-toggle lg:hidden w-full flex items-center justify-between gap-4 p-4 sm:p-5 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors text-left disabled:cursor-default"
           aria-expanded="false"
-          aria-controls={\`product-mobile-\${p.number}\`}
+          aria-controls={`product-mobile-${p.number}`}
           data-mobile-product-toggle
           disabled={p.isSlot}
         >
@@ -52,7 +52,7 @@ const productVisualByNumber: Record<string, string> = {
         </button>
 
         <div
-          id={\`product-mobile-\${p.number}\`}
+          id={`product-mobile-${p.number}`}
           class:list={[
             "lg:hidden p-4 sm:p-5 flex-col gap-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors min-w-0",
             p.isSlot ? "flex" : "registry-mobile-panel hidden"
