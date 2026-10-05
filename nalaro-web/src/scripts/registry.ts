@@ -31,7 +31,7 @@ function initRegistry() {
   const container = document.querySelector('.registry-container');
   const preview = document.getElementById('registry-preview');
   const previewContent = preview?.querySelector('.preview-content');
-  const rows = document.querySelectorAll('.registry-row:not(.is-coming-soon):not([data-product=""])');
+  const rows = document.querySelectorAll('.registry-row:not([data-product=""])');
   
   if (!container || !preview || !previewContent) return;
 
