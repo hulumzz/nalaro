@@ -53,15 +53,18 @@ function initField() {
   let scanlineActive = false;
   let lastScanTime = 0;
 
-  let animationFrameId: number;
+  let animationFrameId = 0;
+  let loopTimer = 0;
   let isVisible = true;
+  let isLoopRunning = false;
 
   // Setup Observer to pause animation when offscreen
   const observer = new IntersectionObserver((entries) => {
     isVisible = entries[0].isIntersecting;
     if (isVisible && !prefersReducedMotion) {
-      lastScanTime = performance.now();
-      loop(lastScanTime);
+      startLoop();
+    } else {
+      stopLoop();
     }
   });
   observer.observe(canvas.parentElement!);
@@ -158,10 +161,11 @@ function initField() {
 
         if (distSq < radiusSq) {
           const dist = Math.sqrt(distSq);
+          const safeDist = Math.max(dist, 0.001);
           const force = (HOVER_RADIUS - dist) / HOVER_RADIUS;
           
-          p.targetX = p.baseX - (dx / dist) * force * HOVER_FORCE;
-          p.targetY = p.baseY - (dy / dist) * force * HOVER_FORCE;
+          p.targetX = p.baseX - (dx / safeDist) * force * HOVER_FORCE;
+          p.targetY = p.baseY - (dy / safeDist) * force * HOVER_FORCE;
           p.active = true;
         } else {
           p.targetX = p.baseX;
@@ -197,9 +201,22 @@ function initField() {
     draw();
 
     // 30 FPS cap per PRD
-    setTimeout(() => {
+    loopTimer = window.setTimeout(() => {
       animationFrameId = requestAnimationFrame(loop);
     }, 1000 / 30);
+  }
+
+  function startLoop() {
+    if (isLoopRunning || prefersReducedMotion || !isVisible) return;
+    isLoopRunning = true;
+    lastScanTime = performance.now();
+    animationFrameId = requestAnimationFrame(loop);
+  }
+
+  function stopLoop() {
+    isLoopRunning = false;
+    cancelAnimationFrame(animationFrameId);
+    window.clearTimeout(loopTimer);
   }
 
   // Event Listeners
@@ -221,10 +238,10 @@ function initField() {
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         isVisible = false;
+        stopLoop();
       } else {
         isVisible = true;
-        lastScanTime = performance.now();
-        loop(lastScanTime);
+        startLoop();
       }
     });
   }
@@ -232,8 +249,7 @@ function initField() {
   // Init
   resize();
   if (!prefersReducedMotion) {
-    lastScanTime = performance.now();
-    loop(lastScanTime);
+    startLoop();
   }
 }
 
