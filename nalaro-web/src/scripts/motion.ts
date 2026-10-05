@@ -18,14 +18,8 @@ if (!prefersReducedMotion) {
     smoothWheel: true,
   });
 
-  function raf(time: number) {
-    lenis?.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-
-  // Sync GSAP ScrollTrigger with Lenis
+  // Use GSAP's ticker as the single animation clock.
+  // Running Lenis from two RAF loops caused uneven scroll and duplicate work.
   lenis.on("scroll", ScrollTrigger.update);
 
   gsap.ticker.add((time) => {
@@ -129,6 +123,7 @@ function initMotion() {
   const dockPct = document.getElementById("dock-pct");
   const dockTick = document.getElementById("dock-tick");
   const railActiveName = document.getElementById("rail-active-name");
+  const dockSection = document.getElementById("dock-section");
   
   // Track scroll percentage
   ScrollTrigger.create({
@@ -138,7 +133,7 @@ function initMotion() {
     onUpdate: (self) => {
       const pct = Math.round(self.progress * 100);
       if (dockPct) dockPct.textContent = `${pct}%`;
-      if (dockTick) dockTick.style.transform = `translateX(${self.progress * 100}vw)`;
+      if (dockTick) dockTick.style.left = `${self.progress * 100}%`;
     }
   });
 
@@ -165,6 +160,11 @@ function initMotion() {
     }
     if (railActiveName) railActiveName.textContent = name;
 
+    const sectionIndex = Array.from(sections).indexOf(section);
+    if (dockSection && sectionIndex >= 0) {
+      dockSection.textContent = `${String(sectionIndex).padStart(2, "0")} / 06 — ${sectionId.toUpperCase()}`;
+    }
+
     // Update Rail indicators
     document.querySelectorAll('.rail-nav-item').forEach(item => {
       item.classList.remove('is-active');
@@ -177,11 +177,12 @@ function initMotion() {
     if (sectionId === 'contact') {
       document.body.classList.add('contact-active');
       
-      // Reveal contact form with stagger
+      // Keep the contact transition restrained: one panel movement,
+      // rather than animating every nested flex column independently.
       gsap.fromTo(
-        "#contact-form .flex-col", 
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out", overwrite: true }
+        "#contact-form",
+        { y: 12, opacity: 0.75 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out", overwrite: true }
       );
     } else {
       document.body.classList.remove('contact-active');
