@@ -26,8 +26,8 @@ const Element = tag;
 
   {/* Content wrapper */}
   <div class="grid-content relative z-10 pointer-events-none">
-    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex items-center justify-between">
-      <span class="t-slab text-[var(--color-ink)] transition-colors duration-180 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] truncate pr-4">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex items-center justify-between gap-4 min-w-0">
+      <span class="t-slab text-[var(--color-ink)] transition-colors duration-180 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] min-w-0 whitespace-normal text-balance leading-[0.95] pr-2">
         <slot />
       </span>
       <Arrow 
