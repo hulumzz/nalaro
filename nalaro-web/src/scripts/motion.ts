@@ -33,7 +33,56 @@ if (!prefersReducedMotion) {
 document.addEventListener("DOMContentLoaded", initMotion);
 
 function initMotion() {
-  if (prefersReducedMotion) return; // Fallback to static CSS
+  if (prefersReducedMotion) {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section[data-section]"));
+    const dockPct = document.getElementById("dock-pct");
+    const dockTick = document.getElementById("dock-tick");
+    const railActiveName = document.getElementById("rail-active-name");
+    const dockSectionCount = document.getElementById("dock-section-count");
+    const dockSectionName = document.getElementById("dock-section-name");
+
+    const updateProgress = () => {
+      const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / scrollable, 0), 1);
+      const pct = Math.round(progress * 100);
+
+      if (dockPct) dockPct.textContent = `${pct}%`;
+      if (dockTick) dockTick.style.left = `${progress * 100}%`;
+    };
+
+    const updateSection = (section: HTMLElement) => {
+      const sectionId = section.id;
+      const sectionIndex = sections.indexOf(section);
+
+      if (railActiveName) railActiveName.textContent = sectionId.toUpperCase();
+      if (dockSectionCount && sectionIndex >= 0) {
+        dockSectionCount.textContent = `${String(sectionIndex).padStart(2, "0")} / 06`;
+      }
+      if (dockSectionName) {
+        dockSectionName.textContent = ` — ${sectionId.toUpperCase()}`;
+      }
+
+      document.querySelectorAll(".rail-nav-item").forEach((item) => {
+        item.classList.toggle("is-active", item.getAttribute("data-target") === sectionId);
+      });
+
+      document.body.classList.toggle("contact-active", sectionId === "contact");
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const active = entries.find((entry) => entry.isIntersecting);
+        if (active?.target instanceof HTMLElement) updateSection(active.target);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+    if (sections[0]) updateSection(sections[0]);
+    return;
+  }
 
   // 1. Initial Page Load Sequence (Desain.md §13.2)
   const tl = gsap.timeline();
