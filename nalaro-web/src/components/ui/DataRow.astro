@@ -2,14 +2,15 @@
 interface Props {
   label: string;
   class?: string;
+  labelClass?: string;
   valueClass?: string;
 }
 
-const { label, class: className = "", valueClass = "" } = Astro.props;
+const { label, class: className = "", labelClass = "", valueClass = "" } = Astro.props;
 ---
 
 <div class:list={["data-row flex w-full min-w-0 items-baseline gap-2", className]}>
-  <span class="t-label text-[var(--color-mute)] shrink-0">{label}</span>
+  <span class:list={["t-label text-[var(--color-mute)] shrink-0", labelClass]}>{label}</span>
   <span class="leader min-w-4 grow border-b border-dotted border-[var(--color-mute)] opacity-30 mx-1 relative top-[-6px]"></span>
   <span class:list={["t-small min-w-0 max-w-[60%] text-right break-words", valueClass]}><slot /></span>
 </div>
