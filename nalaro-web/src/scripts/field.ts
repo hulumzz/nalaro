@@ -1,6 +1,8 @@
 // Interactive 2D Canvas Field (Desain.md §9.2)
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
+const isStaticField = isStaticField || isSmallScreen;
 
 class Point {
   x: number;
@@ -61,7 +63,7 @@ function initField() {
   // Setup Observer to pause animation when offscreen
   const observer = new IntersectionObserver((entries) => {
     isVisible = entries[0].isIntersecting;
-    if (isVisible && !prefersReducedMotion) {
+    if (isVisible && !isStaticField) {
       startLoop();
     } else {
       stopLoop();
@@ -84,7 +86,7 @@ function initField() {
     ctx?.scale(dpr, dpr);
     
     createPoints();
-    if (prefersReducedMotion) {
+    if (isStaticField) {
       draw(); // Draw once
     }
   }
@@ -131,7 +133,7 @@ function initField() {
   }
 
   function loop(time: number) {
-    if (!isVisible || prefersReducedMotion) return;
+    if (!isVisible || isStaticField) return;
 
     // Scanline logic (Every 7 seconds, scan takes 900ms)
     if (time - lastScanTime > 7000) {
@@ -207,7 +209,7 @@ function initField() {
   }
 
   function startLoop() {
-    if (isLoopRunning || prefersReducedMotion || !isVisible) return;
+    if (isLoopRunning || isStaticField || !isVisible) return;
     isLoopRunning = true;
     lastScanTime = performance.now();
     animationFrameId = requestAnimationFrame(loop);
@@ -222,7 +224,7 @@ function initField() {
   // Event Listeners
   window.addEventListener("resize", resize);
   
-  if (!prefersReducedMotion) {
+  if (!isStaticField) {
     canvas.parentElement?.addEventListener("mousemove", (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseX = e.clientX - rect.left;
@@ -248,7 +250,7 @@ function initField() {
 
   // Init
   resize();
-  if (!prefersReducedMotion) {
+  if (!isStaticField) {
     startLoop();
   }
 }
