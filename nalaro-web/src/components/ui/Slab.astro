@@ -6,18 +6,23 @@ interface Props {
   href?: string;
   type?: "button" | "submit";
   class?: string;
+  disabled?: boolean;
 }
 
-const { tag = "a", href, type, class: className = "" } = Astro.props;
+const { tag = "a", href, type, class: className = "", disabled = false } = Astro.props;
 const Element = tag;
 ---
 
 <Element
-  href={tag === "a" ? href : undefined}
+  href={tag === "a" && !disabled ? href : undefined}
   type={tag === "button" ? type : undefined}
+  disabled={tag === "button" ? disabled : undefined}
+  aria-disabled={disabled ? "true" : undefined}
+  tabindex={disabled ? -1 : undefined}
   class:list={[
     "slab group relative flex flex-col justify-center border-t border-b border-[var(--color-line)] bg-[var(--color-flare)] overflow-hidden transition-colors outline-none",
     "py-8 sm:py-12 lg:py-16",
+    disabled ? "opacity-55 pointer-events-none" : "",
     className,
   ]}
 >
