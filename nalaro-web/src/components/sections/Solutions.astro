@@ -8,21 +8,21 @@ import BracketLink from "../ui/BracketLink.astro";
   <div class="grid-content">
     
     {/* Left Column (Sticky) */}
-    <div class="col-span-full lg:col-span-4 lg:sticky lg:top-[112px] h-fit flex flex-col gap-8 mb-16 lg:mb-0">
+    <div class="col-span-full lg:col-span-4 lg:sticky lg:top-[112px] h-fit flex flex-col gap-8 mb-16 lg:mb-0 min-w-0 lg:pr-8">
       <Index number="02" name="Solutions" />
       <h2 class="t-h2 text-[var(--color-ink)] w-wide">Solutions</h2>
       <p class="t-lede text-[var(--color-ink)] opacity-80">
         Kapabilitas yang sama yang kami pakai untuk produk sendiri, tersedia untuk kebutuhan spesifik Anda.
       </p>
       <div class="pt-4 hidden lg:block">
-        <BracketLink href="#contact" class="text-[var(--color-ink)] hover:text-[var(--color-flare)] focus-visible:text-[var(--color-flare)]">
+        <BracketLink href="#contact" class="text-[var(--color-ink)]">
           Build With Nalaro
         </BracketLink>
       </div>
     </div>
 
     {/* Right Column (Spec Sheet) */}
-    <div class="col-span-full lg:col-span-8 flex flex-col">
+    <div class="col-span-full lg:col-span-8 flex flex-col min-w-0">
       {/* Spec Rows */}
       <div class="flex flex-col border-b border-[var(--color-ink)] border-opacity-16">
         {solutions.map((sol) => (
@@ -30,11 +30,11 @@ import BracketLink from "../ui/BracketLink.astro";
             {/* Code & Name */}
             <div class="md:col-span-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 md:pr-6">
               <span class="t-label text-[var(--color-mute-b)] shrink-0 w-8">{sol.code}</span>
-              <h3 class="t-h3 text-[var(--color-ink)]">{sol.name}</h3>
+              <h3 class="t-h3 text-[var(--color-ink)] wrap-pretty">{sol.name}</h3>
             </div>
             
             {/* Input & Output */}
-            <div class="md:col-span-7 flex flex-col gap-6 md:gap-8 justify-center">
+            <div class="md:col-span-7 flex flex-col gap-6 md:gap-8 justify-center min-w-0">
               <div class="flex flex-col gap-2 relative">
                 <span class="t-label text-[var(--color-mute-b)]">MASUKAN</span>
                 <p class="t-body text-[var(--color-ink)]">{sol.input}</p>
