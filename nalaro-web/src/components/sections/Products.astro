@@ -119,7 +119,8 @@ const productVisualByNumber: Record<string, string> = {
             {!p.isSlot && (
               <DataRow 
                 label="STATUS" 
-                class="w-full" 
+                class="w-full"
+                labelClass="group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors"
                 valueClass="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors text-right"
               >
                 {p.status}
@@ -133,7 +134,7 @@ const productVisualByNumber: Record<string, string> = {
               <div class="w-full h-full p-6 lg:min-h-full min-h-[72px]"></div>
             ) : p.status === "Coming Soon" ? (
               <div class="w-full h-full p-6 flex items-center justify-center min-h-[72px]">
-                <span class="t-label text-[var(--color-mute)] text-center">SEGERA HADIR</span>
+                <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors">SEGERA HADIR</span>
               </div>
             ) : (
               <a 
