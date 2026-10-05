@@ -26,8 +26,12 @@ const { number, name, class: className = "" } = Astro.props;
     background-color: var(--color-ink);
   }
 
-  :global([data-surface="bone"]) .index-name,
-  :global([data-surface="flare"]) .index-name {
+  :global([data-surface="bone"]) .index-name {
     color: var(--color-mute-b);
+  }
+
+  :global([data-surface="flare"]) .index-name {
+    color: var(--color-ink);
+    opacity: .68;
   }
 </style>
