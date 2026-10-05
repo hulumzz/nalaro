@@ -71,6 +71,20 @@ function initRegistry() {
     rafId = requestAnimationFrame(updatePreviewPosition);
   }
 
+  function setStaticPreviewPosition(target: EventTarget | null) {
+    const pw = 300;
+    const ph = 200;
+    const padding = 24;
+    const element = target instanceof Element ? target : null;
+    const rect = element?.getBoundingClientRect();
+
+    const x = Math.max(padding, window.innerWidth - pw - padding);
+    const baseY = rect ? rect.top + rect.height / 2 - ph / 2 : (window.innerHeight - ph) / 2;
+    const y = Math.min(Math.max(baseY, padding), window.innerHeight - ph - padding);
+
+    preview!.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
   function showPreview(productCode: string, e: MouseEvent | FocusEvent) {
     if (productCode === currentProduct && isVisible) return;
     
@@ -93,6 +107,8 @@ function initRegistry() {
       previewY = mouseY;
       cancelAnimationFrame(rafId);
       updatePreviewPosition();
+    } else {
+      setStaticPreviewPosition(e.currentTarget);
     }
   }
 
