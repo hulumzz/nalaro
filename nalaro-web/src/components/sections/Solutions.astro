@@ -24,9 +24,9 @@ import BracketLink from "../ui/BracketLink.astro";
     {/* Right Column (Spec Sheet) */}
     <div class="col-span-full lg:col-span-8 flex flex-col min-w-0">
       {/* Spec Rows */}
-      <div class="flex flex-col border-b border-[var(--color-ink)] border-opacity-16">
+      <div class="flex flex-col border-b border-ink-soft">
         {solutions.map((sol) => (
-          <div class="spec-row grid grid-cols-1 md:grid-cols-12 border-t border-[var(--color-ink)] border-opacity-16 py-8 gap-6 md:gap-0">
+          <div class="spec-row grid grid-cols-1 md:grid-cols-12 border-t border-ink-soft py-8 gap-6 md:gap-0">
             {/* Code & Name */}
             <div class="md:col-span-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 md:pr-6">
               <span class="t-label text-[var(--color-mute-b)] shrink-0 w-8">{sol.code}</span>
@@ -39,7 +39,7 @@ import BracketLink from "../ui/BracketLink.astro";
                 <span class="t-label text-[var(--color-mute-b)]">MASUKAN</span>
                 <p class="t-body text-[var(--color-ink)]">{sol.input}</p>
                 {/* Connector line (desktop only) */}
-                <div class="hidden md:block absolute left-0 -bottom-5 w-full max-w-[200px] h-[1px] bg-[var(--color-ink)] opacity-16 origin-left reveal-line">
+                <div class="hidden md:block absolute left-0 -bottom-5 w-full max-w-[200px] h-[1px] line-ink-soft origin-left reveal-line">
                   <div class="absolute right-0 top-[-2px] w-[5px] h-[5px] border border-[var(--color-ink)] opacity-30"></div>
                 </div>
               </div>
@@ -61,7 +61,7 @@ import BracketLink from "../ui/BracketLink.astro";
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
           {audiences.map((aud) => (
-            <div class="flex flex-col gap-4 border-l border-[var(--color-ink)] border-opacity-16 pl-4">
+            <div class="flex flex-col gap-4 border-l border-ink-soft pl-4">
               <h4 class="t-label text-[var(--color-ink)]">{aud.label}</h4>
               <ul class="flex flex-col gap-2">
                 {aud.items.map((item) => (
