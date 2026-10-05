@@ -2,7 +2,7 @@
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
-const isStaticField = isStaticField || isSmallScreen;
+const isStaticField = prefersReducedMotion || isSmallScreen;
 
 class Point {
   x: number;
