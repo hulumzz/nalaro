@@ -28,7 +28,7 @@ import PipelineDiagram from "./PipelineDiagram.astro";
     </div>
 
     {/* Diagram Frame (Desktop: Right Side, Mobile: Below Headline) */}
-    <div class="col-span-full lg:col-start-8 lg:col-span-5 h-[260px] sm:h-[300px] lg:h-auto lg:absolute lg:top-[72px] lg:bottom-8 mt-10 lg:mt-0 relative border border-[var(--color-line)] z-0 reveal-fade delay-3 overflow-hidden">
+    <div class="col-span-full lg:col-start-8 lg:col-span-5 h-[280px] sm:h-[300px] lg:h-auto lg:absolute lg:top-[72px] lg:bottom-8 mt-10 lg:mt-0 relative border border-[var(--color-line)] z-0 reveal-fade delay-3 overflow-hidden">
       <div class="hidden lg:block">
         <CornerTicks color="var(--color-mute)" />
       </div>
@@ -49,8 +49,8 @@ import PipelineDiagram from "./PipelineDiagram.astro";
 
   {/* Gate Row (Always at bottom, above Dock) */}
   <div class="w-full lg:pl-[64px] relative z-20">
-    <div class="grid grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] md:grid-cols-3 border-t border-[var(--color-line)]">
-      <div class="md:col-span-2 border-r border-[var(--color-line)] min-w-0">
+    <div class="grid grid-cols-1 md:grid-cols-3 border-t border-[var(--color-line)]">
+      <div class="md:col-span-2 border-b md:border-b-0 md:border-r border-[var(--color-line)] min-w-0">
         <Gate href="#products" primary={true} class="border-0!">{site.ctaPrimary}</Gate>
       </div>
       <div class="min-w-0">
