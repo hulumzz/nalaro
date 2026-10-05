@@ -1,0 +1,25 @@
+---
+interface Props {
+  number: string;
+  name: string;
+  class?: string;
+}
+
+const { number, name, class: className = "" } = Astro.props;
+---
+
+<div class:list={["index flex items-center gap-4 whitespace-nowrap -ml-4 lg:-ml-8", className]}>
+  <span class="t-label text-[var(--color-flare)] w-5">{number}</span>
+  <span class="w-6 h-px bg-[var(--color-flare)]"></span>
+  <span class="t-label text-[var(--color-mute)]">{name}</span>
+</div>
+
+<style>
+  /* Negative margin pulls the index out into the gutter to create the "hanging" effect described in 5.5 */
+  .on-bone .t-label:first-child {
+    color: var(--color-ink);
+  }
+  .on-bone .w-6 {
+    background-color: var(--color-ink);
+  }
+</style>

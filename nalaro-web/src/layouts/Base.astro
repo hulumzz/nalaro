@@ -1,0 +1,79 @@
+---
+import "@fontsource-variable/anybody/wdth.css";
+import "@fontsource-variable/instrument-sans";
+import "@fontsource-variable/martian-mono";
+import "../styles/tokens.css";
+import "../styles/global.css";
+import { site } from "../data/site";
+import { productCount } from "../data/products";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.name} — ${site.tagline}`,
+  description = site.subheadline,
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL("/og/nalaro-og.png", Astro.site);
+---
+
+<!doctype html>
+<html lang="id" class="antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl.toString()} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl.toString()} />
+    <meta property="og:image" content={ogImageUrl.toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content={site.name} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl.toString()} />
+
+    <!-- JSON-LD Organization -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: site.name,
+        url: Astro.site?.toString() ?? "",
+        description: site.subheadline,
+      })}
+    />
+
+    <!-- Preload critical fonts -->
+    <link
+      rel="preload"
+      href="/fonts/anybody-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+  </head>
+  <body class="surface-ink">
+    <slot />
+  </body>
+</html>

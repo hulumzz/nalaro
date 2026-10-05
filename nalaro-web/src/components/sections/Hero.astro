@@ -1,0 +1,71 @@
+---
+import { site } from "../../data/site";
+import CornerTicks from "../layout/CornerTicks.astro";
+import Gate from "../ui/Gate.astro";
+---
+
+<section id="index" class="relative w-full h-[100svh] min-h-[600px] pb-[40px] flex flex-col justify-end bg-[var(--color-ink)]" data-section="index">
+  {/* The Hero Content */}
+  <div class="grid-content flex-1 pt-[64px] lg:pt-[120px] pb-8 content-end">
+    
+    {/* Headline */}
+    <div class="col-span-full lg:col-start-2 lg:col-span-8 flex flex-col gap-0 z-10">
+      <h1 class="t-hero flex flex-col text-[var(--color-bone)] uppercase leading-[0.9]">
+        <span class="w-cond relative overflow-hidden h-[1.1em]"><span class="block transform translate-y-full reveal-text">We build</span></span>
+        <span class="w-max relative overflow-hidden h-[1.1em] text-[var(--color-bone)]" style="font-weight: 800;"><span class="block transform translate-y-full reveal-text delay-1">USEFUL</span></span>
+        <span class="w-cond relative overflow-hidden h-[1.1em]">
+          <span class="block transform translate-y-full reveal-text delay-2">
+            digital <a href="#products" class="inline-block relative after:absolute after:bottom-[8px] after:left-0 after:w-full after:h-[3px] after:bg-current hover:after:h-[6px] focus-visible:after:h-[6px] after:transition-all after:duration-180 outline-none">products.</a>
+          </span>
+        </span>
+      </h1>
+      
+      {/* Subtext */}
+      <p class="t-lede text-[var(--color-mute)] mt-6 lg:mt-8 max-w-[28ch] opacity-0 reveal-fade">
+        {site.subheadline}
+      </p>
+    </div>
+
+    {/* Diagram Frame (Desktop: Right Side, Mobile: Below Headline) */}
+    <div class="col-span-full lg:col-start-8 lg:col-span-5 h-[280px] lg:h-full lg:absolute lg:top-[96px] lg:bottom-[120px] lg:right-8 mt-8 lg:mt-0 relative border border-transparent lg:border-[var(--color-line)] z-0 opacity-0 reveal-fade delay-3">
+      <div class="hidden lg:block">
+        <CornerTicks color="var(--color-mute)" />
+      </div>
+      
+      {/* Canvas container for Field (filled by script) */}
+      <canvas id="hero-field" class="absolute inset-0 w-full h-full pointer-events-auto" aria-hidden="true"></canvas>
+      
+      {/* SVG Pipeline Diagram (filled by script) */}
+      <div id="hero-pipeline" class="absolute inset-0 w-full h-full pointer-events-none flex items-center justify-center p-8">
+        {/* Placeholder - will be replaced/animated by GSAP/scripts */}
+      </div>
+
+      <div class="absolute bottom-4 left-4 hidden lg:block">
+        <span class="t-label text-[var(--color-mute)] bg-[var(--color-ink)] px-1">FIG.01 — EKOSISTEM</span>
+      </div>
+    </div>
+  </div>
+
+  {/* Gate Row (Always at bottom, above Dock) */}
+  <div class="w-full lg:pl-[64px] relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 border-t border-[var(--color-line)]">
+      <div class="col-span-1 md:col-span-2 border-b md:border-b-0 md:border-r border-[var(--color-line)]">
+        <Gate href="#products" primary={true} class="border-0!">{site.ctaPrimary}</Gate>
+      </div>
+      <div class="col-span-1">
+        <Gate href="#contact" class="border-0!">{site.ctaSecondary}</Gate>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* These will be animated by GSAP in production, basic CSS fallbacks */
+  .reveal-text {
+    will-change: transform;
+  }
+  /* Remove !important from Tailwind to allow our component to override via standard specificity */
+  :global(.gate.border-0\!) {
+    border-width: 0 !important;
+  }
+</style>

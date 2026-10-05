@@ -1,0 +1,40 @@
+---
+// Arrow glyph — custom SVG with square-ended tips
+// Directions: right (default), left, up, down, up-right (↗)
+interface Props {
+  direction?: "right" | "left" | "up" | "down" | "up-right";
+  size?: number;
+  class?: string;
+}
+
+const { direction = "right", size = 16, class: className = "" } = Astro.props;
+
+const rotations: Record<string, number> = {
+  right: 0,
+  down: 90,
+  left: 180,
+  up: 270,
+  "up-right": -45,
+};
+
+const rotation = rotations[direction] ?? 0;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  style={`transform: rotate(${rotation}deg);`}
+>
+  <path
+    d="M1 8H14M14 8L9 3M14 8L9 13"
+    stroke="currentColor"
+    stroke-width="1.5"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  />
+</svg>

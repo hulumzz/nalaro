@@ -1,0 +1,50 @@
+---
+import Base from "../layouts/Base.astro";
+import Rail from "../components/layout/Rail.astro";
+import Dock from "../components/layout/Dock.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import Hero from "../components/sections/Hero.astro";
+import Products from "../components/sections/Products.astro";
+import Solutions from "../components/sections/Solutions.astro";
+import Works from "../components/sections/Works.astro";
+import Lab from "../components/sections/Lab.astro";
+import About from "../components/sections/About.astro";
+import Contact from "../components/sections/Contact.astro";
+---
+
+<Base>
+  <div class="site-wrapper flex">
+    <Rail />
+    
+    <div class="main-content flex-1 w-full lg:w-[calc(100%-64px)] lg:ml-[64px] min-h-screen relative bg-[var(--color-ink)]">
+      <Header />
+      
+      <main id="main-scroll-container">
+        <Hero />
+        <Products />
+        <Solutions />
+        <Works />
+        <Lab />
+        <About />
+        <Contact />
+      </main>
+
+      <Footer />
+      <Dock />
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Import motion and interaction scripts
+  import "../scripts/motion";
+  import "../scripts/field";
+  import "../scripts/registry";
+</script>
+
+<style>
+  .site-wrapper {
+    overflow-x: hidden;
+  }
+</style>

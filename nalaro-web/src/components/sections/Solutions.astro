@@ -1,0 +1,96 @@
+---
+import { solutions, audiences } from "../../data/solutions";
+import Index from "../ui/Index.astro";
+import BracketLink from "../ui/BracketLink.astro";
+---
+
+<section id="solutions" class="relative w-full section-pad bg-[var(--color-bone)]" data-section="solutions" data-surface="bone">
+  <div class="grid-content">
+    
+    {/* Left Column (Sticky) */}
+    <div class="col-span-full lg:col-span-4 lg:sticky lg:top-[112px] h-fit flex flex-col gap-8 mb-16 lg:mb-0">
+      <Index number="02" name="Solutions" />
+      <h2 class="t-h2 text-[var(--color-ink)] w-wide">Solutions</h2>
+      <p class="t-lede text-[var(--color-ink)] opacity-80">
+        Kapabilitas yang sama yang kami pakai untuk produk sendiri, tersedia untuk kebutuhan spesifik Anda.
+      </p>
+      <div class="pt-4 hidden lg:block">
+        <BracketLink href="#contact" class="text-[var(--color-ink)] hover:text-[var(--color-flare)] focus-visible:text-[var(--color-flare)]">
+          Build With Nalaro
+        </BracketLink>
+      </div>
+    </div>
+
+    {/* Right Column (Spec Sheet) */}
+    <div class="col-span-full lg:col-span-8 flex flex-col">
+      {/* Spec Rows */}
+      <div class="flex flex-col border-b border-[var(--color-ink)] border-opacity-16">
+        {solutions.map((sol) => (
+          <div class="spec-row grid grid-cols-1 md:grid-cols-12 border-t border-[var(--color-ink)] border-opacity-16 py-8 gap-6 md:gap-0">
+            {/* Code & Name */}
+            <div class="md:col-span-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 md:pr-6">
+              <span class="t-label text-[var(--color-mute-b)] shrink-0 w-8">{sol.code}</span>
+              <h3 class="t-h3 text-[var(--color-ink)]">{sol.name}</h3>
+            </div>
+            
+            {/* Input & Output */}
+            <div class="md:col-span-7 flex flex-col gap-6 md:gap-8 justify-center">
+              <div class="flex flex-col gap-2 relative">
+                <span class="t-label text-[var(--color-mute-b)]">MASUKAN</span>
+                <p class="t-body text-[var(--color-ink)]">{sol.input}</p>
+                {/* Connector line (desktop only) */}
+                <div class="hidden md:block absolute left-0 -bottom-5 w-full max-w-[200px] h-[1px] bg-[var(--color-ink)] opacity-16 origin-left reveal-line">
+                  <div class="absolute right-0 top-[-2px] w-[5px] h-[5px] border border-[var(--color-ink)] opacity-30"></div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col gap-2">
+                <span class="t-label text-[var(--color-mute-b)]">KELUARAN</span>
+                <p class="t-body text-[var(--color-ink)]">{sol.output}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Target Audiences */}
+      <div class="mt-16 pt-8 border-t border-[var(--color-ink)] border-opacity-30">
+        <div class="mb-8">
+          <span class="t-label text-[var(--color-mute-b)] border border-[var(--color-mute-b)] px-3 py-1 inline-block">UNTUK SIAPA</span>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
+          {audiences.map((aud) => (
+            <div class="flex flex-col gap-4 border-l border-[var(--color-ink)] border-opacity-16 pl-4">
+              <h4 class="t-label text-[var(--color-ink)]">{aud.label}</h4>
+              <ul class="flex flex-col gap-2">
+                {aud.items.map((item) => (
+                  <li class="t-small text-[var(--color-ink)] opacity-80">{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Mobile CTA */}
+      <div class="mt-16 lg:hidden">
+        <BracketLink href="#contact" class="text-[var(--color-ink)] hover:text-[var(--color-flare)] focus-visible:text-[var(--color-flare)]">
+          Build With Nalaro
+        </BracketLink>
+      </div>
+      
+      {/* Footer Note */}
+      <div class="mt-16 md:mt-24 text-right">
+        <span class="t-label text-[var(--color-mute-b)]">KAPABILITAS NALARO. IDENTITAS UTAMA: PRODUK.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reveal-line {
+    will-change: transform;
+    transform: scaleX(0);
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import Arrow from "../glyph/Arrow.astro";
+
+interface Props {
+  tag?: "a" | "button";
+  href?: string;
+  type?: "button" | "submit";
+  class?: string;
+}
+
+const { tag = "a", href, type, class: className = "" } = Astro.props;
+const Element = tag;
+---
+
+<Element
+  href={tag === "a" ? href : undefined}
+  type={tag === "button" ? type : undefined}
+  class:list={[
+    "slab group relative flex flex-col justify-center border-t border-b border-[var(--color-line)] bg-[var(--color-flare)] overflow-hidden transition-colors outline-none",
+    "py-8 sm:py-12 lg:py-16",
+    className,
+  ]}
+>
+  {/* The sweep effect container */}
+  <div class="slab-sweep absolute inset-0 bg-[var(--color-ink)] origin-left scale-x-0 transition-transform duration-360 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"></div>
+
+  {/* Content wrapper */}
+  <div class="grid-content relative z-10 pointer-events-none">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex items-center justify-between">
+      <span class="t-slab text-[var(--color-ink)] transition-colors duration-180 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] truncate pr-4">
+        <slot />
+      </span>
+      <Arrow 
+        direction="up-right" 
+        size={48} 
+        class="text-[var(--color-ink)] shrink-0 transition-all duration-360 ease-out group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] group-hover:translate-x-4 group-hover:-translate-y-4 group-focus-visible:translate-x-4 group-focus-visible:-translate-y-4" 
+      />
+    </div>
+  </div>
+</Element>
+
+<style>
+  /* SVG size scales on mobile */
+  @media (max-width: 639px) {
+    .slab svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+</style>

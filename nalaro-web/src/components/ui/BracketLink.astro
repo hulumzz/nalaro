@@ -1,0 +1,35 @@
+---
+import Arrow from "../glyph/Arrow.astro";
+
+interface Props {
+  href: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+  "data-umami-event"?: string;
+}
+
+const { href, class: className = "", target, rel, ...rest } = Astro.props;
+---
+
+<a 
+  href={href} 
+  class:list={["bracket-link group inline-flex items-center gap-2 tabular-nums text-label", className]}
+  target={target}
+  rel={rel}
+  {...rest}
+>
+  <span class="bracket bracket-left transition-transform duration-180 ease-out group-hover:-translate-x-1 group-focus-visible:-translate-x-1">[</span>
+  <span class="link-text relative">
+    <slot />
+    <span class="underline-hover absolute -bottom-1 left-0 w-full h-[1px] bg-current opacity-0 transition-opacity duration-180 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"></span>
+  </span>
+  <Arrow direction="up-right" size={10} class="opacity-0 -ml-1 transition-all duration-180 ease-out group-hover:opacity-100 group-hover:ml-0 group-focus-visible:opacity-100 group-focus-visible:ml-0" />
+  <span class="bracket bracket-right transition-transform duration-180 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1">]</span>
+</a>
+
+<style>
+  .bracket-link {
+    white-space: nowrap;
+  }
+</style>

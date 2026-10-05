@@ -1,0 +1,199 @@
+---
+import { site } from "../../data/site";
+import Index from "../ui/Index.astro";
+import Slab from "../ui/Slab.astro";
+import Gate from "../ui/Gate.astro";
+import CornerTicks from "../layout/CornerTicks.astro";
+import BracketLink from "../ui/BracketLink.astro";
+---
+
+<section id="contact" class="relative w-full section-pad bg-[var(--color-flare)] pb-[120px]" data-section="contact" data-surface="flare">
+  <div class="grid-content mb-8">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex flex-col gap-6">
+      <Index number="06" name="Contact" class="mb-4" />
+    </div>
+  </div>
+
+  {/* Slabs */}
+  <div class="w-full mb-16 lg:mb-24 lg:pl-[64px]">
+    <Slab tag="a" href={`mailto:${site.email}`}>Tulis ke email</Slab>
+    <Slab tag="a" href={`https://wa.me/${site.whatsapp}?text=Halo%20Nalaro`} target="_blank" rel="noopener noreferrer">Chat via WhatsApp</Slab>
+  </div>
+
+  {/* Contact Form Panel */}
+  <div class="grid-content">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 border border-[var(--color-ink)] relative bg-[var(--color-flare)]">
+      <CornerTicks color="var(--color-ink)" />
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[var(--color-ink)]">
+        
+        {/* Left: Copy */}
+        <div class="lg:col-span-5 p-6 lg:p-12 flex flex-col justify-between min-h-[300px]">
+          <h2 class="t-lede text-[var(--color-ink)] w-wide">Ceritakan kebutuhan Anda.</h2>
+          
+          <div class="mt-12 flex flex-col items-start gap-4">
+            <span class="t-label text-[var(--color-ink)] opacity-60">ATAU SALIN EMAIL</span>
+            <button id="copy-email-btn" class="group flex items-center outline-none" data-email={site.email}>
+              <span class="t-label text-[var(--color-ink)] transition-transform duration-180 group-hover:-translate-x-1">[</span>
+              <span class="t-label text-[var(--color-ink)] mx-2 relative inline-flex">
+                <span id="copy-text" class="relative z-10 transition-opacity">Salin email</span>
+                <span class="absolute -bottom-1 left-0 w-full h-[1px] bg-[var(--color-ink)] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity"></span>
+              </span>
+              <span class="t-label text-[var(--color-ink)] transition-transform duration-180 group-hover:translate-x-1">]</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right: Form */}
+        <div class="lg:col-span-7 flex flex-col">
+          <form id="contact-form" class="flex flex-col flex-1 h-full relative" action="#">
+            <div class="p-6 lg:p-12 flex flex-col gap-10 flex-1">
+              
+              {/* Field: Name */}
+              <div class="flex flex-col gap-3">
+                <label for="c-name" class="t-label text-[var(--color-ink)] opacity-80">NAMA</label>
+                <input 
+                  type="text" 
+                  id="c-name" 
+                  name="name" 
+                  class="t-body text-[var(--color-ink)] border-b border-[var(--color-ink)] border-opacity-30 focus:border-opacity-100 py-2 transition-colors rounded-none outline-none bg-transparent" 
+                  required
+                />
+                <span id="err-name" class="t-label text-[var(--color-ink)] border-b-2 border-[var(--color-ink)] w-max hidden">GALAT — Isi nama Anda</span>
+              </div>
+
+              {/* Field: Need */}
+              <div class="flex flex-col gap-4">
+                <span class="t-label text-[var(--color-ink)] opacity-80">KEBUTUHAN</span>
+                <div class="flex flex-wrap gap-x-6 gap-y-4">
+                  {["Produk", "Solutions", "Kolaborasi", "Lainnya"].map((need, i) => (
+                    <label class="radio-label flex items-center gap-2 cursor-pointer group">
+                      <input type="radio" name="need" value={need} class="sr-only peer" checked={i === 0} />
+                      <span class="w-[12px] h-[12px] border border-[var(--color-ink)] flex items-center justify-center shrink-0 transition-colors group-hover:bg-black/10 peer-focus-visible:outline-2 peer-focus-visible:outline-[var(--color-ink)] peer-focus-visible:outline-offset-2">
+                        <span class="w-full h-full bg-[var(--color-ink)] scale-0 peer-checked:scale-100 transition-transform duration-120"></span>
+                      </span>
+                      <span class="t-body text-[var(--color-ink)] opacity-80 peer-checked:opacity-100 transition-opacity">{need}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Field: Message */}
+              <div class="flex flex-col gap-3">
+                <label for="c-message" class="t-label text-[var(--color-ink)] opacity-80">CERITA SINGKAT</label>
+                <textarea 
+                  id="c-message" 
+                  name="message" 
+                  rows="3" 
+                  class="t-body text-[var(--color-ink)] border-b border-[var(--color-ink)] border-opacity-30 focus:border-opacity-100 py-2 transition-colors rounded-none outline-none bg-transparent resize-none"
+                  required
+                ></textarea>
+                <span id="err-message" class="t-label text-[var(--color-ink)] border-b-2 border-[var(--color-ink)] w-max hidden">GALAT — Ceritakan kebutuhan Anda singkat saja</span>
+              </div>
+            </div>
+
+            {/* Form Actions */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 border-t border-[var(--color-ink)] mt-auto">
+              <button 
+                type="button" 
+                id="submit-email"
+                class="gate group flex items-center justify-between border-b sm:border-b-0 sm:border-r border-[var(--color-ink)] p-4 sm:p-6 lg:p-8 outline-none hover:bg-[var(--color-ink)] focus-visible:bg-[var(--color-ink)] transition-colors duration-140 h-[72px] lg:h-[96px]"
+              >
+                <span class="t-h3 text-[var(--color-ink)] group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)]">Kirim lewat Email</span>
+              </button>
+              <button 
+                type="button" 
+                id="submit-wa"
+                class="gate group flex items-center justify-between p-4 sm:p-6 lg:p-8 outline-none hover:bg-[var(--color-ink)] focus-visible:bg-[var(--color-ink)] transition-colors duration-140 h-[72px] lg:h-[96px]"
+                data-wa={site.whatsapp}
+              >
+                <span class="t-h3 text-[var(--color-ink)] group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)]">Kirim lewat WhatsApp</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Copy Email Logic
+  const copyBtn = document.getElementById('copy-email-btn');
+  const copyText = document.getElementById('copy-text');
+  
+  if (copyBtn && copyText) {
+    let timeout: number;
+    copyBtn.addEventListener('click', async () => {
+      const email = copyBtn.getAttribute('data-email') || '';
+      try {
+        await navigator.clipboard.writeText(email);
+        copyText.textContent = 'Tersalin';
+        
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          copyText.textContent = 'Salin email';
+        }, 1600);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    });
+  }
+
+  // Form Logic
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const btnEmail = document.getElementById('submit-email');
+  const btnWa = document.getElementById('submit-wa');
+  const errName = document.getElementById('err-name');
+  const errMessage = document.getElementById('err-message');
+
+  function validate() {
+    let isValid = true;
+    const formData = new FormData(form);
+    const name = formData.get('name') as string;
+    const message = formData.get('message') as string;
+
+    if (!name || name.trim() === '') {
+      errName?.classList.remove('hidden');
+      isValid = false;
+    } else {
+      errName?.classList.add('hidden');
+    }
+
+    if (!message || message.trim() === '') {
+      errMessage?.classList.remove('hidden');
+      isValid = false;
+    } else {
+      errMessage?.classList.add('hidden');
+    }
+
+    return isValid ? formData : null;
+  }
+
+  function getMessageText(formData: FormData) {
+    const name = formData.get('name');
+    const need = formData.get('need');
+    const msg = formData.get('message');
+    
+    return `Halo Nalaro,\n\nNama: ${name}\nKebutuhan: ${need}\n\n${msg}`;
+  }
+
+  btnEmail?.addEventListener('click', () => {
+    const data = validate();
+    if (data) {
+      const email = copyBtn?.getAttribute('data-email') || 'hello@nalaro.com';
+      const subject = `Pertanyaan dari ${data.get('name')} - ${data.get('need')}`;
+      const body = getMessageText(data);
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    }
+  });
+
+  btnWa?.addEventListener('click', () => {
+    const data = validate();
+    if (data) {
+      const waNumber = btnWa.getAttribute('data-wa') || '';
+      const text = getMessageText(data);
+      window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+  });
+</script>

@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+import BracketLink from "../components/ui/BracketLink.astro";
+import { site } from "../data/site";
+---
+
+<Base title={`404 — Registry Not Found | ${site.name}`}>
+  <div class="site-wrapper flex flex-col min-h-screen bg-[var(--color-ink)]">
+    <Header />
+    
+    <main class="flex-1 flex items-center justify-center relative overflow-hidden section-pad px-4 lg:px-[96px]">
+      <div class="flex flex-col w-full max-w-5xl z-10 relative">
+        <div class="overflow-hidden mb-6" style="height: clamp(5rem, 20vw, 20rem);">
+          <div 
+            class="t-mega text-transparent leading-[0.8] w-full transform translate-y-[14%]" 
+            style="-webkit-text-stroke: 1px var(--color-flare); text-stroke: 1px var(--color-flare);"
+            aria-hidden="true"
+          >
+            404
+          </div>
+        </div>
+        <p class="t-lede text-[var(--color-bone)] mb-12">
+          Halaman ini tidak ada di registry.
+        </p>
+        <div>
+          <BracketLink href="/" class="text-[var(--color-bone)]">Kembali ke index</BracketLink>
+        </div>
+      </div>
+      
+      {/* Subtle grid background */}
+      <div class="absolute inset-0 pointer-events-none opacity-20 z-0" style="background-image: radial-gradient(var(--color-line) 1px, transparent 1px); background-size: 24px 24px;"></div>
+    </main>
+
+    <Footer />
+  </div>
+</Base>

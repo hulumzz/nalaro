@@ -1,0 +1,35 @@
+---
+import Arrow from "../glyph/Arrow.astro";
+
+interface Props {
+  tag?: "a" | "button";
+  href?: string;
+  type?: "button" | "submit";
+  primary?: boolean;
+  class?: string;
+}
+
+const { tag = "a", href, type, primary = false, class: className = "" } = Astro.props;
+const Element = tag;
+---
+
+<Element
+  href={tag === "a" ? href : undefined}
+  type={tag === "button" ? type : undefined}
+  class:list={[
+    "gate group relative flex items-center justify-between border border-[var(--color-line)] p-4 sm:p-6 lg:p-8 overflow-hidden transition-colors duration-140 outline-none",
+    "min-h-[72px] lg:min-h-[96px]", // 72px mobile, 96px desktop
+    primary ? "bg-[var(--color-bone)] text-[var(--color-ink)]" : "bg-transparent hover:bg-[var(--color-bone)] hover:text-[var(--color-ink)] focus-visible:bg-[var(--color-bone)] focus-visible:text-[var(--color-ink)]",
+    className,
+  ]}
+>
+  <span class="t-h3 w-full truncate pr-4 relative z-10"><slot /></span>
+  
+  <div class="relative z-10 shrink-0">
+    <Arrow 
+      direction={primary ? "down" : "up-right"} 
+      size={24} 
+      class="transition-transform duration-140 group-hover:translate-x-2 group-hover:-translate-y-2 group-focus-visible:translate-x-2 group-focus-visible:-translate-y-2" 
+    />
+  </div>
+</Element>

@@ -1,0 +1,87 @@
+---
+import Index from "../ui/Index.astro";
+import DataRow from "../ui/DataRow.astro";
+import Arrow from "../glyph/Arrow.astro";
+---
+
+<section id="works" class="relative w-full section-pad bg-[var(--color-ink)]" data-section="works">
+  <div class="grid-content pb-12 lg:pb-16">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex flex-col gap-6">
+      <Index number="03" name="Works" class="mb-4" />
+      <h2 class="t-h2 text-[var(--color-bone)] w-wide">Works</h2>
+      <p class="t-lede text-[var(--color-mute)] max-w-2xl">Masalah, solusi, hasil.</p>
+    </div>
+  </div>
+
+  {/* Category Filter */}
+  <div class="grid-content pb-12">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex flex-wrap gap-x-8 gap-y-4">
+      {["Semua", "Government & Public Service", "Education", "Business", "Community", "Productivity", "Internal Information System"].map((cat, i) => (
+        <button class="group flex items-center gap-2 outline-none">
+          <span class:list={["w-[6px] h-[6px] shrink-0 transition-colors duration-140", i === 0 ? "bg-[var(--color-flare)]" : "bg-transparent border border-[var(--color-line)] group-hover:border-[var(--color-flare)] group-focus-visible:border-[var(--color-flare)]"]}></span>
+          <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-bone)] group-focus-visible:text-[var(--color-bone)] transition-colors">{cat}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  {/* Works List */}
+  <div class="w-full lg:pl-[64px] border-t border-[var(--color-line)]">
+    {/* Empty State / Example Entry per PRD §7.4 */}
+    <div class="w-full border-b border-[var(--color-line)] border-dashed p-8 lg:p-16 flex flex-col items-center justify-center text-center gap-4 bg-[var(--color-ink-2)] bg-opacity-50">
+      <span class="t-label text-[var(--color-mute)] border border-[var(--color-mute)] px-3 py-1">BELUM ADA ENTRI</span>
+      <p class="t-body text-[var(--color-mute)]">Studi kasus sedang disusun.</p>
+    </div>
+
+    {/* Example Entry (Kerangka) */}
+    <a href="#" class="group block border-b border-[var(--color-line)] relative outline-none cursor-default opacity-60">
+      {/* Flare hover indicator */}
+      <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-[var(--color-flare)] scale-y-0 origin-center transition-transform duration-180 group-hover:scale-y-100 group-focus-visible:scale-y-100"></div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 p-6 lg:p-0">
+        
+        {/* Meta & Title */}
+        <div class="lg:col-span-3 flex flex-col gap-6 lg:p-8 lg:border-r border-[var(--color-line)] relative overflow-hidden">
+          <span class="t-label text-[var(--color-mute)] border border-[var(--color-line)] px-2 py-1 w-max self-start bg-[var(--color-ink)] relative z-10">CONTOH</span>
+          
+          <div class="flex flex-col gap-2 relative z-10">
+            <DataRow label="TAHUN" class="w-full">2026</DataRow>
+            <DataRow label="KATEGORI" class="w-full text-right truncate">Government</DataRow>
+          </div>
+          
+          <h3 class="t-h3 text-[var(--color-bone)] relative z-10 mt-4 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] transition-colors">
+            Sistem Informasi Pengarsipan Digital Terpusat
+          </h3>
+          
+          {/* Subtle background for example */}
+          <div class="absolute inset-0 border-2 border-dashed border-[var(--color-line)] pointer-events-none mx-2 my-2 z-0"></div>
+        </div>
+
+        {/* Details Matrix */}
+        <div class="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:divide-x divide-[var(--color-line)]">
+          <div class="flex flex-col gap-3 lg:p-8 mb-6 lg:mb-0">
+            <span class="t-label text-[var(--color-mute)]">MASALAH</span>
+            <p class="t-small text-[var(--color-bone)] opacity-80">Ribuan dokumen fisik sulit dilacak dan rentan hilang saat perpindahan divisi.</p>
+          </div>
+          <div class="flex flex-col gap-3 lg:p-8 mb-6 lg:mb-0 border-t lg:border-t-0 border-[var(--color-line)] pt-6 lg:pt-0">
+            <span class="t-label text-[var(--color-mute)]">DIBANGUN</span>
+            <p class="t-small text-[var(--color-bone)] opacity-80">Platform manajemen arsip berbasis web dengan pencarian terindeks.</p>
+          </div>
+          <div class="flex flex-col gap-3 lg:p-8 mb-6 lg:mb-0 border-t lg:border-t-0 border-[var(--color-line)] pt-6 lg:pt-0">
+            <span class="t-label text-[var(--color-mute)]">TEKNOLOGI</span>
+            <p class="t-small text-[var(--color-bone)] opacity-80">Next.js, PostgreSQL, Elasticsearch, AWS S3.</p>
+          </div>
+          <div class="flex flex-col gap-3 lg:p-8 border-t lg:border-t-0 border-[var(--color-line)] pt-6 lg:pt-0">
+            <span class="t-label text-[var(--color-mute)]">MANFAAT</span>
+            <p class="t-small text-[var(--color-bone)] opacity-80">Pencarian dokumen berkurang dari hitungan jam menjadi hitungan detik.</p>
+          </div>
+        </div>
+      </div>
+      
+      {/* Absolute Open Arrow */}
+      <div class="absolute top-6 right-6 lg:top-8 lg:right-8 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity">
+        <Arrow direction="up-right" size={24} class="text-[var(--color-flare)]" />
+      </div>
+    </a>
+  </div>
+</section>
