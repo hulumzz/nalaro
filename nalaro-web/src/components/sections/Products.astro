@@ -33,19 +33,31 @@ const productVisualByNumber: Record<string, string> = {
         tabindex={p.isSlot || p.status === "Coming Soon" ? "-1" : "0"}
         data-product={productVisualByNumber[p.number] ?? ""}
       >
-        {/* Mobile Header (visible only on mobile to act as accordion trigger) */}
-        <div class="lg:hidden flex items-center justify-between p-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors">
-          <div class="flex items-center gap-4">
-            <span class="t-label text-[var(--color-flare)]">{p.code}</span>
-            <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors">{p.name}</span>
-          </div>
-          {p.status !== "Slot" && p.status !== "Coming Soon" && (
-            <Arrow direction="down" size={20} class="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors opacity-50" />
+        {/* Mobile accordion */}
+        <button
+          type="button"
+          class="registry-mobile-toggle lg:hidden w-full flex items-center justify-between gap-4 p-4 sm:p-5 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors text-left disabled:cursor-default"
+          aria-expanded="false"
+          aria-controls={\`product-mobile-\${p.number}\`}
+          data-mobile-product-toggle
+          disabled={p.isSlot}
+        >
+          <span class="flex items-center gap-4 min-w-0">
+            <span class="t-label text-[var(--color-flare)] shrink-0">{p.code}</span>
+            <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors min-w-0 wrap-pretty">{p.name}</span>
+          </span>
+          {!p.isSlot && (
+            <Arrow direction="down" size={20} class="registry-mobile-arrow text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-all opacity-60 shrink-0" />
           )}
-        </div>
+        </button>
 
-        {/* Mobile details stay readable even when a product is not open yet. */}
-        <div class="lg:hidden p-4 sm:p-5 flex flex-col gap-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors min-w-0">
+        <div
+          id={\`product-mobile-\${p.number}\`}
+          class:list={[
+            "lg:hidden p-4 sm:p-5 flex-col gap-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors min-w-0",
+            p.isSlot ? "flex" : "registry-mobile-panel hidden"
+          ]}
+        >
           <p class="t-small text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] transition-colors wrap-pretty">
             {p.description}
           </p>
