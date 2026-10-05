@@ -123,7 +123,8 @@ function initMotion() {
   const dockPct = document.getElementById("dock-pct");
   const dockTick = document.getElementById("dock-tick");
   const railActiveName = document.getElementById("rail-active-name");
-  const dockSection = document.getElementById("dock-section");
+  const dockSectionCount = document.getElementById("dock-section-count");
+  const dockSectionName = document.getElementById("dock-section-name");
   
   // Track scroll percentage
   ScrollTrigger.create({
@@ -161,8 +162,13 @@ function initMotion() {
     if (railActiveName) railActiveName.textContent = name;
 
     const sectionIndex = Array.from(sections).indexOf(section);
-    if (dockSection && sectionIndex >= 0) {
-      dockSection.textContent = `${String(sectionIndex).padStart(2, "0")} / 06 — ${sectionId.toUpperCase()}`;
+    if (sectionIndex >= 0) {
+      if (dockSectionCount) {
+        dockSectionCount.textContent = `${String(sectionIndex).padStart(2, "0")} / 06`;
+      }
+      if (dockSectionName) {
+        dockSectionName.textContent = ` — ${sectionId.toUpperCase()}`;
+      }
     }
 
     // Update Rail indicators
