@@ -58,4 +58,4 @@ export const activeProducts = products.filter(
   (p) => p.status === "Live" || p.status === "Beta"
 );
 
-export const productCount = products.filter((p) => !p.isSlot).length;
+export const productCount = activeProducts.length;
