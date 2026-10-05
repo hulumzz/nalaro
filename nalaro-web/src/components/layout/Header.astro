@@ -10,7 +10,7 @@ const hasFounded = !site.founded.startsWith("TODO");
 <header class="hidden lg:flex fixed top-0 left-[64px] right-0 h-[48px] border-b border-[var(--color-line)] z-30 bg-[var(--color-ink)]">
   <div class="flex-1 flex items-center h-full min-w-0">
     <div class="px-4 xl:px-6 border-r border-[var(--color-line)] h-full flex items-center min-w-0">
-      <span class="t-label text-[var(--color-mute)] truncate">{site.name.toUpperCase()} — {site.tagline.toUpperCase()}</span>
+      <span class="t-label text-[var(--color-mute)] whitespace-nowrap">{site.name.toUpperCase()} — {site.tagline.toUpperCase()}</span>
     </div>
     <div class="px-4 xl:px-6 border-r border-[var(--color-line)] h-full flex items-center">
       <span class="t-label text-[var(--color-mute)] whitespace-nowrap">PRODUK AKTIF {productCount.toString().padStart(2, '0')}</span>
