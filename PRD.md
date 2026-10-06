@@ -93,7 +93,7 @@ Fallback jika Astro bermasalah: HTML + CSS + JS biasa dengan Vite. Struktur data
 ## 6. Struktur Folder
 
 ```
-nalaro-web/
+nalaro/
 ├─ PRD.md
 ├─ Desain.md
 ├─ DECISIONS.md                # catatan keputusan teknis agent
