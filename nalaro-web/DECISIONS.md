@@ -7,3 +7,5 @@
 5. **Aksesibilitas**: Semua elemen fungsional dapat dijangkau keyboard (`tabindex`), visibilitas outline (`:focus-visible`) dipertahankan namun disesuaikan warna kontrasnya dengan state Ink/Bone/Flare.
 6. **Anti-AI Design**: Semua library ikon pihak ketiga dihapus. Glyph khusus (Arrow, StatusSquare, ProductMark) dibangun dengan SVG primitif `stroke` 1px `currentColor` untuk beradaptasi dengan status hover section (Ink ↔ Bone).
 7. **Penyimpangan 404**: Ada penggunaan `radial-gradient` murni untuk menggambar pola grid bintik-bintik dekoratif sebagai latar halaman 404, karena ini cara paling performant untuk latar titik (bukan efek gradasi warna riil).
+
+8. **Font Preload**: Preload hard-coded ke `/fonts/anybody-variable.woff2` dihapus karena file tersebut tidak ada di `public/` dan menghasilkan request 404. Font tetap self-hosted lewat `@fontsource-variable`. Preload eksplisit baru ditambahkan kembali bila URL aset font hasil build sudah ditetapkan secara nyata, bukan ditebak.

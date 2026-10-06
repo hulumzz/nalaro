@@ -1,6 +1,10 @@
 ---
 import { site } from "../../data/site";
 import BracketLink from "../ui/BracketLink.astro";
+import { products } from "../../data/products";
+
+const isConfigured = (value: string) => value.length > 0 && !value.startsWith("TODO");
+const footerProducts = products.filter((product) => !product.isSlot);
 
 // Footer component per Desain.md §10.8
 const year = new Date().getFullYear();
@@ -12,7 +16,7 @@ const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
   
   {/* Top Row: Links */}
   <div class="grid-content pb-16 lg:pb-32">
-    <div class="col-span-4 lg:col-span-3 lg:col-start-2 flex flex-col gap-6">
+    <div class="col-span-full sm:col-span-4 lg:col-span-3 lg:col-start-2 flex flex-col gap-6">
       <div class="flex items-center gap-2">
         <span class="t-label text-[var(--color-mute)] shrink-0 w-5">01</span>
         <span class="w-4 h-px bg-[var(--color-line)]"></span>
@@ -27,7 +31,7 @@ const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
       </div>
     </div>
     
-    <div class="col-span-4 lg:col-span-3 flex flex-col gap-6 mt-12 lg:mt-0">
+    <div class="col-span-full sm:col-span-4 lg:col-span-3 flex flex-col gap-6 mt-12 sm:mt-0">
       <div class="flex items-center gap-2">
         <span class="t-label text-[var(--color-mute)] shrink-0 w-5">02</span>
         <span class="w-4 h-px bg-[var(--color-line)]"></span>
@@ -36,8 +40,34 @@ const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
       <div class="flex flex-col gap-3">
         <BracketLink href="#contact" class="text-[var(--color-bone)]">Email</BracketLink>
         <BracketLink href="#contact" class="text-[var(--color-bone)]">WhatsApp</BracketLink>
-        <BracketLink href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">Instagram</BracketLink>
-        <BracketLink href={site.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">LinkedIn</BracketLink>
+        {isConfigured(site.social.instagram) && (
+          <BracketLink href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">Instagram</BracketLink>
+        )}
+        {isConfigured(site.social.linkedin) && (
+          <BracketLink href={site.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">LinkedIn</BracketLink>
+        )}
+        {isConfigured(site.social.github) && (
+          <BracketLink href={site.social.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">GitHub</BracketLink>
+        )}
+      </div>
+    </div>
+
+    <div class="col-span-full sm:col-span-4 lg:col-span-3 flex flex-col gap-6 mt-12 lg:mt-0">
+      <div class="flex items-center gap-2">
+        <span class="t-label text-[var(--color-mute)] shrink-0 w-5">03</span>
+        <span class="w-4 h-px bg-[var(--color-line)]"></span>
+        <span class="t-label text-[var(--color-mute)]">PRODUK</span>
+      </div>
+      <div class="flex flex-col gap-3">
+        {footerProducts.map((product) =>
+          product.url ? (
+            <BracketLink href={product.url} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">
+              {product.name}
+            </BracketLink>
+          ) : (
+            <span class="t-label text-[var(--color-mute)]">{product.name} — SEGERA HADIR</span>
+          )
+        )}
       </div>
     </div>
   </div>
@@ -56,7 +86,7 @@ const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
 
   {/* Bottom Row */}
   <div class="w-full border-t border-[var(--color-line)] h-[48px] px-4 lg:pl-[96px] lg:pr-[32px] flex items-center justify-between z-10 bg-[var(--color-ink)]">
-    <div class="flex items-center gap-4 lg:gap-8 overflow-x-auto no-scrollbar">
+    <div class="min-w-0 flex items-center gap-4 lg:gap-8 overflow-x-auto no-scrollbar">
       <span class="t-label text-[var(--color-mute)] whitespace-nowrap">© {year} {site.name} — {site.closing}</span>
       <span class="t-label text-[var(--color-mute)] opacity-50 whitespace-nowrap hidden sm:inline">BUILD {date}</span>
     </div>

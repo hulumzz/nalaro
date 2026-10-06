@@ -29,6 +29,7 @@ body {
   color: var(--color-bone);
   background-color: var(--color-ink);
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 img, video, svg {
@@ -88,6 +89,24 @@ ul, ol { list-style: none; }
   font-weight: 800;
   line-height: .9;
   letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+@media (max-width: 639px) {
+  .t-hero {
+    font-size: clamp(2.75rem, 10.25vw, 3.25rem);
+    line-height: .92;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  :root {
+    --margin: 32px;
+  }
+
+  .grid-content {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
 }
 
 .t-slab {
@@ -171,11 +190,16 @@ ul, ol { list-style: none; }
 
 .grid-content {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: var(--gutter);
   padding-left: calc(var(--rail) + var(--margin));
   padding-right: var(--margin);
   max-width: 1680px;
+}
+
+.grid-content > * {
+  min-width: 0;
 }
 
 @media (max-width: 1023px) {
@@ -258,4 +282,56 @@ ul, ol { list-style: none; }
 /* ===== MAX-WIDTH CONTAINER ===== */
 .max-content {
   max-width: 1680px;
+}
+
+
+/* ===== LAYOUT SAFETY ===== */
+.main-content {
+  min-width: 0;
+}
+
+.t-h2,
+.t-h3,
+.t-slab {
+  text-wrap: balance;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-text {
+    transform: none !important;
+  }
+
+  .reveal-fade {
+    opacity: 1 !important;
+  }
+
+  .registry-row .w-wide {
+    font-stretch: 120% !important;
+    transition: none !important;
+  }
+}
+
+
+/* ===== EXPLICIT ALPHA SURFACES =====
+   Tailwind v4 no longer relies on legacy bg/border-opacity helpers here. */
+.border-ink-soft { border-color: rgba(11, 12, 10, 0.16); }
+.border-ink-medium { border-color: rgba(11, 12, 10, 0.30); }
+.line-ink-soft { background-color: rgba(11, 12, 10, 0.16); }
+.surface-ink-2-soft { background-color: rgba(21, 22, 19, 0.50); }
+.surface-bone-2-soft { background-color: rgba(218, 214, 202, 0.30); }
+
+.field-line {
+  border-color: rgba(11, 12, 10, 0.30);
+}
+
+.field-line:focus {
+  border-color: var(--color-ink);
 }

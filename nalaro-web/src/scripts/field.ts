@@ -1,6 +1,8 @@
 // Interactive 2D Canvas Field (Desain.md §9.2)
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isSmallScreen = window.matchMedia("(max-width: 767px)").matches;
+const isStaticField = prefersReducedMotion || isSmallScreen;
 
 class Point {
   x: number;
@@ -53,15 +55,18 @@ function initField() {
   let scanlineActive = false;
   let lastScanTime = 0;
 
-  let animationFrameId: number;
+  let animationFrameId = 0;
+  let loopTimer = 0;
   let isVisible = true;
+  let isLoopRunning = false;
 
   // Setup Observer to pause animation when offscreen
   const observer = new IntersectionObserver((entries) => {
     isVisible = entries[0].isIntersecting;
-    if (isVisible && !prefersReducedMotion) {
-      lastScanTime = performance.now();
-      loop(lastScanTime);
+    if (isVisible && !isStaticField) {
+      startLoop();
+    } else {
+      stopLoop();
     }
   });
   observer.observe(canvas.parentElement!);
@@ -81,7 +86,7 @@ function initField() {
     ctx?.scale(dpr, dpr);
     
     createPoints();
-    if (prefersReducedMotion) {
+    if (isStaticField) {
       draw(); // Draw once
     }
   }
@@ -128,7 +133,7 @@ function initField() {
   }
 
   function loop(time: number) {
-    if (!isVisible || prefersReducedMotion) return;
+    if (!isVisible || isStaticField) return;
 
     // Scanline logic (Every 7 seconds, scan takes 900ms)
     if (time - lastScanTime > 7000) {
@@ -158,10 +163,11 @@ function initField() {
 
         if (distSq < radiusSq) {
           const dist = Math.sqrt(distSq);
+          const safeDist = Math.max(dist, 0.001);
           const force = (HOVER_RADIUS - dist) / HOVER_RADIUS;
           
-          p.targetX = p.baseX - (dx / dist) * force * HOVER_FORCE;
-          p.targetY = p.baseY - (dy / dist) * force * HOVER_FORCE;
+          p.targetX = p.baseX - (dx / safeDist) * force * HOVER_FORCE;
+          p.targetY = p.baseY - (dy / safeDist) * force * HOVER_FORCE;
           p.active = true;
         } else {
           p.targetX = p.baseX;
@@ -197,15 +203,28 @@ function initField() {
     draw();
 
     // 30 FPS cap per PRD
-    setTimeout(() => {
+    loopTimer = window.setTimeout(() => {
       animationFrameId = requestAnimationFrame(loop);
     }, 1000 / 30);
+  }
+
+  function startLoop() {
+    if (isLoopRunning || isStaticField || !isVisible) return;
+    isLoopRunning = true;
+    lastScanTime = performance.now();
+    animationFrameId = requestAnimationFrame(loop);
+  }
+
+  function stopLoop() {
+    isLoopRunning = false;
+    cancelAnimationFrame(animationFrameId);
+    window.clearTimeout(loopTimer);
   }
 
   // Event Listeners
   window.addEventListener("resize", resize);
   
-  if (!prefersReducedMotion) {
+  if (!isStaticField) {
     canvas.parentElement?.addEventListener("mousemove", (e) => {
       const rect = canvas.getBoundingClientRect();
       mouseX = e.clientX - rect.left;
@@ -221,19 +240,18 @@ function initField() {
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         isVisible = false;
+        stopLoop();
       } else {
         isVisible = true;
-        lastScanTime = performance.now();
-        loop(lastScanTime);
+        startLoop();
       }
     });
   }
 
   // Init
   resize();
-  if (!prefersReducedMotion) {
-    lastScanTime = performance.now();
-    loop(lastScanTime);
+  if (!isStaticField) {
+    startLoop();
   }
 }
 

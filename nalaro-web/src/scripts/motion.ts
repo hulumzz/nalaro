@@ -18,14 +18,8 @@ if (!prefersReducedMotion) {
     smoothWheel: true,
   });
 
-  function raf(time: number) {
-    lenis?.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-
-  // Sync GSAP ScrollTrigger with Lenis
+  // Use GSAP's ticker as the single animation clock.
+  // Running Lenis from two RAF loops caused uneven scroll and duplicate work.
   lenis.on("scroll", ScrollTrigger.update);
 
   gsap.ticker.add((time) => {
@@ -39,7 +33,56 @@ if (!prefersReducedMotion) {
 document.addEventListener("DOMContentLoaded", initMotion);
 
 function initMotion() {
-  if (prefersReducedMotion) return; // Fallback to static CSS
+  if (prefersReducedMotion) {
+    const sections = Array.from(document.querySelectorAll<HTMLElement>("section[data-section]"));
+    const dockPct = document.getElementById("dock-pct");
+    const dockTick = document.getElementById("dock-tick");
+    const railActiveName = document.getElementById("rail-active-name");
+    const dockSectionCount = document.getElementById("dock-section-count");
+    const dockSectionName = document.getElementById("dock-section-name");
+
+    const updateProgress = () => {
+      const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(window.scrollY / scrollable, 0), 1);
+      const pct = Math.round(progress * 100);
+
+      if (dockPct) dockPct.textContent = `${pct}%`;
+      if (dockTick) dockTick.style.left = `${progress * 100}%`;
+    };
+
+    const updateSection = (section: HTMLElement) => {
+      const sectionId = section.id;
+      const sectionIndex = sections.indexOf(section);
+
+      if (railActiveName) railActiveName.textContent = sectionId.toUpperCase();
+      if (dockSectionCount && sectionIndex >= 0) {
+        dockSectionCount.textContent = `${String(sectionIndex).padStart(2, "0")} / 06`;
+      }
+      if (dockSectionName) {
+        dockSectionName.textContent = ` — ${sectionId.toUpperCase()}`;
+      }
+
+      document.querySelectorAll(".rail-nav-item").forEach((item) => {
+        item.classList.toggle("is-active", item.getAttribute("data-target") === sectionId);
+      });
+
+      document.body.classList.toggle("contact-active", sectionId === "contact");
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const active = entries.find((entry) => entry.isIntersecting);
+        if (active?.target instanceof HTMLElement) updateSection(active.target);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+    if (sections[0]) updateSection(sections[0]);
+    return;
+  }
 
   // 1. Initial Page Load Sequence (Desain.md §13.2)
   const tl = gsap.timeline();
@@ -129,6 +172,8 @@ function initMotion() {
   const dockPct = document.getElementById("dock-pct");
   const dockTick = document.getElementById("dock-tick");
   const railActiveName = document.getElementById("rail-active-name");
+  const dockSectionCount = document.getElementById("dock-section-count");
+  const dockSectionName = document.getElementById("dock-section-name");
   
   // Track scroll percentage
   ScrollTrigger.create({
@@ -138,7 +183,7 @@ function initMotion() {
     onUpdate: (self) => {
       const pct = Math.round(self.progress * 100);
       if (dockPct) dockPct.textContent = `${pct}%`;
-      if (dockTick) dockTick.style.transform = `translateX(${self.progress * 100}vw)`;
+      if (dockTick) dockTick.style.left = `${self.progress * 100}%`;
     }
   });
 
@@ -165,6 +210,16 @@ function initMotion() {
     }
     if (railActiveName) railActiveName.textContent = name;
 
+    const sectionIndex = Array.from(sections).indexOf(section);
+    if (sectionIndex >= 0) {
+      if (dockSectionCount) {
+        dockSectionCount.textContent = `${String(sectionIndex).padStart(2, "0")} / 06`;
+      }
+      if (dockSectionName) {
+        dockSectionName.textContent = ` — ${sectionId.toUpperCase()}`;
+      }
+    }
+
     // Update Rail indicators
     document.querySelectorAll('.rail-nav-item').forEach(item => {
       item.classList.remove('is-active');
@@ -177,11 +232,12 @@ function initMotion() {
     if (sectionId === 'contact') {
       document.body.classList.add('contact-active');
       
-      // Reveal contact form with stagger
+      // Keep the contact transition restrained: one panel movement,
+      // rather than animating every nested flex column independently.
       gsap.fromTo(
-        "#contact-form .flex-col", 
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out", overwrite: true }
+        "#contact-form",
+        { y: 12, opacity: 0.75 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power2.out", overwrite: true }
       );
     } else {
       document.body.classList.remove('contact-active');

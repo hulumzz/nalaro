@@ -8,18 +8,30 @@ interface Props {
 const { number, name, class: className = "" } = Astro.props;
 ---
 
-<div class:list={["index flex items-center gap-4 whitespace-nowrap -ml-4 lg:-ml-8", className]}>
-  <span class="t-label text-[var(--color-flare)] w-5">{number}</span>
-  <span class="w-6 h-px bg-[var(--color-flare)]"></span>
-  <span class="t-label text-[var(--color-mute)]">{name}</span>
+<div class:list={["index flex items-center gap-3 sm:gap-4 whitespace-nowrap -ml-2 sm:-ml-4 lg:-ml-8", className]}>
+  <span class="index-number t-label text-[var(--color-flare)] w-5">{number}</span>
+  <span class="index-rule w-6 h-px bg-[var(--color-flare)]"></span>
+  <span class="index-name t-label text-[var(--color-mute)]">{name}</span>
 </div>
 
 <style>
   /* Negative margin pulls the index out into the gutter to create the "hanging" effect described in 5.5 */
-  .on-bone .t-label:first-child {
+  :global([data-surface="bone"]) .index-number,
+  :global([data-surface="flare"]) .index-number {
     color: var(--color-ink);
   }
-  .on-bone .w-6 {
+
+  :global([data-surface="bone"]) .index-rule,
+  :global([data-surface="flare"]) .index-rule {
     background-color: var(--color-ink);
+  }
+
+  :global([data-surface="bone"]) .index-name {
+    color: var(--color-mute-b);
+  }
+
+  :global([data-surface="flare"]) .index-name {
+    color: var(--color-ink);
+    opacity: .68;
   }
 </style>

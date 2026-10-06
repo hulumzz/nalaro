@@ -28,7 +28,7 @@ import Arrow from "../glyph/Arrow.astro";
   {/* Works List */}
   <div class="w-full lg:pl-[64px] border-t border-[var(--color-line)]">
     {/* Empty State / Example Entry per PRD §7.4 */}
-    <div class="w-full border-b border-[var(--color-line)] border-dashed p-8 lg:p-16 flex flex-col items-center justify-center text-center gap-4 bg-[var(--color-ink-2)] bg-opacity-50">
+    <div class="w-full border-b border-[var(--color-line)] border-dashed p-6 sm:p-8 lg:p-12 flex flex-col items-start justify-center text-left gap-4 surface-ink-2-soft">
       <span class="t-label text-[var(--color-mute)] border border-[var(--color-mute)] px-3 py-1">BELUM ADA ENTRI</span>
       <p class="t-body text-[var(--color-mute)]">Studi kasus sedang disusun.</p>
     </div>
@@ -46,7 +46,7 @@ import Arrow from "../glyph/Arrow.astro";
           
           <div class="flex flex-col gap-2 relative z-10">
             <DataRow label="TAHUN" class="w-full">2026</DataRow>
-            <DataRow label="KATEGORI" class="w-full text-right truncate">Government</DataRow>
+            <DataRow label="KATEGORI" class="w-full">Government</DataRow>
           </div>
           
           <h3 class="t-h3 text-[var(--color-bone)] relative z-10 mt-4 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] transition-colors">

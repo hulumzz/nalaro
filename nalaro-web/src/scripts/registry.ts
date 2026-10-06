@@ -1,13 +1,37 @@
 // Registry Preview Logic (Desain.md §10.1 & §10.2)
 
+function initMobileRegistry() {
+  const toggles = document.querySelectorAll<HTMLButtonElement>("[data-mobile-product-toggle]");
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => {
+      const panelId = toggle.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      if (!panel) return;
+
+      const isOpen = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!isOpen));
+      panel.classList.toggle("hidden", isOpen);
+      panel.classList.toggle("flex", !isOpen);
+
+      const arrow = toggle.querySelector<HTMLElement>(".registry-mobile-arrow");
+      if (arrow) {
+        arrow.style.transform = isOpen ? "" : "rotate(180deg)";
+      }
+    });
+  });
+}
+
 function initRegistry() {
+  initMobileRegistry();
+
   const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   if (!isDesktop) return;
 
   const container = document.querySelector('.registry-container');
   const preview = document.getElementById('registry-preview');
   const previewContent = preview?.querySelector('.preview-content');
-  const rows = document.querySelectorAll('.registry-row:not(.is-coming-soon):not([data-product=""])');
+  const rows = document.querySelectorAll('.registry-row:not([data-product=""])');
   
   if (!container || !preview || !previewContent) return;
 
@@ -47,6 +71,20 @@ function initRegistry() {
     rafId = requestAnimationFrame(updatePreviewPosition);
   }
 
+  function setStaticPreviewPosition(target: EventTarget | null) {
+    const pw = 300;
+    const ph = 200;
+    const padding = 24;
+    const element = target instanceof Element ? target : null;
+    const rect = element?.getBoundingClientRect();
+
+    const x = Math.max(padding, window.innerWidth - pw - padding);
+    const baseY = rect ? rect.top + rect.height / 2 - ph / 2 : (window.innerHeight - ph) / 2;
+    const y = Math.min(Math.max(baseY, padding), window.innerHeight - ph - padding);
+
+    preview!.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
   function showPreview(productCode: string, e: MouseEvent | FocusEvent) {
     if (productCode === currentProduct && isVisible) return;
     
@@ -69,6 +107,8 @@ function initRegistry() {
       previewY = mouseY;
       cancelAnimationFrame(rafId);
       updatePreviewPosition();
+    } else {
+      setStaticPreviewPosition(e.currentTarget);
     }
   }
 

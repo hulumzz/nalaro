@@ -16,8 +16,8 @@ import { pipelineStages } from "../../data/pipeline";
   </div>
 
   {/* Pipeline Strip */}
-  <div class="w-full border-y border-[var(--color-ink)] border-opacity-16 overflow-x-auto no-scrollbar relative">
-    <div class="absolute left-0 top-1/2 w-full h-[1px] bg-[var(--color-ink)] opacity-16 -translate-y-1/2 z-0"></div>
+  <div class="w-full border-y border-ink-soft overflow-x-auto no-scrollbar relative">
+    <div class="absolute left-0 top-1/2 w-full h-[1px] line-ink-soft -translate-y-1/2 z-0"></div>
     <div class="grid-content relative z-10 py-6 min-w-[800px]">
       <div class="col-span-full lg:col-start-2 lg:col-span-11 flex justify-between">
         {pipelineStages.map((stage, i) => (
@@ -41,13 +41,13 @@ import { pipelineStages } from "../../data/pipeline";
   {/* Lab Log List */}
   <div class="w-full lg:pl-[64px]">
     {/* Empty State per PRD */}
-    <div class="w-full border-b border-[var(--color-ink)] border-opacity-30 border-dashed p-8 lg:p-16 flex flex-col items-center justify-center text-center gap-4 bg-[var(--color-bone-2)] bg-opacity-30 mt-8">
+    <div class="w-full border-b border-ink-medium border-dashed p-6 sm:p-8 lg:p-12 flex flex-col items-start justify-center text-left gap-4 surface-bone-2-soft mt-8">
       <span class="t-label text-[var(--color-mute-b)] border border-[var(--color-mute-b)] px-3 py-1">BELUM ADA ENTRI</span>
       <p class="t-body text-[var(--color-ink)] opacity-80">Eksperimen pertama sedang berjalan.</p>
     </div>
     
     {/* Log Table Header (Hidden on mobile) */}
-    <div class="hidden lg:grid grid-cols-12 border-b border-[var(--color-ink)] border-opacity-16 p-4">
+    <div class="hidden lg:grid grid-cols-12 border-b border-ink-soft p-4">
       <div class="col-span-2"><span class="t-label text-[var(--color-mute-b)]">TANGGAL</span></div>
       <div class="col-span-3"><span class="t-label text-[var(--color-mute-b)]">NAMA</span></div>
       <div class="col-span-5"><span class="t-label text-[var(--color-mute-b)]">DESKRIPSI</span></div>

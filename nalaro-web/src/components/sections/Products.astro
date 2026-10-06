@@ -5,6 +5,12 @@ import DataRow from "../ui/DataRow.astro";
 import Arrow from "../glyph/Arrow.astro";
 import CornerTicks from "../layout/CornerTicks.astro";
 import ProductMark from "../glyph/ProductMark.astro";
+
+const productVisualByNumber: Record<string, string> = {
+  "01": "skripzy",
+  "02": "class",
+  "03": "enveely",
+};
 ---
 
 <section id="products" class="relative w-full section-pad bg-[var(--color-ink)]" data-section="products">
@@ -25,20 +31,56 @@ import ProductMark from "../glyph/ProductMark.astro";
           p.status === "Coming Soon" ? "is-coming-soon" : ""
         ]}
         tabindex={p.isSlot || p.status === "Coming Soon" ? "-1" : "0"}
-        data-product={p.code.replace('N/', '').toLowerCase()}
+        data-product={productVisualByNumber[p.number] ?? ""}
       >
-        {/* Mobile Header (visible only on mobile to act as accordion trigger) */}
-        <div class="lg:hidden flex items-center justify-between p-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors">
-          <div class="flex items-center gap-4">
-            <span class="t-label text-[var(--color-flare)]">{p.code}</span>
-            <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors">{p.name}</span>
-          </div>
-          {p.status !== "Slot" && p.status !== "Coming Soon" && (
-            <Arrow direction="down" size={20} class="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors opacity-50" />
+        {/* Mobile accordion */}
+        <button
+          type="button"
+          class="registry-mobile-toggle lg:hidden w-full flex items-center justify-between gap-4 p-4 sm:p-5 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors text-left disabled:cursor-default"
+          aria-expanded="false"
+          aria-controls={`product-mobile-${p.number}`}
+          data-mobile-product-toggle
+          disabled={p.isSlot}
+        >
+          <span class="flex items-center gap-4 min-w-0">
+            <span class="t-label text-[var(--color-flare)] shrink-0">{p.code}</span>
+            <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors min-w-0 wrap-pretty">{p.name}</span>
+          </span>
+          {!p.isSlot && (
+            <Arrow direction="down" size={20} class="registry-mobile-arrow text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-all opacity-60 shrink-0" />
+          )}
+        </button>
+
+        <div
+          id={`product-mobile-${p.number}`}
+          class:list={[
+            "lg:hidden p-4 sm:p-5 flex-col gap-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors min-w-0",
+            p.isSlot ? "flex" : "registry-mobile-panel hidden"
+          ]}
+        >
+          <p class="t-small text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] transition-colors wrap-pretty">
+            {p.description}
+          </p>
+          {!p.isSlot && (
+            <div class="flex flex-col gap-3">
+              <p class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] transition-colors break-words">
+                {p.focus.join(' / ')}
+              </p>
+              <div class="flex items-center justify-between gap-4 pt-2">
+                <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)]">STATUS</span>
+                <span class="t-label text-[var(--color-bone)] group-hover:text-[var(--color-ink)]">{p.status}</span>
+              </div>
+            </div>
+          )}
+          {p.isSlot && (
+            <span class="inline-block border border-[var(--color-mute)] text-[var(--color-mute)] px-3 py-1 t-label w-max max-w-full">
+              SLOT 04 — TERBUKA
+            </span>
           )}
         </div>
 
-        {/* Desktop Layout / Mobile Accordion Content */}
+        {/* Desktop Layout */}
+
         <div class="hidden lg:contents mobile-content">
           {/* Col 1: Number */}
           <div class="hidden lg:flex col-span-1 p-6 items-start border-r border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors">
@@ -46,9 +88,9 @@ import ProductMark from "../glyph/ProductMark.astro";
           </div>
           
           {/* Col 2-6: Name */}
-          <div class="hidden lg:flex col-span-5 p-6 items-center">
+          <div class="hidden lg:flex col-span-5 p-6 items-center min-w-0">
             <h3 class:list={[
-              "font-display font-bold text-[clamp(2.5rem,6vw,6rem)] leading-[0.9] tracking-[-0.02em] transition-all duration-400 ease-out origin-left",
+              "font-display font-bold text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] tracking-[-0.02em] transition-all duration-400 ease-out origin-left max-w-full wrap-balance",
               p.isSlot ? "text-transparent" : "text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] w-wide group-hover:w-max group-focus-visible:w-max"
             ]} style={p.isSlot ? "-webkit-text-stroke: 1px var(--color-mute);" : ""}>
               {p.name}
@@ -56,8 +98,8 @@ import ProductMark from "../glyph/ProductMark.astro";
           </div>
 
           {/* Col 7-9: Description & Focus */}
-          <div class="lg:col-span-3 p-6 flex flex-col justify-center gap-4">
-            <p class="t-body text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors">
+          <div class="lg:col-span-3 p-6 flex flex-col justify-center gap-4 min-w-0">
+            <p class="t-small xl:text-[1.0625rem] xl:leading-[1.6] text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors wrap-pretty">
               {p.description}
             </p>
             {!p.isSlot && (
@@ -77,7 +119,8 @@ import ProductMark from "../glyph/ProductMark.astro";
             {!p.isSlot && (
               <DataRow 
                 label="STATUS" 
-                class="w-full" 
+                class="w-full"
+                labelClass="group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors"
                 valueClass="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors text-right"
               >
                 {p.status}
@@ -91,7 +134,7 @@ import ProductMark from "../glyph/ProductMark.astro";
               <div class="w-full h-full p-6 lg:min-h-full min-h-[72px]"></div>
             ) : p.status === "Coming Soon" ? (
               <div class="w-full h-full p-6 flex items-center justify-center min-h-[72px]">
-                <span class="t-label text-[var(--color-mute)] text-center">SEGERA HADIR</span>
+                <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors">SEGERA HADIR</span>
               </div>
             ) : (
               <a 
@@ -128,18 +171,6 @@ import ProductMark from "../glyph/ProductMark.astro";
 </section>
 
 <style>
-  /* Mobile Accordion Logic */
-  @media (max-width: 1023px) {
-    .registry-row:focus-within .mobile-content {
-      display: contents;
-    }
-    
-    /* Enforce some layout on mobile content */
-    .mobile-content > div {
-      display: flex;
-    }
-  }
-
   /* Preview following cursor */
   #registry-preview {
     will-change: transform;

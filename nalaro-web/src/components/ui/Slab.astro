@@ -5,19 +5,36 @@ interface Props {
   tag?: "a" | "button";
   href?: string;
   type?: "button" | "submit";
+  target?: string;
+  rel?: string;
   class?: string;
+  disabled?: boolean;
 }
 
-const { tag = "a", href, type, class: className = "" } = Astro.props;
+const {
+  tag = "a",
+  href,
+  type,
+  target,
+  rel,
+  class: className = "",
+  disabled = false,
+} = Astro.props;
 const Element = tag;
 ---
 
 <Element
-  href={tag === "a" ? href : undefined}
+  href={tag === "a" && !disabled ? href : undefined}
   type={tag === "button" ? type : undefined}
+  target={tag === "a" ? target : undefined}
+  rel={tag === "a" ? rel : undefined}
+  disabled={tag === "button" ? disabled : undefined}
+  aria-disabled={disabled ? "true" : undefined}
+  tabindex={disabled ? -1 : undefined}
   class:list={[
     "slab group relative flex flex-col justify-center border-t border-b border-[var(--color-line)] bg-[var(--color-flare)] overflow-hidden transition-colors outline-none",
     "py-8 sm:py-12 lg:py-16",
+    disabled ? "opacity-[0.55] pointer-events-none" : "",
     className,
   ]}
 >
@@ -26,8 +43,8 @@ const Element = tag;
 
   {/* Content wrapper */}
   <div class="grid-content relative z-10 pointer-events-none">
-    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex items-center justify-between">
-      <span class="t-slab text-[var(--color-ink)] transition-colors duration-180 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] truncate pr-4">
+    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex items-center justify-between gap-4 min-w-0">
+      <span class="t-slab text-[var(--color-ink)] transition-colors duration-180 group-hover:text-[var(--color-flare)] group-focus-visible:text-[var(--color-flare)] min-w-0 whitespace-normal text-balance leading-[0.95] pr-2">
         <slot />
       </span>
       <Arrow 

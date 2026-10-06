@@ -1,0 +1,122 @@
+---
+import { pipelineStages } from "../../data/pipeline";
+import { products } from "../../data/products";
+
+const visibleProducts = products.filter((product) => !product.isSlot).slice(0, 3);
+const stageX = [45, 125, 205, 285];
+const productY = [150, 205, 260];
+---
+
+<div class="pipeline-diagram" role="img" aria-label="Alur Nalaro dari idea, experiment, lab, product, lalu bercabang ke produk Nalaro">
+  <svg viewBox="0 0 480 320" class="w-full h-full" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+    <g class="pipeline-lines">
+      <path d="M45 82 H125 H205 H285" />
+      <path d="M285 82 V260" />
+      {visibleProducts.map((_, index) => (
+        <path d={`M285 ${productY[index]} H350`} />
+      ))}
+    </g>
+
+    {pipelineStages.map((stage, index) => (
+      <g>
+        <rect
+          x={stageX[index] - 5}
+          y="77"
+          width="10"
+          height="10"
+          class="stage-node"
+        />
+        <text x={stageX[index]} y="60" text-anchor="middle" class="stage-label">
+          {stage.label}
+        </text>
+        <text x={stageX[index]} y="105" text-anchor="middle" class="stage-index">
+          {String(index + 1).padStart(2, "0")}
+        </text>
+      </g>
+    ))}
+
+    {visibleProducts.map((product, index) => (
+      <g>
+        <rect x="345" y={productY[index] - 5} width="10" height="10" class="terminal-node" />
+        <text x="365" y={productY[index] - 8} class="product-code">{product.code}</text>
+        <text x="365" y={productY[index] + 14} class="product-name">{product.name}</text>
+      </g>
+    ))}
+
+    <rect x="281" y="142" width="8" height="16" class="signal-marker" />
+  </svg>
+
+  <ul class="sr-only">
+    {pipelineStages.map((stage) => <li>{stage.label}</li>)}
+    {visibleProducts.map((product) => <li>{product.code} {product.name}</li>)}
+  </ul>
+</div>
+
+<style>
+  .pipeline-diagram {
+    width: 100%;
+    height: 100%;
+    color: var(--color-bone);
+  }
+
+  .pipeline-lines path {
+    fill: none;
+    stroke: var(--color-mute);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .stage-node,
+  .terminal-node {
+    fill: var(--color-ink);
+    stroke: var(--color-bone);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .stage-label,
+  .stage-index,
+  .product-code,
+  .product-name {
+    font-family: var(--font-mono);
+    dominant-baseline: middle;
+  }
+
+  .stage-label,
+  .product-code {
+    fill: var(--color-bone);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .08em;
+  }
+
+  .stage-index {
+    fill: var(--color-mute);
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+
+  .product-name {
+    fill: var(--color-mute);
+    font-size: 15px;
+  }
+
+  .signal-marker {
+    fill: var(--color-flare);
+    animation: signal 6s steps(1, end) infinite;
+  }
+
+  @keyframes signal {
+    0%, 18% { transform: translate(0, -55px); }
+    19%, 42% { transform: translate(0, 0); }
+    43%, 66% { transform: translate(0, 55px); }
+    67%, 100% { transform: translate(0, 110px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal-marker {
+      animation: none;
+      transform: translate(0, 55px);
+    }
+  }
+</style>
