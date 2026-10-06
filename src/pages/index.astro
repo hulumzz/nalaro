@@ -1,7 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Rail from "../components/layout/Rail.astro";
-import Dock from "../components/layout/Dock.astro";
 import Header from "../components/layout/Header.astro";
 import Footer from "../components/layout/Footer.astro";
 import Hero from "../components/sections/Hero.astro";
@@ -12,39 +10,45 @@ import Lab from "../components/sections/Lab.astro";
 import About from "../components/sections/About.astro";
 import Contact from "../components/sections/Contact.astro";
 ---
-
 <Base>
-  <div class="site-wrapper flex">
-    <Rail />
-    
-    <div class="main-content flex-1 w-full min-w-0 min-h-screen relative bg-[var(--color-ink)]">
-      <Header />
-      
-      <main id="main-scroll-container">
-        <Hero />
-        <Products />
-        <Solutions />
-        <Works />
-        <Lab />
-        <About />
-        <Contact />
-      </main>
-
-      <Footer />
-      <Dock />
-    </div>
-  </div>
+  <Header />
+  <main id="main-content"><Hero /><Products /><Solutions /><Works /><Lab /><About /><Contact /></main>
+  <Footer />
 </Base>
-
 <script>
-  // Import motion and interaction scripts
-  import "../scripts/motion";
-  import "../scripts/field";
-  import "../scripts/registry";
-</script>
-
-<style>
-  .site-wrapper {
-    overflow-x: hidden;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+  if (!reduced.matches) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add("revealed"); observer.unobserve(entry.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll("[data-reveal]").forEach(el => { el.classList.add("reveal-ready"); observer.observe(el); });
+    reduced.addEventListener("change", event => { if (event.matches) { document.querySelectorAll(".reveal-ready").forEach(el => el.classList.add("revealed")); observer.disconnect(); } });
   }
-</style>
+  const sections = document.querySelectorAll<HTMLElement>("main > section[id]");
+  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a");
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) navLinks.forEach(link => { if (link.hash === "#" + entry.target.id) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); }); });
+  }, { rootMargin: "-20% 0px -60% 0px" });
+  sections.forEach(section => sectionObserver.observe(section));
+  const header = document.querySelector<HTMLElement>(".site-header")!;
+  const navigationLinks = document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-nav a");
+  navigationLinks.forEach(link => link.addEventListener("click", event => {
+    const id = link.hash.slice(1);
+    const section = id && document.getElementById(id);
+    if (!section) return;
+    event.preventDefault();
+    const firstContent = section.querySelector<HTMLElement>(".eyebrow, .section-heading, .solutions-intro") || section;
+    const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+    const contentOffset = firstContent.getBoundingClientRect().top - section.getBoundingClientRect().top;
+    const position = Math.max(0, sectionTop + contentOffset - header.offsetHeight - 32);
+    section.querySelectorAll<HTMLElement>("[data-reveal]").forEach(heading => heading.classList.add("revealed"));
+    window.scrollTo({ top: position, behavior: reduced.matches ? "auto" : "smooth" });
+    history.pushState(null, "", `#${id}`);
+  }));
+  const diagram = document.querySelector(".system-map")!;
+  let diagramVisible = false;
+  const syncDiagram = () => diagram.classList.toggle("is-in-view", diagramVisible && !document.hidden && !reduced.matches);
+  new IntersectionObserver(([entry]) => { diagramVisible = entry.isIntersecting; syncDiagram(); }).observe(diagram);
+  document.addEventListener("visibilitychange", syncDiagram);
+  reduced.addEventListener("change", syncDiagram);
+</script>

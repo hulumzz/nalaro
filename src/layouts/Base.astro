@@ -1,70 +1,60 @@
 ---
-import "@fontsource-variable/anybody/wdth.css";
-import "@fontsource-variable/instrument-sans";
-import "@fontsource-variable/martian-mono";
 import "../styles/tokens.css";
 import "../styles/global.css";
 import { site } from "../data/site";
+import displayFont from "@fontsource-variable/anybody/files/anybody-latin-wdth-normal.woff2?url";
+import bodyFont from "@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url";
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
+interface Props { title?: string; description?: string; noindex?: boolean; }
 const {
-  title = `${site.name} — ${site.tagline}`,
-  description = site.subheadline,
+  title = "Nalaro | Studio Produk Digital, AI & Aplikasi Web",
+  description = site.description,
+  noindex = false,
 } = Astro.props;
-
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const ogImageUrl = new URL("/og/nalaro-og.png", Astro.site);
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const ogImage = Astro.site ? new URL("/og/nalaro-og.png", Astro.site).toString() : "/og/nalaro-og.png";
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", name: site.name, description: site.description, ...(Astro.site ? { "@id": new URL("/#organization", Astro.site).toString(), url: Astro.site.toString(), logo: new URL(site.logo, Astro.site).toString() } : {}), ...(site.email ? { email: site.email } : {}), sameAs: Object.values(site.social).filter(Boolean) },
+    { "@type": "WebSite", name: site.name, description, inLanguage: "id-ID", ...(Astro.site ? { url: Astro.site.toString(), publisher: { "@id": new URL("/#organization", Astro.site).toString() } } : {}) },
+  ],
+};
 ---
-
 <!doctype html>
-<html lang="id" class="antialiased">
+<html lang="id">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="generator" content={Astro.generator} />
-
-    <!-- SEO -->
+    <meta name="theme-color" content="#0B0C0A" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl.toString()} />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Open Graph -->
+    <meta name="robots" content={noindex || !Astro.site ? "noindex, follow" : "index, follow, max-image-preview:large"} />
+    {canonicalUrl && !noindex && <link rel="canonical" href={canonicalUrl} />}
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl.toString()} />
-    <meta property="og:image" content={ogImageUrl.toString()} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content={site.name} />
-
-    <!-- Twitter Card -->
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Nalaro. We build useful digital products." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl.toString()} />
-
-    <!-- JSON-LD Organization -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        name: site.name,
-        url: Astro.site?.toString() ?? "",
-        description: site.subheadline,
-      })}
-    />
-
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Nalaro. We build useful digital products." />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, "\\u003c")} />}
   </head>
-  <body class="surface-ink">
-    <slot />
-  </body>
+  <body><a class="skip-link" href="#main-content">Langsung ke isi halaman</a><slot /></body>
 </html>

@@ -1,73 +1,11 @@
 ---
-import { principles } from "../../data/principles";
-import Index from "../ui/Index.astro";
+import { home, studioPrinciples } from "../../data/home";
+import { site } from "../../data/site";
 ---
-
-<section id="about" class="relative w-full section-pad bg-[var(--color-ink)]" data-section="about">
-  <div class="grid-content pb-16 lg:pb-32">
-    {/* Core Statement */}
-    <div class="col-span-full lg:col-start-2 lg:col-span-10 flex flex-col gap-6">
-      <Index number="05" name="About" class="mb-4" />
-      <h2 class="font-display text-[clamp(2rem,4.6vw,4.5rem)] font-medium leading-[1.15] tracking-tight text-[var(--color-bone)] text-left wrap-pretty max-w-5xl">
-        Nalaro adalah <span class="relative inline-block border-b-3 border-[var(--color-flare)] text-[var(--color-bone)]">digital product studio</span> yang membangun SaaS, AI tools, platform pendidikan, dan solusi digital untuk menyelesaikan masalah nyata.
-      </h2>
-    </div>
+<section id="about" class="section container" aria-labelledby="about-title">
+  <p class="eyebrow"><span class="section-number">05</span>{home.about.label}</p>
+  <div class="about-grid"><div class="about-statement"><h2 id="about-title" data-reveal>{home.about.title}</h2><div class="about-text"><p>{home.about.text}</p><p>{home.about.detail}</p></div></div>
+    <div class="studio-signature"><div class="signature-top mono"><span>NALARO STUDIO</span><span>↗</span></div><img src={site.logo} alt="Logo Nalaro" width="160" height="160" loading="lazy" /><p>{site.closing}</p><span class="signature-bottom mono">THOUGHTFULLY BUILT</span></div>
   </div>
-
-  {/* Principles */}
-  <div class="w-full lg:pl-[64px] border-t border-[var(--color-line)]">
-    {principles.map((p) => (
-      <div class="grid grid-cols-1 lg:grid-cols-12 border-b border-[var(--color-line)]">
-        <div class="col-span-1 lg:col-span-3 p-6 lg:p-8 flex items-baseline gap-4 lg:border-r border-[var(--color-line)]">
-          <span class="t-label text-[var(--color-flare)] shrink-0">{p.code}</span>
-        </div>
-        <div class="col-span-1 lg:col-span-4 p-6 lg:p-8 pt-0 lg:pt-8 flex items-center lg:border-r border-[var(--color-line)]">
-          <h3 class="font-display font-bold text-[clamp(1.5rem,3vw,2.5rem)] text-[var(--color-bone)] leading-none w-wide uppercase tracking-tight">{p.name}</h3>
-        </div>
-        <div class="col-span-1 lg:col-span-5 p-6 lg:p-8 pt-0 lg:pt-8 flex items-center">
-          <p class="t-body text-[var(--color-mute)]">{p.description}</p>
-        </div>
-      </div>
-    ))}
-  </div>
-
-  {/* Visi Misi */}
-  <div class="grid-content pt-24 lg:pt-32">
-    <div class="col-span-full lg:col-start-2 lg:col-span-5 flex flex-col gap-6 mb-16 lg:mb-0">
-      <span class="t-label text-[var(--color-mute)] border border-[var(--color-line)] px-3 py-1 w-max">VISI</span>
-      <p class="t-lede text-[var(--color-bone)] opacity-90 max-w-md">
-        Menjadi studio pembuat produk digital yang dikenal karena kegunaan, kesederhanaan, dan keandalannya.
-      </p>
-    </div>
-    
-    <div class="col-span-full lg:col-start-7 lg:col-span-6 flex flex-col gap-6">
-      <span class="t-label text-[var(--color-mute)] border border-[var(--color-line)] px-3 py-1 w-max">MISI</span>
-      <ol class="flex flex-col gap-6 w-full">
-        <li class="flex gap-4">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">01</span>
-          <p class="t-body text-[var(--color-mute)]">Fokus menemukan dan menyelesaikan masalah yang nyata.</p>
-        </li>
-        <li class="flex gap-4 border-t border-[var(--color-line)] pt-6">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">02</span>
-          <p class="t-body text-[var(--color-mute)]">Merancang antarmuka yang presisi dan mudah dipahami.</p>
-        </li>
-        <li class="flex gap-4 border-t border-[var(--color-line)] pt-6">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">03</span>
-          <p class="t-body text-[var(--color-mute)]">Menulis kode yang bersih, cepat, dan mudah dipelihara.</p>
-        </li>
-        <li class="flex gap-4 border-t border-[var(--color-line)] pt-6">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">04</span>
-          <p class="t-body text-[var(--color-mute)]">Membangun ekosistem produk yang saling melengkapi.</p>
-        </li>
-        <li class="flex gap-4 border-t border-[var(--color-line)] pt-6">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">05</span>
-          <p class="t-body text-[var(--color-mute)]">Membagikan pelajaran dan eksperimen ke publik.</p>
-        </li>
-        <li class="flex gap-4 border-t border-[var(--color-line)] pt-6">
-          <span class="t-label text-[var(--color-flare)] shrink-0 mt-1">06</span>
-          <p class="t-body text-[var(--color-mute)]">Bekerja dengan prinsip berkelanjutan, tanpa jalan pintas.</p>
-        </li>
-      </ol>
-    </div>
-  </div>
+  <div class="principles">{studioPrinciples.map((principle, i) => <div><span class="mono orange">0{i + 1}</span><h3>{principle.title}</h3><p>{principle.text}</p></div>)}</div>
 </section>

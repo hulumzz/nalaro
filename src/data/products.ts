@@ -15,12 +15,12 @@ export const products: Product[] = [
   {
     number: "01",
     code: "N/01",
-    name: "Skripzy AI",
+    name: "Skripzy Workspace",
     description:
       "AI workspace untuk penelitian dan aktivitas akademik.",
     focus: ["penelitian", "analisis data", "penulisan akademik", "AI research assistant"],
-    status: "Coming Soon", // TODO: Live / Beta
-    url: null, // TODO: URL produk
+    status: "Live",
+    url: "https://www.skripzy.id",
   },
   {
     number: "02",
@@ -29,8 +29,8 @@ export const products: Product[] = [
     description:
       "Platform belajar yang menyatukan LMS, kuis interaktif, dan gamifikasi.",
     focus: ["LMS", "kuis", "classroom game", "materi", "evaluasi"],
-    status: "Coming Soon", // TODO
-    url: null, // TODO: URL produk
+    status: "Coming Soon",
+    url: "https://www.class.nalaro.web.id",
   },
   {
     number: "03",
@@ -39,8 +39,8 @@ export const products: Product[] = [
     description:
       "Undangan digital yang sederhana dan modern untuk dibuat dan dibagikan.",
     focus: ["digital invitation", "personal event", "desain undangan"],
-    status: "Coming Soon", // TODO
-    url: null, // TODO: URL produk
+    status: "Coming Soon",
+    url: "https://enveely.id",
   },
   {
     number: "04",

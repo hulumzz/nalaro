@@ -1,107 +1,30 @@
 ---
 import { site, nav } from "../../data/site";
-import { productCount } from "../../data/products";
-
-const hasLocation = !site.location.startsWith("TODO");
-const hasFounded = !site.founded.startsWith("TODO");
 ---
-
-{/* Desktop Top Strip */}
-<header class="hidden lg:flex absolute top-0 left-[64px] right-0 h-[48px] border-b border-[var(--color-line)] z-30 bg-[var(--color-ink)]">
-  <div class="flex-1 flex items-center h-full min-w-0">
-    <div class="px-4 xl:px-6 border-r border-[var(--color-line)] h-full flex items-center min-w-0">
-      <span class="t-label text-[var(--color-mute)] whitespace-nowrap">{site.name.toUpperCase()} — {site.tagline.toUpperCase()}</span>
-    </div>
-    <div class="px-4 xl:px-6 border-r border-[var(--color-line)] h-full flex items-center">
-      <span class="t-label text-[var(--color-mute)] whitespace-nowrap">PRODUK AKTIF {productCount.toString().padStart(2, '0')}</span>
-    </div>
-    {hasLocation && (
-      <div class="hidden xl:flex px-6 border-r border-[var(--color-line)] h-full items-center shrink-0">
-        <span class="t-label text-[var(--color-mute)] whitespace-nowrap">{site.location.toUpperCase()}</span>
-      </div>
-    )}
-    {hasFounded && (
-      <div class="hidden xl:flex px-6 border-r border-[var(--color-line)] h-full items-center shrink-0">
-        <span class="t-label text-[var(--color-mute)] whitespace-nowrap">{site.founded}</span>
-      </div>
-    )}
-    <div class="px-4 xl:px-6 h-full flex items-center min-w-[112px] justify-end shrink-0 ml-auto">
-      <span class="t-label text-[var(--color-mute)] ticker tabular-nums" id="top-strip-time">--:-- WIB</span>
-    </div>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/#index" class="brand" aria-label="Nalaro, beranda">
+      <img src={site.logo} width="40" height="40" alt="" fetchpriority="high" />
+      <span>nalaro</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Navigasi utama">
+      {nav.map(item => <a href={`/#${item.id}`}>{item.label}</a>)}
+    </nav>
+    <a class="header-contact" href="/#contact">Mari ngobrol <span aria-hidden="true">↗</span></a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">Menu <span aria-hidden="true">+</span></button>
   </div>
-</header>
-
-{/* Mobile Top Bar */}
-<header class="lg:hidden fixed top-0 left-0 right-0 h-[56px] border-b border-[var(--color-line)] z-40 bg-[var(--color-ink)] flex items-center justify-between px-4">
-  <span class="t-h3 w-cond font-bold tracking-tight leading-none text-[var(--color-bone)] uppercase">{site.name}</span>
-  <button id="mobile-menu-toggle" class="t-label text-[var(--color-bone)] px-2 py-1 outline-none focus-visible:bg-[var(--color-bone)] focus-visible:text-[var(--color-ink)]" aria-expanded="false" aria-controls="mobile-nav">
-    INDEX
-  </button>
-</header>
-
-{/* Mobile Overlay Menu */}
-<div id="mobile-nav" class="fixed inset-0 bg-[var(--color-ink)] z-50 transform -translate-y-full transition-transform duration-400 ease-in-out lg:hidden overflow-y-auto pb-[48px]">
-  <div class="flex items-center justify-end h-[56px] px-4 border-b border-[var(--color-line)]">
-    <button id="mobile-menu-close" class="t-label text-[var(--color-bone)] px-2 py-1 outline-none focus-visible:bg-[var(--color-bone)] focus-visible:text-[var(--color-ink)]">
-      TUTUP
-    </button>
-  </div>
-  
-  <nav class="p-6 flex flex-col gap-6" aria-label="Mobile Navigation">
-    {nav.map((item) => (
-      <a href={`#${item.id}`} class="mobile-nav-link group flex flex-col gap-2 outline-none">
-        <span class="t-label text-[var(--color-flare)]">{item.number}</span>
-        <span class="t-h2 text-[var(--color-mute)] group-hover:text-[var(--color-bone)] group-focus-visible:text-[var(--color-bone)] transition-colors">{item.label}</span>
-      </a>
-    ))}
+  <nav id="mobile-nav" class="mobile-nav container" aria-label="Navigasi mobile" hidden>
+    {nav.map(item => <a href={`/#${item.id}`}><span>{item.number}</span>{item.label}<span aria-hidden="true">↗</span></a>)}
+    <a href="/#contact"><span>06</span>Mari ngobrol<span aria-hidden="true">↗</span></a>
   </nav>
-</div>
-
+</header>
 <script>
-  // Simple clock for the top strip
-  function updateTime() {
-    const el = document.getElementById("top-strip-time");
-    if (!el) return;
-    
-    const now = new Date();
-    const options: Intl.DateTimeFormatOptions = { 
-      timeZone: 'Asia/Jakarta',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    };
-    
-    const timeStr = new Intl.DateTimeFormat('id-ID', options).format(now);
-    el.textContent = `${timeStr} WIB`;
-  }
-  
-  updateTime();
-  setInterval(updateTime, 60000);
-
-  // Mobile menu toggle
-  const toggleBtn = document.getElementById("mobile-menu-toggle");
-  const closeBtn = document.getElementById("mobile-menu-close");
-  const nav = document.getElementById("mobile-nav");
-  const links = document.querySelectorAll(".mobile-nav-link");
-
-  function openMenu() {
-    if (!nav || !toggleBtn) return;
-    nav.style.transform = "translateY(0)";
-    toggleBtn.setAttribute("aria-expanded", "true");
-    document.body.style.overflow = "hidden"; // Prevent background scroll
-  }
-
-  function closeMenu() {
-    if (!nav || !toggleBtn) return;
-    nav.style.transform = "translateY(-100%)";
-    toggleBtn.setAttribute("aria-expanded", "false");
-    document.body.style.overflow = "";
-  }
-
-  toggleBtn?.addEventListener("click", openMenu);
-  closeBtn?.addEventListener("click", closeMenu);
-  
-  links.forEach(link => {
-    link.addEventListener("click", closeMenu);
-  });
+  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle")!;
+  const menu = document.querySelector<HTMLElement>("#mobile-nav")!;
+  function closeMenu() { menu.hidden = true; toggle.setAttribute("aria-expanded", "false"); }
+  toggle.addEventListener("click", () => { menu.hidden = !menu.hidden; toggle.setAttribute("aria-expanded", String(!menu.hidden)); });
+  menu.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", event => { if (event.key === "Escape" && !menu.hidden) { closeMenu(); toggle.focus(); } });
+  document.addEventListener("click", event => { if (!(event.target as Element).closest(".site-header")) closeMenu(); });
+  matchMedia("(min-width: 761px)").addEventListener("change", event => { if (event.matches) closeMenu(); });
 </script>

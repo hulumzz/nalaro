@@ -1,178 +1,44 @@
 ---
 import { products } from "../../data/products";
-import Index from "../ui/Index.astro";
-import DataRow from "../ui/DataRow.astro";
-import Arrow from "../glyph/Arrow.astro";
-import CornerTicks from "../layout/CornerTicks.astro";
-import ProductMark from "../glyph/ProductMark.astro";
-
-const productVisualByNumber: Record<string, string> = {
-  "01": "skripzy",
-  "02": "class",
-  "03": "enveely",
-};
+import { home } from "../../data/home";
+const ids = ["skripzy", "class", "enveely"];
+const categories = ["RESEARCH & WRITING", "EDUCATION & LEARNING", "INVITATION & EVENTS"];
 ---
-
-<section id="products" class="relative w-full section-pad bg-[var(--color-ink)]" data-section="products">
-  <div class="grid-content pb-16 lg:pb-24">
-    <div class="col-span-full lg:col-start-2 lg:col-span-11 flex flex-col gap-6">
-      <Index number="01" name="Products" class="mb-4" />
-      <h2 class="t-h2 text-[var(--color-bone)] w-wide">Products</h2>
-      <p class="t-lede text-[var(--color-mute)]">Produk yang kami bangun dan miliki.</p>
-    </div>
-  </div>
-
-  <div class="w-full lg:pl-[64px] border-t border-[var(--color-line)] relative registry-container">
-    {products.map((p) => (
-      <div 
-        class:list={[
-          "registry-row group flex flex-col lg:grid lg:grid-cols-12 min-h-[22vh] border-b outline-none relative z-10 transition-colors duration-140",
-          p.isSlot ? "border-[var(--color-mute)] border-dashed pointer-events-none opacity-50" : "border-[var(--color-line)] cursor-pointer hover:bg-[var(--color-bone)] focus-visible:bg-[var(--color-bone)]",
-          p.status === "Coming Soon" ? "is-coming-soon" : ""
-        ]}
-        tabindex={p.isSlot || p.status === "Coming Soon" ? "-1" : "0"}
-        data-product={productVisualByNumber[p.number] ?? ""}
-      >
-        {/* Mobile accordion */}
-        <button
-          type="button"
-          class="registry-mobile-toggle lg:hidden w-full flex items-center justify-between gap-4 p-4 sm:p-5 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors text-left disabled:cursor-default"
-          aria-expanded="false"
-          aria-controls={`product-mobile-${p.number}`}
-          data-mobile-product-toggle
-          disabled={p.isSlot}
-        >
-          <span class="flex items-center gap-4 min-w-0">
-            <span class="t-label text-[var(--color-flare)] shrink-0">{p.code}</span>
-            <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-colors min-w-0 wrap-pretty">{p.name}</span>
-          </span>
-          {!p.isSlot && (
-            <Arrow direction="down" size={20} class="registry-mobile-arrow text-[var(--color-bone)] group-hover:text-[var(--color-ink)] transition-all opacity-60 shrink-0" />
-          )}
-        </button>
-
-        <div
-          id={`product-mobile-${p.number}`}
-          class:list={[
-            "lg:hidden p-4 sm:p-5 flex-col gap-4 border-b border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors min-w-0",
-            p.isSlot ? "flex" : "registry-mobile-panel hidden"
-          ]}
-        >
-          <p class="t-small text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] transition-colors wrap-pretty">
-            {p.description}
-          </p>
-          {!p.isSlot && (
-            <div class="flex flex-col gap-3">
-              <p class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] transition-colors break-words">
-                {p.focus.join(' / ')}
-              </p>
-              <div class="flex items-center justify-between gap-4 pt-2">
-                <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)]">STATUS</span>
-                <span class="t-label text-[var(--color-bone)] group-hover:text-[var(--color-ink)]">{p.status}</span>
-              </div>
-            </div>
-          )}
-          {p.isSlot && (
-            <span class="inline-block border border-[var(--color-mute)] text-[var(--color-mute)] px-3 py-1 t-label w-max max-w-full">
-              SLOT 04 — TERBUKA
-            </span>
-          )}
-        </div>
-
-        {/* Desktop Layout */}
-
-        <div class="hidden lg:contents mobile-content">
-          {/* Col 1: Number */}
-          <div class="hidden lg:flex col-span-1 p-6 items-start border-r border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors">
-            <span class="t-label text-[var(--color-flare)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors">{p.code}</span>
-          </div>
-          
-          {/* Col 2-6: Name */}
-          <div class="hidden lg:flex col-span-5 p-6 items-center min-w-0">
-            <h3 class:list={[
-              "font-display font-bold text-[clamp(2.5rem,6vw,6rem)] leading-[0.92] tracking-[-0.02em] transition-all duration-400 ease-out origin-left max-w-full wrap-balance",
-              p.isSlot ? "text-transparent" : "text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] w-wide group-hover:w-max group-focus-visible:w-max"
-            ]} style={p.isSlot ? "-webkit-text-stroke: 1px var(--color-mute);" : ""}>
-              {p.name}
-            </h3>
-          </div>
-
-          {/* Col 7-9: Description & Focus */}
-          <div class="lg:col-span-3 p-6 flex flex-col justify-center gap-4 min-w-0">
-            <p class="t-small xl:text-[1.0625rem] xl:leading-[1.6] text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors wrap-pretty">
-              {p.description}
-            </p>
-            {!p.isSlot && (
-              <p class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors leading-relaxed">
-                {p.focus.join(' / ')}
-              </p>
-            )}
-            {p.isSlot && (
-              <span class="inline-block border border-[var(--color-mute)] text-[var(--color-mute)] px-3 py-1 t-label w-max">
-                SLOT 04 — TERBUKA
-              </span>
-            )}
-          </div>
-
-          {/* Col 10: Status */}
-          <div class="lg:col-span-2 p-6 flex items-center justify-end">
-            {!p.isSlot && (
-              <DataRow 
-                label="STATUS" 
-                class="w-full"
-                labelClass="group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors"
-                valueClass="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors text-right"
-              >
-                {p.status}
-              </DataRow>
-            )}
-          </div>
-
-          {/* Col 11-12: Action Cell */}
-          <div class="lg:col-span-1 p-0 flex items-stretch border-l border-t lg:border-t-0 border-[var(--color-line)] group-hover:border-[var(--color-ink)] transition-colors">
-            {p.isSlot ? (
-              <div class="w-full h-full p-6 lg:min-h-full min-h-[72px]"></div>
-            ) : p.status === "Coming Soon" ? (
-              <div class="w-full h-full p-6 flex items-center justify-center min-h-[72px]">
-                <span class="t-label text-[var(--color-mute)] group-hover:text-[var(--color-mute-b)] group-focus-visible:text-[var(--color-mute-b)] transition-colors">SEGERA HADIR</span>
-              </div>
-            ) : (
-              <a 
-                href={p.url || "#"} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="w-full h-full p-6 flex lg:flex-col items-center justify-between min-h-[72px] outline-none"
-                aria-label={`Buka ${p.name}`}
-                data-umami-event="open-product"
-              >
-                <span class="t-h3 text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors">Open</span>
-                <Arrow direction="up-right" size={24} class="text-[var(--color-bone)] group-hover:text-[var(--color-ink)] group-focus-visible:text-[var(--color-ink)] transition-colors" />
-              </a>
-            )}
-          </div>
-        </div>
+<section id="products" class="section container" aria-labelledby="products-title">
+  <div class="section-heading"><div><p class="eyebrow"><span class="section-number">01</span>{home.products.label}</p><h2 id="products-title" data-reveal>{home.products.title}</h2></div><p class="section-intro">{home.products.intro}</p></div>
+  <div class="product-grid">
+    {products.filter(p => !p.isSlot).map((product, i) => <article id={`product-${ids[i]}`} class={`product-card product-${ids[i]}`}>
+      <div class="product-art" aria-hidden="true">
+        <div class="art-topline"><span>{categories[i]}</span><span>↗</span></div>
+        {i === 0 && <div class="research-art"><div class="research-sidebar"><i></i><i></i><i></i><i></i></div><div class="research-paper"><span class="art-small">RUANG PENELITIAN</span><strong>Mulai dari<br/>rasa ingin tahu.</strong><div class="paper-lines"><i></i><i></i><i></i></div><div class="research-prompt"><span>✳</span> Bantu susun ide penelitian<span class="art-cursor"></span></div><div class="paper-lines short"><i></i><i></i></div></div></div>}
+        {i === 1 && <div class="class-art"><div class="class-label"><span>RUANG KELAS</span><span>01 / 04</span></div><strong>Belajar. Coba.<br/>Pahami.</strong><div class="answer-grid"><span>A <i></i></span><span class="chosen">B <b>✓</b></span><span>C <i></i></span><span>D <i></i></span></div><div class="class-progress"><i></i><i></i><i></i><i></i></div></div>}
+        {i === 2 && <div class="invite-art">
+          <svg class="envelope-illustration" viewBox="0 0 320 220" fill="none" aria-hidden="true">
+            <path d="M28 108 160 24 292 108V204H28Z" fill="#24251F" stroke="#55574C"/>
+            <path d="m28 108 132 80 132-80" stroke="#55574C"/>
+            <g class="envelope-letter">
+              <path d="M65 12H255V187H65Z" fill="#E9E6DD" stroke="#DAD6CA"/>
+              <path d="M75 22H245V177H75Z" stroke="#BBB7A9" stroke-width=".6"/>
+              <text x="88" y="43" fill="#5F625B" font-size="7" letter-spacing="1.3" font-family="var(--font-mono)">SEBUAH CERITA BARU</text>
+              <text x="88" y="76" fill="#151613" font-size="25" font-family="Georgia,serif">Untuk momen</text>
+              <text x="88" y="104" fill="#151613" font-size="25" font-family="Georgia,serif">berhargamu.</text>
+              <path d="M88 121H117" stroke="#FF5B2E" stroke-width="2"/>
+              <path d="M225 36v15m-7.5-7.5h15m-13-5.5 11 11m0-11-11 11" stroke="#FF5B2E" stroke-width="1.2"/>
+            </g>
+            <path d="M28 108 160 172 292 108V204H28Z" fill="#35372D" stroke="#606253"/>
+            <path d="m28 204 101-81m163 81-101-81" stroke="#55574A"/>
+            <path d="m28 204 105-70q27-18 54 0l105 70" fill="#414336" stroke="#606253"/>
+            <text x="46" y="188" fill="#F5F5F2" font-family="Georgia,serif" font-size="18">enveely</text>
+            <path d="M251 176h13v13m-13 0 13-13" stroke="#FF5B2E" stroke-width="1.5"/>
+          </svg>
+        </div>}
+        <span class="art-caption">Gambaran produk</span>
       </div>
-    ))}
-
-    {/* Desktop Preview Panel (Appended to body by script, but template lives here) */}
-    <div id="registry-preview" class="fixed top-0 left-0 w-[300px] h-[200px] bg-[var(--color-ink-2)] border border-[var(--color-line)] z-50 pointer-events-none opacity-0 transition-opacity duration-180 hidden lg:flex items-center justify-center">
-      <CornerTicks />
-      {/* Product marks will be cloned here by JS based on hover */}
-      <div class="preview-content w-[160px] h-[160px]"></div>
-    </div>
-
-    {/* Hidden SVGs to clone */}
-    <div class="hidden" id="product-marks-templates">
-      <ProductMark product="skripzy" class="w-full h-full skripzy-template" />
-      <ProductMark product="class" class="w-full h-full class-template" />
-      <ProductMark product="enveely" class="w-full h-full enveely-template" />
-    </div>
+      <div class="product-info"><div class="product-meta"><span class="mono">{product.code}</span><span class="product-status"><span class="signal"></span>{product.status === "Coming Soon" ? "Segera hadir" : product.status === "Live" ? "Tersedia" : product.status}</span></div><h3>{product.name}</h3><p>{product.description}</p>
+        {product.url && <a class="product-open text-link" href={product.url} target="_blank" rel="noopener noreferrer">Buka {product.name} <span aria-hidden="true">↗</span></a>}
+        <details class="product-details"><summary>Fitur dan fokus<span aria-hidden="true">+</span></summary><div><ul>{product.focus.map(focus => <li>{focus}</li>)}</ul></div></details>
+      </div>
+    </article>)}
   </div>
+  <div class="product-next"><span><span class="orange" aria-hidden="true">+</span>{home.products.next}</span><a href="#lab" class="text-link">{home.products.nextLink}<span aria-hidden="true">↗</span></a></div>
 </section>
-
-<style>
-  /* Preview following cursor */
-  #registry-preview {
-    will-change: transform;
-  }
-</style>

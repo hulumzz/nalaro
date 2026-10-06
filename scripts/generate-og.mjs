@@ -1,0 +1,7 @@
+import fs from 'node:fs/promises';
+import sharp from 'sharp';
+const logo = (await fs.readFile('public/brand/nalaro.png')).toString('base64');
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#0B0C0A"/><rect x="34" y="34" width="1132" height="562" fill="none" stroke="#2A2C27"/><image href="data:image/png;base64,${logo}" x="73" y="64" width="53" height="53"/><text x="142" y="103" fill="#F5F5F2" font-family="Arial,sans-serif" font-size="41" font-weight="700" letter-spacing="-2">nalaro<tspan fill="#FF5B2E">.</tspan></text><text x="80" y="231" fill="#F5F5F2" font-family="Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-4">WE BUILD</text><text x="80" y="325" fill="#FF5B2E" font-family="Arial,sans-serif" font-size="92" font-weight="700" letter-spacing="-4">USEFUL</text><text x="80" y="419" fill="#F5F5F2" font-family="Arial,sans-serif" font-size="76" font-weight="700" letter-spacing="-4">DIGITAL PRODUCTS.</text><path d="M80 480H1120" stroke="#2A2C27"/><text x="80" y="533" fill="#A2A49C" font-family="Arial,sans-serif" font-size="22">Digital Product Studio</text><text x="923" y="533" fill="#A2A49C" font-family="Arial,sans-serif" font-size="22">nalaro.web.id</text><path d="M1054 131h50v50m-50 0 50-50" fill="none" stroke="#FF5B2E" stroke-width="6"/></svg>`;
+await fs.mkdir('public/og', { recursive: true });
+await sharp(Buffer.from(svg)).png().toFile('public/og/nalaro-og.png');
+console.log('Generated public/og/nalaro-og.png (1200 x 630)');

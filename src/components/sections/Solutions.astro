@@ -1,96 +1,19 @@
 ---
-import { solutions, audiences } from "../../data/solutions";
-import Index from "../ui/Index.astro";
-import BracketLink from "../ui/BracketLink.astro";
+import { solutions } from "../../data/solutions";
+import { home } from "../../data/home";
 ---
-
-<section id="solutions" class="relative w-full section-pad bg-[var(--color-bone)]" data-section="solutions" data-surface="bone">
-  <div class="grid-content">
-    
-    {/* Left Column (Sticky) */}
-    <div class="col-span-full lg:col-span-4 lg:sticky lg:top-[112px] h-fit flex flex-col gap-8 mb-16 lg:mb-0 min-w-0 lg:pr-8">
-      <Index number="02" name="Solutions" />
-      <h2 class="t-h2 text-[var(--color-ink)] w-wide">Solutions</h2>
-      <p class="t-lede text-[var(--color-ink)] opacity-80">
-        Kapabilitas yang sama yang kami pakai untuk produk sendiri, tersedia untuk kebutuhan spesifik Anda.
-      </p>
-      <div class="pt-4 hidden lg:block">
-        <BracketLink href="#contact" class="text-[var(--color-ink)]">
-          Build With Nalaro
-        </BracketLink>
+<section id="solutions" class="section section-surface" aria-labelledby="solutions-title">
+  <div class="container solutions-grid">
+    <div class="solutions-intro"><p class="eyebrow"><span class="section-number">02</span>{home.solutions.label}</p><h2 id="solutions-title" data-reveal>{home.solutions.title}</h2><p class="section-intro">{home.solutions.intro}</p><a href="#contact" class="text-link">Ceritakan kebutuhanmu<span aria-hidden="true">↗</span></a>
+      <div class="system-map" aria-label="Tim, data, dan aktivitas terhubung dalam satu sistem">
+        <div class="map-top"><span>TIM</span><span>DATA</span><span>AKTIVITAS</span></div>
+        <div class="map-connectors" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="map-core"><img src="/brand/nalaro.png" width="32" height="32" alt="" /><span>Satu sistem yang terhubung</span><span class="signal"></span></div>
+        <div class="map-output"><span aria-hidden="true">↓</span><span>{home.solutions.visualLabel}</span></div>
       </div>
     </div>
-
-    {/* Right Column (Spec Sheet) */}
-    <div class="col-span-full lg:col-span-8 flex flex-col min-w-0">
-      {/* Spec Rows */}
-      <div class="flex flex-col border-b border-ink-soft">
-        {solutions.map((sol) => (
-          <div class="spec-row grid grid-cols-1 md:grid-cols-12 border-t border-ink-soft py-8 gap-6 md:gap-0">
-            {/* Code & Name */}
-            <div class="md:col-span-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 md:pr-6">
-              <span class="t-label text-[var(--color-mute-b)] shrink-0 w-8">{sol.code}</span>
-              <h3 class="t-h3 text-[var(--color-ink)] wrap-pretty">{sol.name}</h3>
-            </div>
-            
-            {/* Input & Output */}
-            <div class="md:col-span-7 flex flex-col gap-6 md:gap-8 justify-center min-w-0">
-              <div class="flex flex-col gap-2 relative">
-                <span class="t-label text-[var(--color-mute-b)]">MASUKAN</span>
-                <p class="t-body text-[var(--color-ink)]">{sol.input}</p>
-                {/* Connector line (desktop only) */}
-                <div class="hidden md:block absolute left-0 -bottom-5 w-full max-w-[200px] h-[1px] line-ink-soft origin-left reveal-line">
-                  <div class="absolute right-0 top-[-2px] w-[5px] h-[5px] border border-[var(--color-ink)] opacity-30"></div>
-                </div>
-              </div>
-              
-              <div class="flex flex-col gap-2">
-                <span class="t-label text-[var(--color-mute-b)]">KELUARAN</span>
-                <p class="t-body text-[var(--color-ink)]">{sol.output}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Target Audiences */}
-      <div class="mt-16 pt-8 border-t border-ink-medium">
-        <div class="mb-8">
-          <span class="t-label text-[var(--color-mute-b)] border border-[var(--color-mute-b)] px-3 py-1 inline-block">UNTUK SIAPA</span>
-        </div>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
-          {audiences.map((aud) => (
-            <div class="flex flex-col gap-4 border-l border-ink-soft pl-4">
-              <h4 class="t-label text-[var(--color-ink)]">{aud.label}</h4>
-              <ul class="flex flex-col gap-2">
-                {aud.items.map((item) => (
-                  <li class="t-small text-[var(--color-ink)] opacity-80">{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {/* Mobile CTA */}
-      <div class="mt-16 lg:hidden">
-        <BracketLink href="#contact" class="text-[var(--color-ink)]">
-          Build With Nalaro
-        </BracketLink>
-      </div>
-      
-      {/* Footer Note */}
-      <div class="mt-16 md:mt-24 text-right">
-        <span class="t-label text-[var(--color-mute-b)]">KAPABILITAS NALARO. IDENTITAS UTAMA: PRODUK.</span>
-      </div>
+    <div class="solution-list">{solutions.map((solution, i) => <details class="solution-item" name="solutions" open={i === 0}><summary><span class="mono orange">{solution.code}</span><h3>{solution.name}</h3><span class="detail-plus" aria-hidden="true">+</span></summary><div class="solution-content"><p>{solution.description}</p><div class="solution-flow"><div><span class="mono muted">DARI</span><p>{solution.input}</p></div><span class="orange" aria-hidden="true">↳</span><div><span class="mono muted">MENJADI</span><p>{solution.output}</p></div></div><ul class="solution-tags">{solution.tags.map(tag => <li>{tag}</li>)}</ul></div></details>)}
+      <p class="audience-note">{home.solutions.audiences}</p>
     </div>
   </div>
 </section>
-
-<style>
-  .reveal-line {
-    will-change: transform;
-    transform: scaleX(0);
-  }
-</style>

@@ -1,105 +1,27 @@
 ---
-import { site } from "../../data/site";
-import BracketLink from "../ui/BracketLink.astro";
+import { site, nav } from "../../data/site";
 import { products } from "../../data/products";
-
-const isConfigured = (value: string) => value.length > 0 && !value.startsWith("TODO");
-const footerProducts = products.filter((product) => !product.isSlot);
-
-// Footer component per Desain.md §10.8
 const year = new Date().getFullYear();
-// Format current date as YYYY.MM.DD
-const date = new Date().toISOString().split('T')[0].replace(/-/g, '.');
 ---
-
-<footer class="bg-[var(--color-ink)] border-t border-[var(--color-line)] pt-16 lg:pt-24 relative overflow-hidden flex flex-col justify-between" id="footer">
-  
-  {/* Top Row: Links */}
-  <div class="grid-content pb-16 lg:pb-32">
-    <div class="col-span-full sm:col-span-4 lg:col-span-3 lg:col-start-2 flex flex-col gap-6">
-      <div class="flex items-center gap-2">
-        <span class="t-label text-[var(--color-mute)] shrink-0 w-5">01</span>
-        <span class="w-4 h-px bg-[var(--color-line)]"></span>
-        <span class="t-label text-[var(--color-mute)]">SECTION</span>
-      </div>
-      <div class="flex flex-col gap-3">
-        <BracketLink href="#products" class="text-[var(--color-bone)]">Products</BracketLink>
-        <BracketLink href="#solutions" class="text-[var(--color-bone)]">Solutions</BracketLink>
-        <BracketLink href="#works" class="text-[var(--color-bone)]">Works</BracketLink>
-        <BracketLink href="#lab" class="text-[var(--color-bone)]">Lab</BracketLink>
-        <BracketLink href="#about" class="text-[var(--color-bone)]">About</BracketLink>
-      </div>
-    </div>
-    
-    <div class="col-span-full sm:col-span-4 lg:col-span-3 flex flex-col gap-6 mt-12 sm:mt-0">
-      <div class="flex items-center gap-2">
-        <span class="t-label text-[var(--color-mute)] shrink-0 w-5">02</span>
-        <span class="w-4 h-px bg-[var(--color-line)]"></span>
-        <span class="t-label text-[var(--color-mute)]">KONTAK</span>
-      </div>
-      <div class="flex flex-col gap-3">
-        <BracketLink href="#contact" class="text-[var(--color-bone)]">Email</BracketLink>
-        <BracketLink href="#contact" class="text-[var(--color-bone)]">WhatsApp</BracketLink>
-        {isConfigured(site.social.instagram) && (
-          <BracketLink href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">Instagram</BracketLink>
-        )}
-        {isConfigured(site.social.linkedin) && (
-          <BracketLink href={site.social.linkedin} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">LinkedIn</BracketLink>
-        )}
-        {isConfigured(site.social.github) && (
-          <BracketLink href={site.social.github} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">GitHub</BracketLink>
-        )}
-      </div>
-    </div>
-
-    <div class="col-span-full sm:col-span-4 lg:col-span-3 flex flex-col gap-6 mt-12 lg:mt-0">
-      <div class="flex items-center gap-2">
-        <span class="t-label text-[var(--color-mute)] shrink-0 w-5">03</span>
-        <span class="w-4 h-px bg-[var(--color-line)]"></span>
-        <span class="t-label text-[var(--color-mute)]">PRODUK</span>
-      </div>
-      <div class="flex flex-col gap-3">
-        {footerProducts.map((product) =>
-          product.url ? (
-            <BracketLink href={product.url} target="_blank" rel="noopener noreferrer" class="text-[var(--color-bone)]">
-              {product.name}
-            </BracketLink>
-          ) : (
-            <span class="t-label text-[var(--color-mute)]">{product.name} — SEGERA HADIR</span>
-          )
-        )}
-      </div>
-    </div>
+<footer class="site-footer container">
+  <div class="footer-top"><div><a href="/#index" class="brand" aria-label="Nalaro, beranda"><img src={site.logo} width="40" height="40" alt="" loading="lazy"/><span>nalaro</span></a><p>{site.tagline}</p></div>
+    <nav aria-label="Navigasi footer">{nav.map(item => <a href={`/#${item.id}`}>{item.label}</a>)}<a href="/#lab">Lab</a><a href="/#contact">Kontak</a></nav>
+    <div class="footer-products">{products.filter(p => !p.isSlot).map((product, i) => <a href={product.url || `/#product-${["skripzy", "class", "enveely"][i]}`} target={product.url ? "_blank" : undefined} rel={product.url ? "noopener noreferrer" : undefined}>{product.name}<span aria-hidden="true">↗</span></a>)}</div>
   </div>
-
-  {/* Middle: Giant Wordmark */}
-  <div class="w-full relative overflow-hidden" style="height: clamp(8rem, 25vw, 25rem);">
-    <div 
-      class="t-mega text-transparent w-full text-left pl-4 lg:pl-[96px] leading-[0.8] absolute bottom-0 select-none transform translate-y-[14%]" 
-      style="-webkit-text-stroke: 1px var(--color-line); text-stroke: 1px var(--color-line);"
-      aria-hidden="true"
-      id="footer-wordmark"
-    >
-      {site.name.toUpperCase()}
-    </div>
+  <div class="footer-wordmark" aria-hidden="true" style="display: flex; align-items: center; overflow: visible;">
+    <div style="display: block; white-space: nowrap;">NALARO<span style="font-size: .25em; -webkit-text-stroke: 0; color: var(--color-flare); vertical-align: top; margin-left: 20px; line-height: 1.7;">✳</span></div>
+    <img src="/brand/nalaro-ghost-mascot.svg" alt="" style="height: 1.2em; width: auto; flex-shrink: 0; margin-left: auto;" />
   </div>
-
-  {/* Bottom Row */}
-  <div class="w-full border-t border-[var(--color-line)] h-[48px] px-4 lg:pl-[96px] lg:pr-[32px] flex items-center justify-between z-10 bg-[var(--color-ink)]">
-    <div class="min-w-0 flex items-center gap-4 lg:gap-8 overflow-x-auto no-scrollbar">
-      <span class="t-label text-[var(--color-mute)] whitespace-nowrap">© {year} {site.name} — {site.closing}</span>
-      <span class="t-label text-[var(--color-mute)] opacity-50 whitespace-nowrap hidden sm:inline">BUILD {date}</span>
+  <div class="footer-bottom">
+    <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+      <span>© {year} Nalaro</span>
+      <a href="/faq">FAQ</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms-of-use">Terms of Use</a>
     </div>
-    <div class="shrink-0">
-      <BracketLink href="#index" class="text-[var(--color-mute)] hover:text-[var(--color-bone)]">Kembali ke index</BracketLink>
+    <div style="display: flex; gap: 20px; align-items: center;">
+      <span class="desktop-only">{site.closing}</span>
+      <a href="/#index">Kembali ke atas <span aria-hidden="true">↑</span></a>
     </div>
   </div>
 </footer>
-
-<style>
-  /* Base state for wordmark width */
-  #footer-wordmark {
-    font-stretch: 100%;
-    will-change: font-stretch;
-  }
-</style>

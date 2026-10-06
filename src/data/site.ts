@@ -1,43 +1,24 @@
-// src/data/site.ts — Identitas, kontak, nav, meta
-
+const configured = (value: string | undefined) => value?.trim() || "";
 export const site = {
   name: "Nalaro",
   tagline: "Digital Product Studio",
   headline: "We build useful digital products.",
-  subheadline:
-    "Nalaro membuat SaaS, AI tools, platform pendidikan, dan solusi digital untuk masalah yang nyata.",
-  tag: "Ideas into useful digital products.",
+  subheadline: "Kami membangun produk untuk membantu orang belajar, bekerja, dan mengelola hal yang penting bagi mereka.",
+  description: "Nalaro adalah studio produk digital yang membangun SaaS, AI tools, platform pendidikan, dan aplikasi web untuk kebutuhan bisnis dan organisasi.",
   closing: "Build useful things.",
-  ctaPrimary: "Explore Products",
-  ctaSecondary: "Build With Nalaro",
-
-  domain: "TODO: domain final (mis. nalaro.com / nalaro.id)",
-  email: "TODO: email kontak",
-  whatsapp: "TODO: nomor format internasional tanpa +",
-  social: {
-    instagram: "TODO: Instagram",
-    linkedin: "TODO: LinkedIn",
-    github: "TODO: GitHub",
-  },
-
-  logo: "TODO: file logo Nalaro (SVG)",
-  founded: "TODO: tahun berdiri",
-  location: "TODO: kota/negara",
-
-  // Dihitung otomatis dari products.ts
-  get activeProductCount() {
-    return 3; // Update ini setelah menghitung dari products.ts
-  },
-} as const;
-
+  domain: configured(import.meta.env.PUBLIC_SITE_URL) || "https://nalaro.web.id",
+  email: configured(import.meta.env.PUBLIC_CONTACT_EMAIL) || "nalaro@skripzy.id",
+  whatsapp: (configured(import.meta.env.PUBLIC_WHATSAPP) || "6285771298582").replace(/\D/g, ""),
+  social: { instagram: "", linkedin: "", github: "" },
+  logo: "/brand/nalaro.png",
+  founded: "", location: "",
+  ctaPrimary: "Jelajahi produk",
+  ctaSecondary: "Mulai percakapan",
+};
 export const nav = [
-  { id: "index", label: "Index", number: "00" },
-  { id: "products", label: "Products", number: "01" },
-  { id: "solutions", label: "Solutions", number: "02" },
-  { id: "works", label: "Works", number: "03" },
-  { id: "lab", label: "Lab", number: "04" },
-  { id: "about", label: "About", number: "05" },
-  { id: "contact", label: "Contact", number: "06" },
+  { id: "products", label: "Produk", number: "01" },
+  { id: "solutions", label: "Solusi", number: "02" },
+  { id: "works", label: "Proses", number: "03" },
+  { id: "about", label: "Studio", number: "05" },
 ] as const;
-
 export type NavItem = (typeof nav)[number];

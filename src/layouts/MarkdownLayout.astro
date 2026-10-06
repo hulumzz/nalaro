@@ -1,0 +1,58 @@
+---
+import Base from "./Base.astro";
+import Header from "../components/layout/Header.astro";
+import Footer from "../components/layout/Footer.astro";
+
+const { frontmatter } = Astro.props;
+---
+<Base title={frontmatter.title || "Nalaro"}>
+  <Header />
+  <main id="main-content" class="container" style="padding-top: 120px; padding-bottom: 80px; max-width: 720px; margin: 0 auto;">
+    <article class="markdown-content">
+      <slot />
+    </article>
+  </main>
+  <Footer />
+</Base>
+<style is:global>
+  .markdown-content {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-ink);
+  }
+  .markdown-content h1 {
+    font-size: clamp(36px, 5vw, 48px);
+    margin-bottom: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--color-bone);
+  }
+  .markdown-content h2 {
+    font-size: 24px;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    line-height: 1.3;
+    color: var(--color-bone);
+  }
+  .markdown-content p {
+    margin-bottom: 24px;
+    color: var(--color-mute);
+  }
+  .markdown-content ul, .markdown-content ol {
+    margin-bottom: 24px;
+    padding-left: 20px;
+    color: var(--color-mute);
+  }
+  .markdown-content li {
+    margin-bottom: 8px;
+  }
+  .markdown-content a {
+    color: var(--color-flare);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .markdown-content strong {
+    color: var(--color-bone);
+  }
+</style>
+

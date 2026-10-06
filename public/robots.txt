@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://nalaro.com/sitemap-index.xml

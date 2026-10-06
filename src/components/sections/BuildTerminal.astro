@@ -1,0 +1,26 @@
+---
+import { buildScenarios, buildEvents } from "../../data/home";
+const initial = buildScenarios[0];
+---
+<div class="build-terminal" data-build-terminal>
+  <div class="terminal-top"><div class="terminal-brand"><span class="signal"></span><span>nalaro<span class="muted"> / build studio</span></span></div><span class="terminal-status" data-build-status>Siap digunakan</span></div>
+  <div class="scenario-picker" role="group" aria-label="Pilih contoh proyek">
+    {buildScenarios.map((scenario, i) => <button type="button" data-scenario={i} aria-pressed={i === 0}>{scenario.label}</button>)}
+  </div>
+  <div class="terminal-content">
+    <div class="conversation">
+      <div class="pane-heading"><span>01</span> Percakapan</div>
+      <div class="chat-bubble client-bubble"><div class="bubble-byline"><span class="avatar">K</span><span>Kamu</span></div><p data-client data-full-text={initial.client}><span>{initial.client}</span></p></div>
+      <div class="chat-bubble studio-bubble"><div class="bubble-byline"><img src="/brand/nalaro.png" width="24" height="24" alt="" /><span>Nalaro</span><span class="response-mark" aria-hidden="true">↳</span></div><p data-reply data-full-text={initial.reply}><span>{initial.reply}</span></p></div>
+      <div class="project-module"><span class="mono muted">MODUL UTAMA</span><span data-module>{initial.module}</span></div>
+    </div>
+    <div class="build-stream"><div class="pane-heading"><span>02</span> Build log <span class="event-count" data-event-count>8 / 8</span></div>
+      <div class="build-progress" role="progressbar" aria-label="Progres demo" aria-valuemin="0" aria-valuemax="8" aria-valuenow="8"><span></span></div>
+      <ol class="event-list">{buildEvents.map((event, i) => <li class="build-event" data-event={i}><span class="event-marker" aria-hidden="true">✓</span><div><span class="event-tag" data-full-text={event.tag}><span>{event.tag}</span></span><p class="event-message" data-full-text={event.text}><span>{event.text}</span></p></div></li>)}</ol>
+      <div class="terminal-path"><span aria-hidden="true">↗</span><span data-endpoint>{initial.endpoint}</span><span class="signal"></span></div>
+    </div>
+  </div>
+  <div class="terminal-bottom"><span><span class="terminal-prompt" aria-hidden="true">›</span><span data-terminal-message>Build selesai</span><span class="type-cursor" aria-hidden="true"></span></span><button type="button" data-pause hidden>Jeda animasi</button></div>
+  <p class="sr-only" role="status" data-build-announcement>Demo alur pembuatan produk. Bukan proses deployment langsung.</p>
+</div>
+<script>import "../../scripts/build-terminal";</script>
