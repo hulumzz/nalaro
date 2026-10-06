@@ -21,11 +21,11 @@ Anda diperbolehkan menggunakan situs Nalaro untuk tujuan yang wajar dan sah.
 
 Anda tidak diperbolehkan:
 
-- menggunakan situs untuk aktivitas yang melanggar hukum;
-- mencoba mengganggu, merusak, atau mengeksploitasi sistem;
-- melakukan akses tanpa izin terhadap bagian yang tidak ditujukan untuk publik;
-- menyalin atau menggunakan identitas, desain, karya, atau materi Nalaro secara menyesatkan;
-- menggunakan konten Nalaro untuk mengaku sebagai pihak yang berafiliasi dengan Nalaro tanpa izin.
+1. menggunakan situs untuk aktivitas yang melanggar hukum;
+2. mencoba mengganggu, merusak, atau mengeksploitasi sistem;
+3. melakukan akses tanpa izin terhadap bagian yang tidak ditujukan untuk publik;
+4. menyalin atau menggunakan identitas, desain, karya, atau materi Nalaro secara menyesatkan;
+5. menggunakan konten Nalaro untuk mengaku sebagai pihak yang berafiliasi dengan Nalaro tanpa izin.
 
 ## 3. Hak Kekayaan Intelektual
 
@@ -39,12 +39,12 @@ Penggunaan kembali untuk kepentingan komersial, distribusi, publikasi ulang, ata
 
 Produk-produk yang ditampilkan di situs Nalaro dapat memiliki:
 
-- domain atau aplikasi terpisah;
-- sistem akun tersendiri;
-- fitur dan layanan yang berbeda;
-- Kebijakan Privasi;
-- Ketentuan Layanan;
-- aturan penggunaan masing-masing.
+1. domain atau aplikasi terpisah;
+2. sistem akun tersendiri;
+3. fitur dan layanan yang berbeda;
+4. Kebijakan Privasi;
+5. Ketentuan Layanan;
+6. aturan penggunaan masing-masing.
 
 Ketika Anda menggunakan suatu produk Nalaro, ketentuan pada produk tersebut berlaku secara terpisah dari Ketentuan Penggunaan situs utama Nalaro.
 
@@ -58,15 +58,15 @@ Informasi pada situs tidak selalu merupakan penawaran kontraktual yang mengikat 
 
 Jika Nalaro menawarkan jasa atau pengembangan sistem khusus, detail seperti:
 
-- ruang lingkup pekerjaan;
-- biaya;
-- jadwal pengerjaan;
-- revisi;
-- dukungan;
-- maintenance;
-- hosting;
-- hak penggunaan;
-- kepemilikan kode atau aset;
+1. ruang lingkup pekerjaan;
+2. biaya;
+3. jadwal pengerjaan;
+4. revisi;
+5. dukungan;
+6. maintenance;
+7. hosting;
+8. hak penggunaan;
+9. kepemilikan kode atau aset;
 
 akan mengikuti proposal, quotation, perjanjian, atau kesepakatan proyek yang dibuat secara terpisah.
 
@@ -90,10 +90,10 @@ Kami tidak menjamin situs akan selalu tersedia tanpa gangguan.
 
 Sejauh diperbolehkan oleh ketentuan yang berlaku, Nalaro tidak bertanggung jawab atas kerugian yang timbul semata-mata dari:
 
-- penggunaan informasi pada situs di luar konteksnya;
-- gangguan akses sementara;
-- layanan pihak ketiga;
-- penggunaan produk di luar petunjuk atau tujuan yang semestinya.
+1. penggunaan informasi pada situs di luar konteksnya;
+2. gangguan akses sementara;
+3. layanan pihak ketiga;
+4. penggunaan produk di luar petunjuk atau tujuan yang semestinya.
 
 Ketentuan khusus suatu produk atau proyek dapat menetapkan tanggung jawab yang berbeda.
 

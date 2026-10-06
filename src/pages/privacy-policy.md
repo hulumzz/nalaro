@@ -19,11 +19,11 @@ Produk digital di bawah ekosistem Nalaro, seperti Skripzy dan produk lainnya, da
 
 Kami dapat menerima informasi yang Anda berikan secara langsung ketika menghubungi Nalaro, seperti:
 
-- nama;
-- alamat email;
-- nomor WhatsApp atau informasi kontak lain;
-- isi pesan, kebutuhan, atau pertanyaan yang Anda kirimkan;
-- informasi lain yang secara sukarela Anda sertakan dalam komunikasi.
+1. nama;
+2. alamat email;
+3. nomor WhatsApp atau informasi kontak lain;
+4. isi pesan, kebutuhan, atau pertanyaan yang Anda kirimkan;
+5. informasi lain yang secara sukarela Anda sertakan dalam komunikasi.
 
 Situs Nalaro juga dapat menggunakan informasi teknis dasar untuk keperluan operasional dan analitik, seperti jenis perangkat, browser, halaman yang dikunjungi, waktu akses, dan data penggunaan situs.
 
@@ -31,12 +31,12 @@ Situs Nalaro juga dapat menggunakan informasi teknis dasar untuk keperluan opera
 
 Informasi yang diterima dapat digunakan untuk:
 
-- menjawab pertanyaan atau permintaan Anda;
-- memahami kebutuhan proyek atau layanan;
-- menindaklanjuti komunikasi;
-- meningkatkan kualitas situs, produk, dan layanan Nalaro;
-- menjaga keamanan dan keandalan layanan;
-- melakukan analisis penggunaan situs secara umum.
+1. menjawab pertanyaan atau permintaan Anda;
+2. memahami kebutuhan proyek atau layanan;
+3. menindaklanjuti komunikasi;
+4. meningkatkan kualitas situs, produk, dan layanan Nalaro;
+5. menjaga keamanan dan keandalan layanan;
+6. melakukan analisis penggunaan situs secara umum.
 
 Nalaro tidak menjual data pribadi pengguna kepada pihak lain.
 
@@ -64,9 +64,9 @@ Informasi akan disimpan selama masih diperlukan untuk tujuan operasional, komuni
 
 Anda dapat menghubungi Nalaro apabila ingin:
 
-- menanyakan informasi pribadi yang pernah Anda kirimkan;
-- meminta koreksi terhadap informasi yang tidak tepat;
-- meminta penghapusan informasi tertentu, sepanjang tidak bertentangan dengan kewajiban hukum atau kebutuhan operasional yang sah.
+1. menanyakan informasi pribadi yang pernah Anda kirimkan;
+2. meminta koreksi terhadap informasi yang tidak tepat;
+3. meminta penghapusan informasi tertentu, sepanjang tidak bertentangan dengan kewajiban hukum atau kebutuhan operasional yang sah.
 
 ## 8. Perubahan Kebijakan
 

@@ -93,11 +93,11 @@ Anda dapat menghubungi Nalaro melalui kanal kontak yang tersedia di website.
 
 Ceritakan secara singkat:
 
-- masalah atau kebutuhan yang ingin diselesaikan;
-- jenis sistem atau produk yang dibayangkan, jika sudah ada;
-- target pengguna;
-- fitur utama yang diperlukan;
-- target waktu, jika ada.
+1. masalah atau kebutuhan yang ingin diselesaikan;
+2. jenis sistem atau produk yang dibayangkan, jika sudah ada;
+3. target pengguna;
+4. fitur utama yang diperlukan;
+5. target waktu, jika ada.
 
 Tidak perlu menyiapkan spesifikasi teknis yang sempurna sebelum menghubungi kami.
 
