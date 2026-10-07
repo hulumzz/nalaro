@@ -5,7 +5,7 @@ const connected = Boolean(site.email || site.whatsapp);
 ---
 <section id="contact" class="contact-section" aria-labelledby="contact-title">
   <div class="container contact-grid"><div class="contact-copy"><p class="eyebrow"><span class="section-number">06</span>{home.contact.label}</p><h2 id="contact-title" data-reveal>{home.contact.title}</h2><p>{home.contact.text}</p>
-    <div class="contact-links">{site.email && <a href={`mailto:${site.email}`}>{site.email}<span aria-hidden="true">↗</span></a>}{site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer">Chat via WhatsApp<span aria-hidden="true">↗</span></a>}</div>
+    <div class="contact-links">{site.email && <a href={`mailto:${site.email}`}>{site.email}<span aria-hidden="true">↗</span></a>}{site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer">Chat via WhatsApp<span aria-hidden="true">↗</span></a>}<a href="https://order.nalaro.digital/form/" target="_blank" rel="noopener noreferrer">Form order<span aria-hidden="true">↗</span></a></div>
     {site.email && <button type="button" class="copy-email" data-email={site.email}>Salin email</button>}
   </div>
   <form id="contact-form" class="contact-form" data-email={site.email} data-whatsapp={site.whatsapp}>

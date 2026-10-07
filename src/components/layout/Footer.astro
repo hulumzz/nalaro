@@ -4,7 +4,12 @@ import { products } from "../../data/products";
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer container">
-  <div class="footer-top"><div><a href="/#index" class="brand" aria-label="Nalaro, beranda"><img src={site.logo} width="40" height="40" alt="" loading="lazy"/><span>nalaro</span></a><p>{site.tagline}</p></div>
+  <div class="footer-top"><div><a href="/#index" class="brand" aria-label="Nalaro, beranda"><img src={site.logo} width="40" height="40" alt="" loading="lazy"/><span>nalaro</span></a><p>{site.tagline}</p>
+    <div class="footer-order-links">
+      <a href="https://order.nalaro.digital/form/" target="_blank" rel="noopener noreferrer">Form order <span aria-hidden="true">↗</span></a>
+      {site.whatsapp && <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener noreferrer">Order via WhatsApp <span aria-hidden="true">↗</span></a>}
+    </div>
+  </div>
     <nav aria-label="Navigasi footer">{nav.map(item => <a href={`/#${item.id}`}>{item.label}</a>)}<a href="/#lab">Lab</a><a href="/#contact">Kontak</a></nav>
     <div class="footer-products">{products.filter(p => !p.isSlot).map((product, i) => <a href={product.url || `/#product-${["skripzy", "class", "enveely"][i]}`} target={product.url ? "_blank" : undefined} rel={product.url ? "noopener noreferrer" : undefined}>{product.name}<span aria-hidden="true">↗</span></a>)}</div>
   </div>
@@ -25,3 +30,9 @@ const year = new Date().getFullYear();
     </div>
   </div>
 </footer>
+
+<style>
+  .footer-order-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; }
+  .footer-order-links a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font-size: 13px; border-bottom: 1px solid var(--color-line); }
+  .footer-order-links span { color: var(--color-flare); }
+</style>
