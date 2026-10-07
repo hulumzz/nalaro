@@ -92,12 +92,12 @@ try {
   assert.equal(mailto, "mailto:nalaro@skripzy.id");
   report.checks.push("Blank/whitespace validation and encoded WhatsApp draft; no message sent");
   await page.goto(origin);
-  assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://nalaro.web.id/");
+  assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://nalaro.digital/");
   assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).startsWith("index"));
-  assert.equal(await page.locator('meta[property="og:image"]').getAttribute("content"), "https://nalaro.web.id/og/nalaro-og.png");
+  assert.equal(await page.locator('meta[property="og:image"]').getAttribute("content"), "https://nalaro.digital/og/nalaro-og.png");
   JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
-  assert.ok((await (await context.request.get(origin + "/sitemap.xml")).text()).includes("https://nalaro.web.id/"));
-  assert.ok((await (await context.request.get(origin + "/robots.txt")).text()).includes("https://nalaro.web.id/sitemap.xml"));
+  assert.ok((await (await context.request.get(origin + "/sitemap.xml")).text()).includes("https://nalaro.digital/"));
+  assert.ok((await (await context.request.get(origin + "/robots.txt")).text()).includes("https://nalaro.digital/sitemap.xml"));
   assert.equal((await context.request.get(origin + "/og/nalaro-og.png")).status(), 200);
   const errorPage = await context.newPage();
   await errorPage.goto(origin + "/404.html");

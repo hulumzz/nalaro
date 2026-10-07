@@ -26,7 +26,7 @@ Jika mode background gagal karena batas startup 30 detik pada Windows, hasil bui
 
 Konfigurasi bawaan telah dikonfirmasi pemilik:
 
-- Domain `https://nalaro.web.id`
+- Domain `https://nalaro.digital`
 - Email `nalaro@skripzy.id`
 - WhatsApp `6285771298582`
 

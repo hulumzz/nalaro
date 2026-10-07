@@ -21,7 +21,7 @@ Website ini adalah Astro statis. Tidak memakai Pages Functions, database, atau s
 
    | Nama | Nilai |
    | --- | --- |
-   | `PUBLIC_SITE_URL` | `https://nalaro.web.id` |
+   | `PUBLIC_SITE_URL` | `https://nalaro.digital` |
    | `PUBLIC_CONTACT_EMAIL` | `nalaro@skripzy.id` |
    | `PUBLIC_WHATSAPP` | `6285771298582` |
 
@@ -29,7 +29,7 @@ Website ini adalah Astro statis. Tidak memakai Pages Functions, database, atau s
 
 ## Domain
 
-Setelah deployment pertama selesai, buka **Custom domains** pada project Pages dan tambahkan `nalaro.web.id`. Pastikan domain sudah berada di akun Cloudflare atau ikuti instruksi DNS dari dashboard. Jangan mengaktifkan redirect domain sebelum certificate dan deployment telah aktif.
+Setelah deployment pertama selesai, buka **Custom domains** pada project Pages dan tambahkan `nalaro.digital`. Pastikan domain sudah berada di akun Cloudflare atau ikuti instruksi DNS dari dashboard. Jangan mengaktifkan redirect domain sebelum certificate dan deployment telah aktif.
 
 ## Deploy langsung dari komputer
 
@@ -44,7 +44,7 @@ Tambahkan `--branch=preview` untuk deployment preview manual. Perintah ini memer
 
 ## Verifikasi setelah rilis
 
-1. Buka URL `*.pages.dev`, lalu domain `https://nalaro.web.id` setelah domain aktif.
+1. Buka URL `*.pages.dev`, lalu domain `https://nalaro.digital` setelah domain aktif.
 2. Cek halaman utama, menu mobile, ketiga tautan produk, form email/WhatsApp, serta loop terminal.
 3. Buka `/robots.txt`, `/sitemap.xml`, dan cek preview Open Graph dengan URL production.
 4. Jika build gagal, lihat **Deployments > build log** dan pastikan `NODE_VERSION=22.12.0`, perintah build, serta output `dist` masih sama.

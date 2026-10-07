@@ -20,7 +20,7 @@ Permintaan terbaru pemilik menggantikan batasan layout lama pada PRD.md dan Desa
 - Bagian Works menampilkan proses kerja dan catatan studi kasus yang jujur. Contoh studi kasus fiktif, filter kosong, serta label registry/internal dihapus dari halaman. Lab tetap ada sebagai ruang eksperimen ringkas.
 - Animasi menggunakan CSS, IntersectionObserver, dan timer kecil. GSAP, Lenis, canvas lama, rail, dan dock tidak dimuat oleh halaman baru. Scroll tetap native.
 - Kontak memakai draft mailto/WhatsApp dengan validasi dan URL encoding. Tidak ada backend atau pengiriman otomatis.
-- Domain, email, WhatsApp, serta ketiga URL produk diambil dari jawaban pemilik pada sesi ini. Canonical, sitemap, robots, schema Organization/WebSite, dan OG memakai domain nalaro.web.id. Font Latin self-hosted dengan preload dua file utama. Logo asli dari favicon/ diterapkan pada halaman serta browser.
+- Domain, email, WhatsApp, serta ketiga URL produk diambil dari jawaban pemilik pada sesi ini. Canonical, sitemap, robots, schema Organization/WebSite, dan OG memakai domain nalaro.digital. Font Latin self-hosted dengan preload dua file utama. Logo asli dari favicon/ diterapkan pada halaman serta browser.
 - @playwright/test dan @axe-core/playwright ditambahkan sebagai dependensi pengembangan untuk verifikasi responsif, aksesibilitas, dan interaksi tanpa mengirim pesan. sharp dipakai untuk membuat aset OG dari SVG, tanpa layanan eksternal.
 - Pengujian lokal tidak membuktikan deployment produksi, login produk, atau perilaku perangkat fisik. Prototype dan aset asli milik pemilik dipertahankan.
 
@@ -28,4 +28,4 @@ Permintaan terbaru pemilik menggantikan batasan layout lama pada PRD.md dan Desa
 
 Sapaan hero menjadi "Hi, I'm Nalaro!" dan pengantar produk menjadi "Coba produk resmi kami". Ilustrasi Enveely digambar ulang sebagai SVG dengan kartu yang terbaca, lipatan amplop yang konsisten, dan gerak kartu saat hover/fokus. Terminal mengetik label serta pesan log per karakter, mempertahankan hasil selama 4,5 detik, kemudian mengulang otomatis. Tombol ulang dihapus; kontrol jeda tetap tersedia untuk aksesibilitas. Loop tetap berhenti saat offscreen, tab tersembunyi, dan reduced motion aktif.
 
-Pemeriksaan HTTP pada sesi ini berhasil untuk nalaro.web.id dan Skripzy. Domain Enveely dan Nalaro Class menghasilkan ENOTFOUND dari lingkungan lokal; tautan sesuai instruksi pemilik dipertahankan dengan status Segera hadir.
+Pemeriksaan HTTP pada sesi ini berhasil untuk nalaro.digital dan Skripzy. Domain Enveely dan Nalaro Class menghasilkan ENOTFOUND dari lingkungan lokal; tautan sesuai instruksi pemilik dipertahankan dengan status Segera hadir.
