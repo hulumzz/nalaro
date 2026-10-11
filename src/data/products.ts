@@ -20,7 +20,7 @@ export const products: Product[] = [
       "AI workspace untuk penelitian dan aktivitas akademik.",
     focus: ["penelitian", "analisis data", "penulisan akademik", "AI research assistant"],
     status: "Live",
-    url: "https://www.skripzy.id",
+    url: "https://ww.skripzy.id",
   },
   {
     number: "02",
@@ -30,7 +30,7 @@ export const products: Product[] = [
       "Platform belajar yang menyatukan LMS, kuis interaktif, dan gamifikasi.",
     focus: ["LMS", "kuis", "classroom game", "materi", "evaluasi"],
     status: "Coming Soon",
-    url: "https://www.class.nalaro.digital",
+    url: "https://lms.nalaro.digital",
   },
   {
     number: "03",
@@ -40,7 +40,7 @@ export const products: Product[] = [
       "Undangan digital yang sederhana dan modern untuk dibuat dan dibagikan.",
     focus: ["digital invitation", "personal event", "desain undangan"],
     status: "Coming Soon",
-    url: "https://enveely.id",
+    url: "https://enveely.nalaro.digital",
   },
   {
     number: "04",
