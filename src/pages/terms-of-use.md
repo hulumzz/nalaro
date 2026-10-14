@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Terms of Use Nalaro
+title: "Ketentuan Penggunaan | Nalaro Digital"
+description: "Ketentuan penggunaan situs Nalaro Digital, hak kekayaan intelektual, informasi produk, dan layanan pengembangan."
 ---
 
 # Ketentuan Penggunaan Nalaro

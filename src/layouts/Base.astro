@@ -2,24 +2,80 @@
 import "../styles/tokens.css";
 import "../styles/global.css";
 import { site } from "../data/site";
+import { products } from "../data/products";
 import displayFont from "@fontsource-variable/anybody/files/anybody-latin-wdth-normal.woff2?url";
 import bodyFont from "@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2?url";
 
 interface Props { title?: string; description?: string; noindex?: boolean; }
 const {
-  title = "Nalaro | Studio Produk Digital, AI & Aplikasi Web",
+  title = "Nalaro Digital | SaaS, AI, Kelas & Toko Online",
   description = site.description,
   noindex = false,
 } = Astro.props;
-const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const cleanPath = Astro.url.pathname.replace(/\/+$/, "");
+const canonicalPath = cleanPath === "" ? "/" : cleanPath + "/";
+const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site).toString() : undefined;
 const ogImage = Astro.site ? new URL("/og/nalaro-og.png", Astro.site).toString() : "/og/nalaro-og.png";
-const schema = {
-  "@context": "https://schema.org",
-  "@graph": [
-    { "@type": "Organization", name: site.name, description: site.description, ...(Astro.site ? { "@id": new URL("/#organization", Astro.site).toString(), url: Astro.site.toString(), logo: new URL(site.logo, Astro.site).toString() } : {}), ...(site.email ? { email: site.email } : {}), sameAs: Object.values(site.social).filter(Boolean) },
-    { "@type": "WebSite", name: site.name, description, inLanguage: "id-ID", ...(Astro.site ? { url: Astro.site.toString(), publisher: { "@id": new URL("/#organization", Astro.site).toString() } } : {}) },
-  ],
-};
+const rootUrl = Astro.site?.toString() || site.domain;
+const orgId = new URL("/#organization", rootUrl).toString();
+const websiteId = new URL("/#website", rootUrl).toString();
+const schemaGraph: Record<string, unknown>[] = [
+  {
+    "@type": "Organization",
+    "@id": orgId,
+    name: "Nalaro Digital",
+    url: rootUrl,
+    logo: { "@type": "ImageObject", url: new URL(site.logo, rootUrl).toString() },
+    description: site.description,
+    email: site.email,
+    sameAs: Object.values(site.social).filter(Boolean),
+  },
+  {
+    "@type": "WebSite",
+    "@id": websiteId,
+    name: "Nalaro Digital",
+    url: rootUrl,
+    inLanguage: "id-ID",
+    publisher: { "@id": orgId },
+  },
+  {
+    "@type": "WebPage",
+    "@id": (canonicalUrl || rootUrl) + "#webpage",
+    url: canonicalUrl || rootUrl,
+    name: title,
+    description,
+    inLanguage: "id-ID",
+    isPartOf: { "@id": websiteId },
+    about: { "@id": orgId },
+  },
+];
+if (canonicalPath === "/") {
+  schemaGraph.push({
+    "@type": "ItemList",
+    "@id": new URL("/#produk", rootUrl).toString(),
+    name: "Produk digital Nalaro",
+    numberOfItems: products.filter(product => !!product.url).length,
+    itemListElement: products.filter(product => !!product.url).map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "WebApplication",
+        name: product.name,
+        description: product.description,
+        url: product.url,
+      },
+    })),
+  });
+} else if (!noindex) {
+  schemaGraph.push({
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Beranda", item: rootUrl },
+      { "@type": "ListItem", position: 2, name: title.split(" | ")[0], item: canonicalUrl },
+    ],
+  });
+}
+const schema = { "@context": "https://schema.org", "@graph": schemaGraph };
 ---
 <!doctype html>
 <html lang="id">
@@ -29,6 +85,7 @@ const schema = {
     <meta name="theme-color" content="#0B0C0A" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content="Nalaro Digital" />
     <meta name="robots" content={noindex || !Astro.site ? "noindex, follow" : "index, follow, max-image-preview:large"} />
     {canonicalUrl && !noindex && <link rel="canonical" href={canonicalUrl} />}
     <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
@@ -48,12 +105,12 @@ const schema = {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:alt" content="Nalaro. We build useful digital products." />
+    <meta property="og:image:alt" content="Nalaro Digital, studio dan ekosistem produk digital." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="Nalaro. We build useful digital products." />
+    <meta name="twitter:image:alt" content="Nalaro Digital, studio dan ekosistem produk digital." />
     {!noindex && <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, "\\u003c")} />}
   </head>
   <body><a class="skip-link" href="#main-content">Langsung ke isi halaman</a><slot /></body>

@@ -6,14 +6,23 @@ import BuildTerminal from "./BuildTerminal.astro";
 <section id="index" class="hero container" aria-labelledby="hero-title">
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="signal"></span>{home.hero.eyebrow} <img id="hero-ghost" src="/brand/nalaro-ghost-mascot-thin-v2.svg" alt="" aria-hidden="true" style="height: 48px; width: auto; margin-left: 4px; margin-top: -12px; margin-bottom: -12px; position: relative; z-index: 10;" /></p>
-      <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-useful">USEFUL<span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
+      <p class="eyebrow">{home.hero.eyebrow} <img id="hero-ghost" src="/brand/nalaro-ghost-mascot-thin-v2.svg" alt="" aria-hidden="true" style="height: 48px; width: auto; margin-left: 4px; margin-top: -12px; margin-bottom: -12px; position: relative; z-index: 10;" /></p>
+      <div class="hero-heading-wrap">
+        <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-accent">BETTER<span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
+        <svg class="hero-orbit" viewBox="0 0 84 84" fill="none" aria-hidden="true" focusable="false">
+          <circle cx="42" cy="42" r="27" stroke="currentColor" stroke-width="1"/>
+          <circle cx="42" cy="42" r="15" stroke="currentColor" stroke-width="1" opacity=".46"/>
+          <path d="M42 0V18M42 66V84M0 42H18M66 42H84" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M56 28 63 21M21 63 28 56" stroke="currentColor" stroke-width="1" opacity=".6"/>
+          <circle cx="42" cy="42" r="3" fill="currentColor"/>
+        </svg>
+      </div>
       <p class="hero-description">{site.subheadline}</p>
       <div class="hero-actions"><a href="#products" class="button button-primary">{site.ctaPrimary}<span aria-hidden="true">↗</span></a><a href="#contact" class="text-link">{site.ctaSecondary}<span aria-hidden="true">↗</span></a></div>
     </div>
     <div class="hero-visual"><div class="visual-caption"><span class="mono">IDEA INTO ACTION</span><span class="demo-label">Nalaro is building...</span></div><BuildTerminal /><p class="visual-note"><span aria-hidden="true">↳</span>{home.hero.note}</p></div>
   </div>
-  <div class="hero-bottom"><span>{home.hero.productsLabel}</span><div><a href="#product-skripzy">Skripzy AI</a><span aria-hidden="true">/</span><a href="#product-class">Nalaro Class</a><span aria-hidden="true">/</span><a href="#product-enveely">Enveely</a></div><a href="#products" class="scroll-link" aria-label="Gulir ke produk"><span aria-hidden="true">↓</span></a></div>
+  <div class="hero-bottom"><span>{home.hero.productsLabel}</span><div><a href="#product-skripzy">Skripzy AI</a><span aria-hidden="true">/</span><a href="#product-class">Nalaro Class</a><span aria-hidden="true">/</span><a href="#product-enveely">Enveely</a><span aria-hidden="true">/</span><a href="#product-store">Nalaro Store</a></div><a href="#products" class="scroll-link" aria-label="Gulir ke produk"><span aria-hidden="true">↓</span></a></div>
 </section>
 
 <style is:global>
@@ -52,65 +61,5 @@ import BuildTerminal from "./BuildTerminal.astro";
     }
   }
 
-  .ghost-bubble {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9;
-    animation: bubble-fade 1.5s ease-out forwards;
-  }
-  
-  @keyframes bubble-fade {
-    0% { transform: scale(0.5) translateY(0); opacity: 0.8; }
-    100% { transform: scale(2.5) translateY(-25px); opacity: 0; }
-  }
 </style>
 
-<script>
-  const ghost = document.getElementById("hero-ghost");
-  if (ghost) {
-    let lastAbsX = 0;
-    let lastAbsY = 0;
-    let lastBubbleTime = 0;
-    
-    function trackGhost(time) {
-      if (!ghost) return;
-      
-      const rect = ghost.getBoundingClientRect();
-      const absX = rect.left + rect.width / 2 + window.scrollX;
-      const absY = rect.top + rect.height / 2 + window.scrollY;
-      
-      const dist = Math.hypot(absX - lastAbsX, absY - lastAbsY);
-      
-      if (dist > 3 && lastAbsX !== 0 && time - lastBubbleTime > 120) {
-        const bubble = document.createElement("div");
-        bubble.className = "ghost-bubble";
-        
-        const offsetX = (Math.random() - 0.5) * 25;
-        const offsetY = (Math.random() - 0.5) * 25 + 10;
-        
-        bubble.style.left = `${absX + offsetX}px`;
-        bubble.style.top = `${absY + offsetY}px`;
-        
-        const size = 5 + Math.random() * 7;
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        
-        document.body.appendChild(bubble);
-        lastBubbleTime = time;
-        
-        setTimeout(() => {
-          if (bubble.parentNode) bubble.remove();
-        }, 1500);
-      }
-      
-      lastAbsX = absX;
-      lastAbsY = absY;
-      
-      requestAnimationFrame(trackGhost);
-    }
-    
-    requestAnimationFrame(trackGhost);
-  }
-</script>

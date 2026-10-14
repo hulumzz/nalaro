@@ -89,14 +89,17 @@ try {
   assert.ok(url.searchParams.get("text").includes("Butuh aplikasi untuk tim & laporan."));
   // Capture email navigation before the browser can invoke an external app.
   const mailto = await page.locator('.contact-links a[href^="mailto:"]').getAttribute("href");
-  assert.equal(mailto, "mailto:nalaro@skripzy.id");
+  assert.equal(mailto, "mailto:business@nalaro.digital");
   report.checks.push("Blank/whitespace validation and encoded WhatsApp draft; no message sent");
   await page.goto(origin);
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"), "https://nalaro.digital/");
   assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).startsWith("index"));
   assert.equal(await page.locator('meta[property="og:image"]').getAttribute("content"), "https://nalaro.digital/og/nalaro-og.png");
   JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
-  assert.ok((await (await context.request.get(origin + "/sitemap.xml")).text()).includes("https://nalaro.digital/"));
+  const sitemap = await (await context.request.get(origin + "/sitemap.xml")).text();
+  for (const path of ["/", "/faq/", "/privacy-policy/", "/terms-of-use/"]) assert.ok(sitemap.includes("https://nalaro.digital" + path));
+  assert.equal(await page.locator("#product-store").count(), 1);
+  assert.ok(await page.locator('a[href="https://class.nalaro.digital"]').count() > 0);
   assert.ok((await (await context.request.get(origin + "/robots.txt")).text()).includes("https://nalaro.digital/sitemap.xml"));
   assert.equal((await context.request.get(origin + "/og/nalaro-og.png")).status(), 200);
   const errorPage = await context.newPage();

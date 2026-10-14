@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: FAQ Nalaro
+title: "FAQ | Pertanyaan Umum Nalaro Digital"
+description: "Jawaban tentang produk Nalaro, pembuatan website dan aplikasi, proses kerja, maintenance, biaya, serta cara memulai proyek."
 ---
 
 # FAQ Nalaro

@@ -1,6 +1,7 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Privacy Policy Nalaro
+title: "Kebijakan Privasi | Nalaro Digital"
+description: "Pelajari Kebijakan Privasi Nalaro Digital terkait informasi pengunjung, penggunaan data, keamanan, dan hak pengguna situs."
 ---
 
 # Kebijakan Privasi Nalaro
