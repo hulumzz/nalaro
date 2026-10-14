@@ -1,15 +1,13 @@
 ---
 import { products } from "../../data/products";
 import { home } from "../../data/home";
-const ids = ["skripzy", "class", "enveely"];
-const categories = ["RESEARCH & WRITING", "EDUCATION & LEARNING", "INVITATION & EVENTS"];
 ---
 <section id="products" class="section container" aria-labelledby="products-title">
   <div class="section-heading"><div><p class="eyebrow"><span class="section-number">01</span>{home.products.label}</p><h2 id="products-title" data-reveal>{home.products.title}</h2></div><p class="section-intro">{home.products.intro}</p></div>
   <div class="product-grid">
-    {products.filter(p => !p.isSlot).map((product, i) => <article id={`product-${ids[i]}`} class={`product-card product-${ids[i]}`}>
+    {products.filter(p => !p.isSlot).map((product, i) => <article id={`product-${product.slug}`} class={`product-card product-${product.slug}`}>
       <div class="product-art" aria-hidden="true">
-        <div class="art-topline"><span>{categories[i]}</span><span>↗</span></div>
+        <div class="art-topline"><span>{product.category}</span><span>↗</span></div>
         {i === 0 && <div class="research-art"><div class="research-sidebar"><i></i><i></i><i></i><i></i></div><div class="research-paper"><span class="art-small">RUANG PENELITIAN</span><strong>Mulai dari<br/>rasa ingin tahu.</strong><div class="paper-lines"><i></i><i></i><i></i></div><div class="research-prompt"><span>✳</span> Bantu susun ide penelitian<span class="art-cursor"></span></div><div class="paper-lines short"><i></i><i></i></div></div></div>}
         {i === 1 && <div class="class-art"><div class="class-label"><span>RUANG KELAS</span><span>01 / 04</span></div><strong>Belajar. Coba.<br/>Pahami.</strong><div class="answer-grid"><span>A <i></i></span><span class="chosen">B <b>✓</b></span><span>C <i></i></span><span>D <i></i></span></div><div class="class-progress"><i></i><i></i><i></i><i></i></div></div>}
         {i === 2 && <div class="invite-art">
@@ -31,6 +29,16 @@ const categories = ["RESEARCH & WRITING", "EDUCATION & LEARNING", "INVITATION & 
             <text x="46" y="188" fill="#F5F5F2" font-family="Georgia,serif" font-size="18">enveely</text>
             <path d="M251 176h13v13m-13 0 13-13" stroke="#FF5B2E" stroke-width="1.5"/>
           </svg>
+        </div>}
+        {product.slug === "store" && <div class="store-art">
+          <div class="store-art-brand"><span>nalaro<span class="orange">.</span>store</span><span class="store-art-arrow">↗</span></div>
+          <div class="store-art-content">
+            <span class="store-art-kicker">TOKO ONLINE MILIKMU</span>
+            <strong>Jual lebih dekat.<br/>Tumbuh lebih jauh.</strong>
+            <div class="store-art-divider"></div>
+            <div class="store-art-data"><span>Pesanan <b>+24</b></span><span>Penjualan <b>↗</b></span></div>
+          </div>
+          <div class="store-art-edge"></div>
         </div>}
         <span class="art-caption">Gambaran produk</span>
       </div>
