@@ -42,6 +42,22 @@ try {
     }
   }
   report.checks.push("No horizontal panning, responsive layout, images, anchors and axe at desktop/mobile");
+
+  // Verify animation differs by breakpoint and rotates through the full reel.
+  const motionPreview = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: "no-preference" });
+  const motionPage = await motionPreview.newPage();
+  await motionPage.goto(origin, { waitUntil: "networkidle" });
+  assert.equal(await motionPage.locator("#hero-ghost").evaluate(el => getComputedStyle(el).animationName), "ghost-mobile-route");
+  const ctaHeight = await motionPage.locator(".hero-actions .button-primary").evaluate(el => el.getBoundingClientRect().height);
+  assert.ok(ctaHeight >= 44 && ctaHeight <= 48, "Mobile primary CTA height: " + ctaHeight);
+  await motionPage.waitForFunction(() => document.querySelector("#hero-word")?.textContent === "BEST", undefined, { timeout: 7500 });
+  assert.equal(await motionPage.locator(".hero-word-slot").count(), 1);
+  assert.equal(await motionPage.evaluate(() => document.documentElement.scrollWidth), 390);
+  await motionPage.setViewportSize({ width: 1440, height: 900 });
+  await motionPage.goto(origin);
+  assert.equal(await motionPage.locator("#hero-ghost").evaluate(el => getComputedStyle(el).animationName), "ghost-flight");
+  await motionPreview.close();
+  report.checks.push("Mobile route, compact CTA, 2.6s rotating reel and desktop flight");
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(origin);
   for (const link of await page.locator(".desktop-nav a").all()) {
