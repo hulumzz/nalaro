@@ -8,7 +8,12 @@ import BuildTerminal from "./BuildTerminal.astro";
     <div class="hero-copy">
       <p class="eyebrow">{home.hero.eyebrow} <img id="hero-ghost" src="/brand/nalaro-ghost-mascot-thin-v2.svg" alt="" aria-hidden="true" style="height: 48px; width: auto; margin-left: 4px; margin-top: -12px; margin-bottom: -12px; position: relative; z-index: 10;" /></p>
       <div class="hero-heading-wrap">
-        <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-accent"><span id="hero-word" class="hero-word">BETTER</span><span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
+        <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-accent"><span class="hero-word-slot" aria-hidden="true">
+          <span class="hero-word-measure">SMARTER</span>
+          <span id="hero-word" class="hero-word hero-word-current">BETTER</span>
+          <span class="hero-word hero-word-echo" data-hero-echo></span>
+          <span class="hero-word hero-word-next" data-hero-next></span>
+        </span><span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
         <svg class="hero-orbit" viewBox="0 0 84 84" fill="none" aria-hidden="true" focusable="false">
           <circle cx="42" cy="42" r="27" stroke="currentColor" stroke-width="1"/>
           <circle cx="42" cy="42" r="15" stroke="currentColor" stroke-width="1" opacity=".46"/>
@@ -31,14 +36,21 @@ import BuildTerminal from "./BuildTerminal.astro";
     animation: ghost-flight 18s infinite;
   }
 
-  /* On narrow screens the mascot must remain within the viewport. */
+  /* Distinct mobile flight path: short rightward travel, then a gentle descent. */
   @media (max-width: 760px) {
-    #hero-ghost { animation: ghost-hover 5s ease-in-out infinite; }
+    #hero-ghost {
+      animation: ghost-mobile-route 9s ease-in-out infinite;
+      transform-origin: center;
+    }
   }
 
-  @keyframes ghost-hover {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-6px) rotate(2deg); }
+  @keyframes ghost-mobile-route {
+    0%, 9%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+    24% { transform: translate3d(15px, -4px, 0) rotate(0deg); }
+    40% { transform: translate3d(32px, -7px, 0) rotate(5deg); }
+    58% { transform: translate3d(34px, 12px, 0) rotate(2deg); }
+    74% { transform: translate3d(18px, 26px, 0) rotate(-4deg); }
+    88% { transform: translate3d(7px, 10px, 0) rotate(-3deg); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -79,41 +91,51 @@ import BuildTerminal from "./BuildTerminal.astro";
 
 
 <script>
-  // Keep the first, crawlable word in HTML; only animate for motion-enabled visitors.
-  const word = document.querySelector<HTMLElement>("#hero-word");
-  if (word) {
+  // BETTER is rendered by Astro for SEO, no-JS visitors and reduced-motion users.
+  // For other visitors, the clipped reel rolls the words DOWN like a shuffled number wheel.
+  const current = document.querySelector<HTMLElement>("#hero-word");
+  const slot = document.querySelector<HTMLElement>(".hero-word-slot");
+  const upcoming = document.querySelector<HTMLElement>("[data-hero-next]");
+  const echo = document.querySelector<HTMLElement>("[data-hero-echo]");
+
+  if (current && slot && upcoming && echo) {
     const words = ["BETTER", "BEST", "USEFUL", "SMARTER", "BOLDER"] as const;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let index = 0;
     let visible = false;
-    let interval: number | undefined;
-    let transitionTimer: number | undefined;
-    let enteringTimer: number | undefined;
+    let ticker: number | undefined;
+    let finishTimer: number | undefined;
 
-    const stop = () => {
-      window.clearInterval(interval);
-      window.clearTimeout(transitionTimer);
-      window.clearTimeout(enteringTimer);
-      interval = undefined;
-      word.classList.remove("is-word-exiting", "is-word-entering");
+    const clear = () => {
+      window.clearInterval(ticker);
+      window.clearTimeout(finishTimer);
+      ticker = undefined;
+      finishTimer = undefined;
+      slot.classList.remove("is-spinning");
+      upcoming.textContent = "";
+      echo.textContent = "";
     };
 
-    const changeWord = () => {
-      if (document.hidden || motion.matches || !visible) return;
-      word.classList.add("is-word-exiting");
-      transitionTimer = window.setTimeout(() => {
-        index = (index + 1) % words.length;
-        word.textContent = words[index];
-        word.classList.remove("is-word-exiting");
-        word.classList.add("is-word-entering");
-        enteringTimer = window.setTimeout(() => word.classList.remove("is-word-entering"), 400);
-      }, 230);
+    const advance = () => {
+      if (document.hidden || motion.matches || !visible || slot.classList.contains("is-spinning")) return;
+      const nextIndex = (index + 1) % words.length;
+      upcoming.textContent = words[nextIndex];
+      echo.textContent = words[(index + 2) % words.length];
+      slot.classList.add("is-spinning");
+      finishTimer = window.setTimeout(() => {
+        index = nextIndex;
+        current.textContent = words[index];
+        slot.classList.remove("is-spinning");
+        upcoming.textContent = "";
+        echo.textContent = "";
+      }, 720);
     };
 
     const sync = () => {
-      stop();
+      clear();
+      // In reduced-motion mode the first semantic word stays still, with no timer.
       if (!document.hidden && !motion.matches && visible) {
-        interval = window.setInterval(changeWord, 3600);
+        ticker = window.setInterval(advance, 2600);
       }
     };
 
@@ -121,7 +143,7 @@ import BuildTerminal from "./BuildTerminal.astro";
       visible = entry.isIntersecting;
       sync();
     }, { threshold: 0.15 });
-    observer.observe(word);
+    observer.observe(slot);
     document.addEventListener("visibilitychange", sync);
     motion.addEventListener("change", sync);
   }
