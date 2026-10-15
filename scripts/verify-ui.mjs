@@ -50,7 +50,7 @@ try {
   assert.equal(await motionPage.locator("#hero-ghost").evaluate(el => getComputedStyle(el).animationName), "ghost-mobile-route");
   const ctaHeight = await motionPage.locator(".hero-actions .button-primary").evaluate(el => el.getBoundingClientRect().height);
   assert.ok(ctaHeight >= 44 && ctaHeight <= 48, "Mobile primary CTA height: " + ctaHeight);
-  await motionPage.waitForFunction(() => document.querySelector("#hero-word")?.textContent === "BEST", { timeout: 7500 });
+  await motionPage.waitForFunction(() => document.querySelector("#hero-word")?.textContent === "BEST", undefined, { timeout: 7500 });
   assert.equal(await motionPage.locator(".hero-word-slot").count(), 1);
   assert.equal(await motionPage.evaluate(() => document.documentElement.scrollWidth), 390);
   await motionPage.setViewportSize({ width: 1440, height: 900 });
