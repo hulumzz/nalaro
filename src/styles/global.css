@@ -274,6 +274,13 @@ summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:n
 .contact-copy>p:not(.eyebrow){font-size:18px;max-width:340px;line-height:1.7;margin-top:25px}
 .contact-links{display:flex;flex-direction:column;gap:12px;margin-top:32px}
 .contact-links a{display:flex;justify-content:space-between;align-items:center;font-size:17px;padding-block:10px;border-bottom:1px solid #7b301a;overflow-wrap:anywhere;gap:20px}
+.contact-link-main{display:inline-flex;align-items:center;gap:12px;min-width:0}
+.contact-link-icon{display:inline-flex;align-items:center;justify-content:center;flex:none;width:26px;height:26px}
+.contact-link-icon svg{width:23px;height:23px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.contact-link-text{min-width:0;overflow-wrap:anywhere}
+.contact-link-arrow{flex:none;margin-left:auto;transition:transform .2s}
+.contact-links a:hover .contact-link-arrow,.contact-links a:focus-visible .contact-link-arrow{transform:translate(3px,-3px)}
+
 .copy-email{min-height:44px;text-decoration:underline;font-size:13px}
 .contact-form{display:flex;flex-direction:column;align-self:center;min-width:0}
 .contact-form>label,.contact-form legend{font-size:14px;font-weight:600;margin-bottom:7px}
