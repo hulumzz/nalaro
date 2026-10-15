@@ -24,6 +24,10 @@ try {
       badAnchors: [...document.querySelectorAll('a[href*="#"]')].filter(a => a.hash && !document.getElementById(a.hash.slice(1))).map(a => a.getAttribute("href")),
     }));
     assert.equal(measurements.scrollWidth, width, "Horizontal overflow at " + width);
+    // Verify the viewport cannot be panned horizontally, even on touch-sized layouts.
+    await page.evaluate(() => window.scrollTo({ left: 1000, top: 0, behavior: "instant" }));
+    assert.equal(await page.evaluate(() => window.scrollX), 0, "Horizontal panning at " + width);
+    assert.equal(await page.locator("#hero-word").innerText(), "BETTER");
     assert.equal(measurements.h1, 1);
     assert.deepEqual(measurements.brokenImages, []);
     assert.deepEqual(measurements.badAnchors, []);
@@ -37,7 +41,7 @@ try {
       assert.deepEqual(violations, [], "Accessibility violations at " + width);
     }
   }
-  report.checks.push("Responsive layout, images, anchors and axe at desktop/mobile");
+  report.checks.push("No horizontal panning, responsive layout, images, anchors and axe at desktop/mobile");
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(origin);
   for (const link of await page.locator(".desktop-nav a").all()) {

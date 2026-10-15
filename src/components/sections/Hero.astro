@@ -8,7 +8,7 @@ import BuildTerminal from "./BuildTerminal.astro";
     <div class="hero-copy">
       <p class="eyebrow">{home.hero.eyebrow} <img id="hero-ghost" src="/brand/nalaro-ghost-mascot-thin-v2.svg" alt="" aria-hidden="true" style="height: 48px; width: auto; margin-left: 4px; margin-top: -12px; margin-bottom: -12px; position: relative; z-index: 10;" /></p>
       <div class="hero-heading-wrap">
-        <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-accent">BETTER<span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
+        <h1 id="hero-title" aria-label={site.headline}><span>WE BUILD</span><span class="hero-accent"><span id="hero-word" class="hero-word">BETTER</span><span class="asterisk" aria-hidden="true">✳</span></span><span>DIGITAL</span><span>PRODUCTS<span class="orange">.</span></span></h1>
         <svg class="hero-orbit" viewBox="0 0 84 84" fill="none" aria-hidden="true" focusable="false">
           <circle cx="42" cy="42" r="27" stroke="currentColor" stroke-width="1"/>
           <circle cx="42" cy="42" r="15" stroke="currentColor" stroke-width="1" opacity=".46"/>
@@ -29,6 +29,20 @@ import BuildTerminal from "./BuildTerminal.astro";
   #hero-ghost {
     will-change: transform;
     animation: ghost-flight 18s infinite;
+  }
+
+  /* On narrow screens the mascot must remain within the viewport. */
+  @media (max-width: 760px) {
+    #hero-ghost { animation: ghost-hover 5s ease-in-out infinite; }
+  }
+
+  @keyframes ghost-hover {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-6px) rotate(2deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hero-ghost { animation: none; will-change: auto; }
   }
   
   @keyframes ghost-flight {
@@ -63,3 +77,52 @@ import BuildTerminal from "./BuildTerminal.astro";
 
 </style>
 
+
+<script>
+  // Keep the first, crawlable word in HTML; only animate for motion-enabled visitors.
+  const word = document.querySelector<HTMLElement>("#hero-word");
+  if (word) {
+    const words = ["BETTER", "BEST", "USEFUL", "SMARTER", "BOLDER"] as const;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let index = 0;
+    let visible = false;
+    let interval: number | undefined;
+    let transitionTimer: number | undefined;
+    let enteringTimer: number | undefined;
+
+    const stop = () => {
+      window.clearInterval(interval);
+      window.clearTimeout(transitionTimer);
+      window.clearTimeout(enteringTimer);
+      interval = undefined;
+      word.classList.remove("is-word-exiting", "is-word-entering");
+    };
+
+    const changeWord = () => {
+      if (document.hidden || motion.matches || !visible) return;
+      word.classList.add("is-word-exiting");
+      transitionTimer = window.setTimeout(() => {
+        index = (index + 1) % words.length;
+        word.textContent = words[index];
+        word.classList.remove("is-word-exiting");
+        word.classList.add("is-word-entering");
+        enteringTimer = window.setTimeout(() => word.classList.remove("is-word-entering"), 400);
+      }, 230);
+    };
+
+    const sync = () => {
+      stop();
+      if (!document.hidden && !motion.matches && visible) {
+        interval = window.setInterval(changeWord, 3600);
+      }
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    }, { threshold: 0.15 });
+    observer.observe(word);
+    document.addEventListener("visibilitychange", sync);
+    motion.addEventListener("change", sync);
+  }
+</script>
