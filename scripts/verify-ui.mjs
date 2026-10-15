@@ -108,6 +108,11 @@ try {
   assert.equal(url.origin + url.pathname, "https://wa.me/6285771298582");
   assert.ok(url.searchParams.get("text").includes("Butuh aplikasi untuk tim & laporan."));
   // Capture email navigation before the browser can invoke an external app.
+  const channels = page.locator(".contact-links a");
+  assert.equal(await channels.count(), 3);
+  assert.equal(await channels.locator("svg").count(), 3, "Email, WhatsApp, form links each need an SVG icon");
+  assert.ok(await page.locator('.contact-links a[href^="https://wa.me/"]').count() > 0);
+  assert.equal(await page.locator('.contact-links a[href="https://order.nalaro.digital/form/"]').count(), 1);
   const mailto = await page.locator('.contact-links a[href^="mailto:"]').getAttribute("href");
   assert.equal(mailto, "mailto:business@nalaro.digital");
   report.checks.push("Blank/whitespace validation and encoded WhatsApp draft; no message sent");

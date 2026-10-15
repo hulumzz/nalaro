@@ -1,0 +1,18 @@
+---
+interface Props { kind: "email" | "whatsapp" | "form"; }
+const { kind } = Astro.props;
+---
+<svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  {kind === "email" && <>
+    <rect x="2.75" y="5.25" width="18.5" height="13.5" rx="2.1" />
+    <path d="m3.5 6.5 8.5 6.65 8.5-6.65" />
+  </>}
+  {kind === "whatsapp" && <>
+    <path d="M20.1 11.45a8.15 8.15 0 0 1-11.8 7.35L3.25 20.2l1.43-4.87A8.15 8.15 0 1 1 20.1 11.45Z" />
+    <path d="m8.2 8.15 1.5 2.1-.8.95c.8 1.5 1.95 2.55 3.45 3.15l.9-.95 2.35 1.25c-.2 1.7-1.85 2.1-3.55 1.4-2.1-.9-4.1-2.9-5.05-5.05-.68-1.5-.25-2.6 1.2-2.85Z" />
+  </>}
+  {kind === "form" && <>
+    <path d="M13.5 3.25H6.25A2.25 2.25 0 0 0 4 5.5v13A2.25 2.25 0 0 0 6.25 20.75h11.5A2.25 2.25 0 0 0 20 18.5V9.75Z" />
+    <path d="M13.5 3.25v6.5H20M8 13.2h8M8 16.7h5" />
+  </>}
+</svg>
