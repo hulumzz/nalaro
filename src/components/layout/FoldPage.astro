@@ -1,0 +1,10 @@
+---
+interface Props { tone?: "default" | "surface" | "accent"; }
+const { tone = "default" } = Astro.props;
+---
+<div class:list={["fold-page", `fold-${tone}`]} data-fold-page>
+  <div class="fold-sheet">
+    <slot />
+    <div class="fold-shade" aria-hidden="true"></div>
+  </div>
+</div>

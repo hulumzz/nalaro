@@ -116,8 +116,9 @@ import BuildTerminal from "./BuildTerminal.astro";
       echo.textContent = "";
     };
 
+    const covered = () => Boolean(slot.closest(".fold-covered"));
     const advance = () => {
-      if (document.hidden || motion.matches || !visible || slot.classList.contains("is-spinning")) return;
+      if (document.hidden || covered() || motion.matches || !visible || slot.classList.contains("is-spinning")) return;
       const nextIndex = (index + 1) % words.length;
       upcoming.textContent = words[nextIndex];
       echo.textContent = words[(index + 2) % words.length];
@@ -134,7 +135,7 @@ import BuildTerminal from "./BuildTerminal.astro";
     const sync = () => {
       clear();
       // In reduced-motion mode the first semantic word stays still, with no timer.
-      if (!document.hidden && !motion.matches && visible) {
+      if (!document.hidden && !covered() && !motion.matches && visible) {
         ticker = window.setInterval(advance, 2600);
       }
     };
@@ -145,6 +146,7 @@ import BuildTerminal from "./BuildTerminal.astro";
     }, { threshold: 0.15 });
     observer.observe(slot);
     document.addEventListener("visibilitychange", sync);
+    document.addEventListener("foldvisibilitychange", sync);
     motion.addEventListener("change", sync);
   }
 </script>

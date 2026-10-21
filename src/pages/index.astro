@@ -6,16 +6,25 @@ import Hero from "../components/sections/Hero.astro";
 import Products from "../components/sections/Products.astro";
 import Solutions from "../components/sections/Solutions.astro";
 import Works from "../components/sections/Works.astro";
-import Lab from "../components/sections/Lab.astro";
+import FoldPage from "../components/layout/FoldPage.astro";
+import "../styles/fold.css";
 import About from "../components/sections/About.astro";
 import Contact from "../components/sections/Contact.astro";
 ---
 <Base>
   <Header />
-  <main id="main-content"><Hero /><Products /><Solutions /><Works /><Lab /><About /><Contact /></main>
+  <main id="main-content" class="book-scroll">
+    <FoldPage><Hero /></FoldPage>
+    <FoldPage tone="surface"><Products /></FoldPage>
+    <FoldPage tone="surface"><Solutions /></FoldPage>
+    <FoldPage><Works /></FoldPage>
+    <FoldPage tone="surface"><About /></FoldPage>
+    <FoldPage tone="accent"><Contact /></FoldPage>
+  </main>
   <Footer />
 </Base>
 <script>
+  import { initFoldScroll } from "../scripts/fold-scroll";
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   if (!reduced.matches) {
     const observer = new IntersectionObserver(entries => {
@@ -24,31 +33,12 @@ import Contact from "../components/sections/Contact.astro";
     document.querySelectorAll("[data-reveal]").forEach(el => { el.classList.add("reveal-ready"); observer.observe(el); });
     reduced.addEventListener("change", event => { if (event.matches) { document.querySelectorAll(".reveal-ready").forEach(el => el.classList.add("revealed")); observer.disconnect(); } });
   }
-  const sections = document.querySelectorAll<HTMLElement>("main > section[id]");
-  const navLinks = document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a");
-  const sectionObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => { if (entry.isIntersecting) navLinks.forEach(link => { if (link.hash === "#" + entry.target.id) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); }); });
-  }, { rootMargin: "-20% 0px -60% 0px" });
-  sections.forEach(section => sectionObserver.observe(section));
-  const header = document.querySelector<HTMLElement>(".site-header")!;
-  const navigationLinks = document.querySelectorAll<HTMLAnchorElement>(".desktop-nav a, .mobile-nav a");
-  navigationLinks.forEach(link => link.addEventListener("click", event => {
-    const id = link.hash.slice(1);
-    const section = id && document.getElementById(id);
-    if (!section) return;
-    event.preventDefault();
-    const firstContent = section.querySelector<HTMLElement>(".eyebrow, .section-heading, .solutions-intro") || section;
-    const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-    const contentOffset = firstContent.getBoundingClientRect().top - section.getBoundingClientRect().top;
-    const position = Math.max(0, sectionTop + contentOffset - header.offsetHeight - 32);
-    section.querySelectorAll<HTMLElement>("[data-reveal]").forEach(heading => heading.classList.add("revealed"));
-    window.scrollTo({ top: position, behavior: reduced.matches ? "auto" : "smooth" });
-    history.pushState(null, "", `#${id}`);
-  }));
+  initFoldScroll();
   const diagram = document.querySelector(".system-map")!;
   let diagramVisible = false;
-  const syncDiagram = () => diagram.classList.toggle("is-in-view", diagramVisible && !document.hidden && !reduced.matches);
+  const syncDiagram = () => diagram.classList.toggle("is-in-view", diagramVisible && !diagram.closest(".fold-covered") && !document.hidden && !reduced.matches);
   new IntersectionObserver(([entry]) => { diagramVisible = entry.isIntersecting; syncDiagram(); }).observe(diagram);
   document.addEventListener("visibilitychange", syncDiagram);
+  document.addEventListener("foldvisibilitychange", syncDiagram);
   reduced.addEventListener("change", syncDiagram);
 </script>

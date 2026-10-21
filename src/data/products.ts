@@ -15,7 +15,7 @@ export const products: Product[] = [
   {
     number: "01", code: "N/01", slug: "skripzy", category: "RESEARCH & WRITING",
     name: "Skripzy Workspace",
-    description: "Ruang kerja AI untuk riset, analisis, dan penulisan akademik dalam satu alur.",
+    description: "Susun riset, analisis data, dan tulis naskah akademik dengan bantuan AI.",
     focus: ["penelitian", "analisis data", "penulisan akademik", "AI research assistant"],
     status: "Live",
     url: "https://ww.skripzy.id",
@@ -23,7 +23,7 @@ export const products: Product[] = [
   {
     number: "02", code: "N/02", slug: "class", category: "EDUCATION & LEARNING",
     name: "Nalaro Class",
-    description: "Belajar lebih hidup dengan ruang kelas, materi, kuis interaktif, dan gamifikasi.",
+    description: "Kelola materi, buat kuis, dan pantau progres siswa dalam satu kelas.",
     focus: ["LMS", "kuis interaktif", "gamifikasi kelas", "materi", "evaluasi"],
     status: "Live",
     url: "https://class.nalaro.digital",
@@ -31,7 +31,7 @@ export const products: Product[] = [
   {
     number: "03", code: "N/03", slug: "enveely", category: "INVITATION & EVENTS",
     name: "Enveely",
-    description: "Buat undangan digital yang personal dan mudah dibagikan untuk momen istimewa.",
+    description: "Buat undangan digital dengan informasi acara dan tautan yang mudah dibagikan.",
     focus: ["undangan digital", "acara personal", "desain undangan"],
     status: "Live",
     url: "https://enveely.nalaro.digital",
@@ -39,7 +39,7 @@ export const products: Product[] = [
   {
     number: "04", code: "N/04", slug: "store", category: "COMMERCE & BUSINESS",
     name: "Nalaro Store",
-    description: "Bangun toko online dengan etalase sendiri, kelola produk, dan terima pesanan lebih mudah.",
+    description: "Buka toko online sendiri. Kelola katalog, stok, dan pesanan dari satu tempat.",
     focus: ["toko online", "etalase produk", "manajemen pesanan", "bisnis & UMKM"],
     status: "Live",
     url: "https://store.nalaro.digital",

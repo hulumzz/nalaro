@@ -1,5 +1,5 @@
-import { chromium } from '@playwright/test';
-const browser = await chromium.launch({channel:process.env.TEST_BROWSER || 'msedge',headless:true});
+import { launchBrowser } from "./browser.mjs";
+const browser = await launchBrowser();
 try {
   const page = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',err=>errors.push(err.message));

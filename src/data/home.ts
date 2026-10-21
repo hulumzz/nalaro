@@ -1,11 +1,11 @@
 export const home = {
-  hero: { eyebrow: "Hi, I'm Nalaro!", note: "Dari percakapan pertama sampai produk siap dipakai.", productsLabel: "Coba produk resmi kami" },
-  products: { label: "Produk Nalaro", title: "Berbeda kebutuhan.\nSatu perhatian pada detail.", intro: "Dari ruang riset dan kelas, sampai toko online dan undangan. Masing-masing dirancang untuk kebutuhan nyata.", next: "Masih ada ruang untuk ide berikutnya.", nextLink: "Kenali cara kami bekerja" },
-  solutions: { label: "Nalaro Solutions", title: "Kebutuhanmu punya\ncaranya sendiri.", intro: "Pengalaman membangun produk kami bawa ke pekerjaanmu. Ceritakan alurnya, kita cari bagian yang bisa dibuat lebih mudah.", visualLabel: "Dibangun mengikuti alur kerjamu", visualTitle: "Semua terhubung.\nLebih mudah dikelola.", audiences: "Untuk bisnis, institusi, komunitas, dan proyek pribadi." },
-  process: { label: "Cara kami bekerja", title: "Dimulai dengan mendengar.\nDibangun bersama.", intro: "Kamu ikut melihat perkembangannya. Ada ruang untuk bertanya, mencoba, dan memperbaiki sebelum produk diluncurkan.", caseTitle: "Catatan dari proyek kami", caseText: "Studi kasus sedang kami susun. Sementara itu, kamu bisa mengenal produk yang sedang kami bangun.", caseLink: "Lihat produk Nalaro" },
+  hero: { eyebrow: "Hi, I'm Nalaro!", note: "Contoh alur pengembangan aplikasi.", productsLabel: "Produk Nalaro" },
+  products: { label: "Produk Nalaro", title: "Pilih yang\nkamu butuhkan.", intro: "Riset, kelola kelas, buka toko, atau buat undangan.", next: "Butuh aplikasi dengan fitur khusus?", nextLink: "Lihat prosesnya" },
+  solutions: { label: "Nalaro Solutions", title: "Pekerjaan menumpuk?\nRapikan sistemnya.", intro: "Kami membuat website dan aplikasi untuk mengelola data, melayani pelanggan, dan mengurangi pekerjaan manual.", visualLabel: "Data dan akses tim dalam satu aplikasi", visualTitle: "Semua terhubung.\nLebih mudah dikelola.", audiences: "Untuk bisnis, institusi, komunitas, dan proyek pribadi." },
+  process: { label: "Cara kami bekerja", title: "Dari kebutuhan\nsampai siap dipakai.", intro: "Sepakati fitur, coba desainnya, lalu pantau pengembangan sampai rilis.", caseTitle: "Coba produk kami", caseText: "Lihat hasilnya langsung di Skripzy, Nalaro Class, Enveely, dan Nalaro Store.", caseLink: "Lihat produk Nalaro" },
   lab: { label: "Nalaro Lab", title: "Ruang untuk mencoba.", text: "Ide kecil kami uji di sini. Yang berguna kami kembangkan lebih jauh.", note: "Catatan eksperimen akan dibagikan di sini.", stages: ["Ide", "Eksperimen", "Prototipe", "Produk"] },
-  about: { label: "Tentang studio", title: "Dibuat dengan nalar.\nDirawat dengan perhatian.", text: "Nalaro adalah studio produk digital. Kami membangun alat yang ingin kami pakai sendiri, lalu membukanya untuk lebih banyak orang.", detail: "Kami suka alur yang jelas, tampilan yang enak dibaca, dan fitur yang memang diperlukan. Sesudah rilis, kami tetap mendengar dan memperbaiki." },
-  contact: { label: "Bangun bersama Nalaro", title: "Ada yang ingin\nkamu bangun?", text: "Boleh mulai dari masalah yang sering kamu temui. Tidak perlu brief yang sempurna.", offline: "Susun ceritamu di sini, lalu simpan untuk percakapan berikutnya.", note: "Pesan dibuka melalui aplikasi email atau WhatsApp milikmu." },
+  about: { label: "Tentang studio", title: "Studio di balik\nproduk Nalaro.", text: "Kami mengembangkan produk sendiri dan mengerjakan website serta aplikasi untuk bisnis, sekolah, dan komunitas.", detail: "Dari penentuan fitur sampai pemeliharaan, kamu bekerja langsung dengan tim yang membangunnya." },
+  contact: { label: "Kontak", title: "Ceritakan\nkebutuhanmu.", text: "Sebutkan apa yang ingin dibuat atau pekerjaan yang ingin dipermudah.", offline: "Susun ceritamu di sini, lalu simpan untuk percakapan berikutnya.", note: "Pesan dibuka melalui aplikasi email atau WhatsApp milikmu." },
 };
 export const processSteps = [
   { title: "Pahami dulu", text: "Kami dengarkan kebutuhanmu dan pelajari cara kerjanya.", label: "Discover" },
@@ -14,9 +14,9 @@ export const processSteps = [
   { title: "Rilis dan rawat", text: "Produk diluncurkan. Masukan pengguna jadi bahan perbaikan.", label: "Ship" },
 ];
 export const studioPrinciples = [
-  { title: "Pahami masalahnya", text: "Alasan sebuah fitur dibuat harus jelas." },
+  { title: "Pahami masalahnya", text: "Fitur dipilih berdasarkan kebutuhan pengguna." },
   { title: "Buat mudah dipakai", text: "Pengguna tidak perlu menebak langkah berikutnya." },
-  { title: "Perbaiki terus", text: "Pemakaian sehari-hari memberi pelajaran terbaik." },
+  { title: "Perbaiki terus", text: "Perbaikan mengikuti hasil uji dan masukan pengguna." },
 ];
 export const buildScenarios = [
   { id: "crm", label: "Kelola pelanggan", name: "Customer workspace", client: "Data pelanggan masih tersebar di chat. Bisa dibuatkan satu tempat untuk mengelolanya?", reply: "Bisa. Kita satukan kontak, riwayat percakapan, dan jadwal follow up dalam satu alur.", module: "Kontak & follow up", endpoint: "customer-workspace", final: "Workspace pelanggan siap digunakan." },

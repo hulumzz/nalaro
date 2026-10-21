@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
-import { chromium } from "@playwright/test";
+import { launchBrowser } from "./browser.mjs";
 import AxeBuilder from "@axe-core/playwright";
 
 const origin = process.env.TEST_URL || "http://127.0.0.1:4321";
 await fs.mkdir("artifacts", { recursive: true });
-const browser = await chromium.launch({ channel: process.env.TEST_BROWSER || "msedge", headless: true });
+const browser = await launchBrowser();
 const report = { widths: [], errors: [], checks: [] };
 try {
   const context = await browser.newContext({ reducedMotion: "reduce" });

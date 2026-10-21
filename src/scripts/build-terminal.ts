@@ -21,6 +21,7 @@ const idleDuration = 4500;
 const characterDuration = 18;
 let selection = 0, elapsed = 0, finishAt = 0;
 let visible = false, paused = false;
+const covered = () => Boolean(root.closest(".fold-covered"));
 let timer: ReturnType<typeof setInterval> | undefined;
 let schedule: { tag: string; text: string; start: number; messageStart: number; finish: number }[] = [];
 
@@ -54,14 +55,14 @@ function render() {
   status.textContent = paused ? "Dijeda" : done ? "Siap digunakan" : "Membangun";
   message.textContent = done ? "Build selesai" : elapsed < 3400 ? "Memahami kebutuhan" : "Menyiapkan produk";
   root.classList.toggle("is-complete", done);
-  root.classList.toggle("is-paused", paused || !visible || document.hidden || reduced.matches);
+  root.classList.toggle("is-paused", paused || !visible || covered() || document.hidden || reduced.matches);
 }
 
 function stop() { clearInterval(timer); timer = undefined; }
 
 function resume() {
   stop();
-  if (!visible || document.hidden || paused || reduced.matches) return;
+  if (!visible || covered() || document.hidden || paused || reduced.matches) return;
   let previous = performance.now();
   timer = setInterval(() => {
     const now = performance.now();
@@ -114,6 +115,7 @@ new IntersectionObserver(([entry]) => {
   resume();
 }, { threshold: 0.12 }).observe(root);
 document.addEventListener("visibilitychange", () => { render(); resume(); });
+document.addEventListener("foldvisibilitychange", () => { render(); resume(); });
 window.addEventListener("pagehide", stop);
 window.addEventListener("pageshow", resume);
 reduced.addEventListener("change", () => start(selection));
