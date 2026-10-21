@@ -1,0 +1,56 @@
+/* Natural document flow is the baseline, including without JavaScript. */
+.book-scroll { --fold-header: 85px; --fold-radius: 24px; isolation: isolate; }
+.fold-page { position: relative; }
+.fold-sheet { position: relative; background: var(--color-ink); }
+.fold-surface .fold-sheet { background: var(--color-ink-2); }
+.fold-accent .fold-sheet { background: var(--color-flare); }
+.fold-shade { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .book-scroll.is-fold-ready .fold-page {
+    position: sticky;
+    top: var(--fold-top, var(--fold-header));
+  }
+  .book-scroll.is-fold-ready .fold-sheet {
+    min-height: calc(100svh - var(--fold-header));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform-origin: 50% 0;
+    /* Only the page edges override the square UI tokens. */
+    border-radius: var(--fold-radius) var(--fold-radius) 0 0 !important;
+    isolation: isolate;
+  }
+  .book-scroll.is-fold-ready .fold-page:first-child .fold-sheet { border-radius: 0 !important; }
+  .book-scroll.is-fold-ready .fold-sheet::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 1px solid #f5f5f21a;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .book-scroll.is-fold-ready .fold-page:first-child .fold-sheet::before { display: none; }
+  .book-scroll.is-fold-ready .fold-sheet > section {
+    position: relative;
+    border-top-left-radius: inherit !important;
+    border-top-right-radius: inherit !important;
+  }
+  .book-scroll.is-fold-ready .fold-shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #000a, #0005 45%, #0008);
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Promote only a page currently folding, without clipping tall sections. */
+  .book-scroll .is-folding .fold-sheet { will-change: transform; }
+  .book-scroll .is-folding .fold-shade { will-change: opacity; }
+  @media (max-width: 760px) { .book-scroll { --fold-radius: 16px; } }
+}
+
+.book-scroll .fold-covered * { animation-play-state: paused !important; }

@@ -40,7 +40,7 @@ Form kontak memvalidasi nama dan cerita lalu membuka draft di email atau WhatsAp
 
 ## Verifikasi lokal
 
-Setelah build dan preview berjalan, jalankan `npm run test:ui`. Pemeriksaan menggunakan Microsoft Edge headless yang terpasang di Windows. Untuk Chrome gunakan variabel `TEST_BROWSER=chrome`, atau atur `TEST_URL` bila port preview berbeda.
+Setelah build dan preview berjalan, jalankan `npm run test:ui`. Pemeriksaan memakai Chromium dari `npx playwright install chromium`. Untuk browser yang sudah terpasang gunakan `TEST_BROWSER=msedge` / `TEST_BROWSER=chrome`, atau `TEST_BROWSER_PATH` untuk path executable. Atur `TEST_URL` bila port preview berbeda.
 
 Pemeriksaan mencakup 320, 390, 600, 768, 1024, 1440, dan 1920px, aksesibilitas axe, menu, accordion, reduced motion, terminal, form, tautan, dan SEO. Hasil serta screenshot berada di `artifacts/` (tidak masuk Git). Tidak ada pesan yang dikirim selama pengujian.
 
@@ -49,3 +49,11 @@ Gambar berbagi tautan dapat dibuat ulang dengan `npm run generate:og`.
 Belum ada deployment otomatis yang dikonfigurasi oleh perubahan desain ini.
 
 Panduan lengkap konfigurasi Git integration, domain, environment variable, dan deploy langsung ada di [docs/deploy-cloudflare-pages.md](docs/deploy-cloudflare-pages.md).
+
+## Scroll lipatan
+
+Landing memakai `FoldPage.astro`, `fold.css`, dan `fold-scroll.ts`. Scroll tetap native: tidak ada scroll hijacking, blur layar penuh, atau dependensi animasi tambahan. Section yang panjang dibaca sampai bawah sebelum menempel dan tertutup halaman berikutnya. Hanya transform dan opacity bayangan yang berubah saat scroll; ukuran halaman diukur ulang lewat ResizeObserver saat konten, font, atau viewport berubah.
+
+Animasi hero dan terminal berhenti ketika halaman tertutup lipatan. Preferensi reduced motion mengembalikan alur dokumen biasa; tanpa JavaScript seluruh konten tetap terbaca. Semua tautan internal memakai posisi layout asli, termasuk tautan produk, deep link, navigasi kembali, dan fokus keyboard pada halaman yang tertutup.
+
+Jalankan `npm run test:fold` setelah build dan preview untuk memeriksa lipatan pada 320×640, 390×844, 844×390, dan 1440×900. Pemeriksaan meliputi scroll dua arah, konten panjang, accordion, anchor/deep link, riwayat browser, fokus keyboard, dan perubahan reduced motion. Screenshot transisi disimpan di `artifacts/fold-*.png`.

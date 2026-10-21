@@ -3,9 +3,9 @@ import { home, studioPrinciples } from "../../data/home";
 import { site } from "../../data/site";
 ---
 <section id="about" class="section container" aria-labelledby="about-title">
-  <p class="eyebrow"><span class="section-number">05</span>{home.about.label}</p>
+  <p class="eyebrow"><span class="section-number">04</span>{home.about.label}</p>
   <div class="about-grid"><div class="about-statement"><h2 id="about-title" data-reveal>{home.about.title}</h2><div class="about-text"><p>{home.about.text}</p><p>{home.about.detail}</p></div></div>
-    <div class="studio-signature"><div class="signature-top mono"><span>NALARO STUDIO</span><span>↗</span></div><img src={site.logo} alt="Logo Nalaro" width="160" height="160" loading="lazy" /><p>{site.closing}</p><span class="signature-bottom mono">THOUGHTFULLY BUILT</span></div>
+    <div class="studio-signature"><div class="signature-top mono"><span>NALARO STUDIO</span><span>↗</span></div><img src={site.logo} alt="Logo Nalaro" width="160" height="160" loading="lazy" /><p>{site.closing}</p><span class="signature-bottom mono">DIGITAL PRODUCT STUDIO</span></div>
   </div>
   <div class="principles">{studioPrinciples.map((principle, i) => <div><span class="mono orange">0{i + 1}</span><h3>{principle.title}</h3><p>{principle.text}</p></div>)}</div>
 </section>

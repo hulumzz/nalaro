@@ -12,7 +12,8 @@
     "astro": "astro",
     "test:ui": "node scripts/verify-ui.mjs",
     "generate:og": "node scripts/generate-og.mjs",
-    "test:seo": "node scripts/verify-seo.mjs"
+    "test:seo": "node scripts/verify-seo.mjs",
+    "test:fold": "node scripts/verify-fold.mjs"
   },
   "dependencies": {
     "@fontsource-variable/anybody": "^5.3.0",
