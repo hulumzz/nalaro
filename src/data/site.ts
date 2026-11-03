@@ -4,7 +4,7 @@ export const site = {
   tagline: "Digital Product Studio",
   headline: "We build better digital products.",
   subheadline: "Produk untuk riset, kelas, toko online, dan undangan. Kami juga membuat website serta aplikasi sesuai kebutuhanmu.",
-  description: "Nalaro Digital membangun produk SaaS, AI untuk riset, platform kelas, toko online, undangan digital, serta website dan aplikasi untuk bisnis maupun pendidikan.",
+  description: "Nalaro Digital membangun Produk SaaS, AI untuk riset, Platform Pendidikan, Toko Online, Undangan Digital dan Layanan Custom Web App sesuai kebutuhan pelanggan.",
   closing: "Build better experiences.",
   domain: configured(import.meta.env.PUBLIC_SITE_URL) || "https://nalaro.digital",
   email: configured(import.meta.env.PUBLIC_CONTACT_EMAIL) || "business@nalaro.digital",
