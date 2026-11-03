@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32" role="img" aria-label="Nalaro Digital">
+  <rect width="512" height="512" fill="#0B0C0A"/>
+  <g fill="#FDFDFD" stroke="#FDFDFD" stroke-width="14" stroke-linejoin="round">
+    <path d="M82 178 L200 106 L336 186 L336 128 L431 182 L431 306 L408 328 L186 198 L82 252 Z"/>
+    <path d="M82 296 L178 236 L386 362 L322 414 L192 336 L192 398 L176 406 L82 342 Z"/>
+  </g>
+</svg>
